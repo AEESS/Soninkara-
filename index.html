@@ -1,387 +1,594 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AEESS - Association des Étudiants Soninké à l'UGB</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root {
-    --primary-color: #2E8B57;
-    --secondary-color: #FFFFFF;
-    --accent-color: #3CB371;
-    --text-color: #333333;
-    --light-gray: #f5f5f5;
-    --transition: all 0.3s ease;
-}
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
-html { scroll-behavior: smooth; }
-body { color: var(--text-color); line-height:1.6; overflow-x:hidden; }
-h1,h2,h3,h4 { font-weight:700; line-height:1.2; margin-bottom:1rem; }
-h1 { font-size:2.8rem; } h2 { font-size:2.2rem; position:relative; display:inline-block; margin-bottom:2.5rem; }
-h2::after { content:''; position:absolute; bottom:-10px; left:0; width:60px; height:4px; background-color:var(--primary-color); }
-p { margin-bottom:1.5rem; }
-.container { width:90%; max-width:1200px; margin:0 auto; padding:0 15px; }
-section { padding:5rem 0; opacity:0; transform:translateY(20px); transition:opacity 0.8s ease, transform 0.8s ease; }
-section.visible { opacity:1; transform:translateY(0); }
-.text-center { text-align:center; }
-.text-center h2::after { left:50%; transform:translateX(-50%); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portail UGB - Université Gaston Berger</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-/* Header */
-header { position:fixed; top:0; left:0; width:100%; z-index:1000; background-color:var(--secondary-color); box-shadow:0 2px 10px rgba(0,0,0,0.1); transition:var(--transition); }
-header.scrolled { padding:0.5rem 0; }
-.navbar { display:flex; justify-content:space-between; align-items:center; padding:1.2rem 0; }
-.logo-text { font-size:1.5rem; font-weight:700; color:var(--primary-color); }
-.nav-links { display:flex; list-style:none; }
-.nav-links li { margin-left:2rem; }
-.nav-links a { text-decoration:none; color:var(--text-color); font-weight:500; transition:var(--transition); position:relative; }
-.nav-links a::after { content:''; position:absolute; bottom:-5px; left:0; width:0; height:2px; background-color:var(--primary-color); transition:var(--transition); }
-.nav-links a:hover { color:var(--primary-color); }
-.nav-links a:hover::after { width:100%; }
-.hamburger { display:none; cursor:pointer; }
-.hamburger div { width:25px; height:3px; background-color:var(--text-color); margin:5px; transition:var(--transition); }
+        :root {
+            --primary: #0c3a6c;
+            --secondary: #e37c00;
+            --light: #f5f5f5;
+            --dark: #333;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+        }
 
-/* Hero */
-.hero { height:100vh; display:flex; align-items:center; background:linear-gradient(135deg, rgba(46,139,87,0.9) 0%, rgba(60,179,113,0.8) 100%); position:relative; overflow:hidden; color:var(--secondary-color); padding-top:80px; }
-.hero-content { position:relative; z-index:1; max-width:800px; }
-.hero h1 { font-size:3.5rem; margin-bottom:1.5rem; animation:fadeInDown 1s ease; }
-.hero p { font-size:1.2rem; margin-bottom:2rem; animation:fadeInUp 1s ease; }
-.btn { display:inline-block; padding:0.8rem 2rem; background-color:var(--primary-color); color:var(--secondary-color); border:none; border-radius:50px; font-weight:600; transition:var(--transition); cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.1); text-decoration:none; }
-.btn:hover { background-color:var(--accent-color); transform:translateY(-3px); box-shadow:0 6px 15px rgba(0,0,0,0.2); }
-.btn-outline { background-color:transparent; border:2px solid var(--secondary-color); margin-left:1rem; }
-.btn-outline:hover { background-color:var(--secondary-color); color:var(--primary-color); }
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
 
-/* Missions */
-.missions { background-color:var(--secondary-color); }
-.mission-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:2rem; margin-top:3rem; }
-.mission-card { background-color:var(--light-gray); padding:2rem; border-radius:10px; text-align:center; transition:var(--transition); box-shadow:0 5px 15px rgba(0,0,0,0.05); opacity:0; transform:translateY(20px); }
-.mission-card.animate { animation:fadeInUp 0.6s ease forwards; }
-.mission-card:hover { transform:translateY(-10px); box-shadow:0 15px 30px rgba(0,0,0,0.1); }
-.mission-icon { font-size:3rem; color:var(--primary-color); margin-bottom:1.5rem; }
-.mission-card h3 { color:var(--primary-color); margin-bottom:1rem; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
 
-/* Members */
-.members { background-color:var(--light-gray); }
-.tabs { display:flex; justify-content:center; margin-bottom:2rem; }
-.tab-btn { padding:1rem 2rem; background-color:var(--secondary-color); border:none; cursor:pointer; font-weight:600; transition:var(--transition); border-radius:5px 5px 0 0; margin:0 0.2rem; opacity:0; transform:translateY(20px); }
-.tab-btn.animate { animation:fadeInUp 0.6s ease forwards; }
-.tab-btn.active { background-color:var(--primary-color); color:var(--secondary-color); }
-.tab-content { display:none; background-color:var(--secondary-color); padding:2rem; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.05); opacity:0; transform:translateY(20px); transition:opacity 0.5s ease, transform 0.5s ease; }
-.tab-content.active { display:block; opacity:1; transform:translateY(0); }
-.form-group { margin-bottom:1.5rem; opacity:0; transform:translateY(20px); transition:opacity 0.5s ease, transform 0.5s ease; }
-.form-group.animate { opacity:1; transform:translateY(0); }
-.form-group label { display:block; margin-bottom:0.5rem; font-weight:500; }
-.form-control { width:100%; padding:0.8rem 1rem; border:1px solid #ddd; border-radius:5px; font-size:1rem; transition:var(--transition); }
-.form-control:focus { border-color:var(--primary-color); outline:none; box-shadow:0 0 0 3px rgba(46,139,87,0.2); }
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, var(--primary), #1a5294);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-/* Bacheliers Table */
-.bacheliers-table { width:100%; border-collapse:collapse; margin-top:2rem; box-shadow:0 5px 15px rgba(0,0,0,0.05); border-radius:10px; overflow:hidden; }
-.bacheliers-table th, .bacheliers-table td { padding:1rem; text-align:left; border-bottom:1px solid #ddd; }
-.bacheliers-table th { background-color:var(--primary-color); color:var(--secondary-color); font-weight:600; }
-.bacheliers-table tr:nth-child(even) { background-color:#f9f9f9; }
-.bacheliers-table tr { opacity:0; transform:translateX(-20px); transition:opacity 0.5s ease, transform 0.5s ease; }
-.bacheliers-table tr.animate { opacity:1; transform:translateX(0); }
-.bacheliers-table tr:hover { background-color:#f1f1f1; }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
 
-/* Contact */
-.contact { background-color:var(--secondary-color); }
-.contact-wrapper { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:3rem; }
-.contact-info { background:linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%); padding:2rem; border-radius:10px; color:var(--secondary-color); box-shadow:0 5px 15px rgba(0,0,0,0.1); opacity:0; transform:translateX(-20px); }
-.contact-info.animate { animation:fadeInLeft 0.6s ease forwards; }
-.contact-info h3 { margin-bottom:1.5rem; }
-.contact-info-item { display:flex; align-items:center; margin-bottom:1.5rem; opacity:0; transform:translateX(-20px); }
-.contact-info-item.animate { animation:fadeInLeft 0.6s ease forwards; }
-.contact-icon { font-size:1.5rem; margin-right:1rem; }
-.contact-form { opacity:0; transform:translateX(20px); }
-.contact-form.animate { animation:fadeInRight 0.6s ease forwards; }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
 
-/* Footer */
-footer { background-color:#222; color:var(--secondary-color); padding:3rem 0 1rem; }
-.footer-content { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:2rem; margin-bottom:2rem; }
-.footer-about, .footer-links { opacity:0; transform:translateY(20px); }
-.footer-about.animate, .footer-links.animate { animation:fadeInUp 0.6s ease forwards; }
-.footer-about.animate { animation-delay:0.2s; }
-.footer-links:nth-child(2).animate { animation-delay:0.4s; }
-.footer-links:nth-child(3).animate { animation-delay:0.6s; }
-.footer-logo { font-size:1.8rem; font-weight:700; color:var(--secondary-color); margin-bottom:1rem; display:inline-block; }
-.footer-social { display:flex; margin-top:1.5rem; }
-.footer-social a { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background-color:rgba(255,255,255,0.1); color:var(--secondary-color); margin-right:1rem; transition:var(--transition); opacity:0; transform:translateY(20px); }
-.footer-social a.animate { animation:fadeInUp 0.6s ease forwards; }
-.footer-social a:nth-child(1).animate { animation-delay:0.3s; }
-.footer-social a:nth-child(2).animate { animation-delay:0.4s; }
-.footer-social a:nth-child(3).animate { animation-delay:0.5s; }
-.footer-social a:nth-child(4).animate { animation-delay:0.6s; }
-.footer-social a:hover { background-color:var(--primary-color); transform:translateY(-3px); }
-.footer-links h4 { margin-bottom:1.5rem; position:relative; padding-bottom:0.5rem; }
-.footer-links h4::after { content:''; position:absolute; bottom:0; left:0; width:40px; height:2px; background-color:var(--primary-color); }
-.footer-links ul { list-style:none; }
-.footer-links li { margin-bottom:0.8rem; opacity:0; transform:translateX(-20px); }
-.footer-links li.animate { animation:fadeInLeft 0.6s ease forwards; }
-.footer-links a { color:#ccc; text-decoration:none; transition:var(--transition); }
-.footer-links a:hover { color:var(--secondary-color); padding-left:5px; }
-.copyright { text-align:center; padding-top:2rem; border-top:1px solid #444; font-size:0.9rem; color:#ccc; }
+        .logo img {
+            height: 60px;
+            margin-right: 15px;
+        }
 
-/* Animations */
-@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-@keyframes fadeInUp { from{opacity:0; transform:translateY(40px);} to{opacity:1; transform:translateY(0);} }
-@keyframes fadeInDown { from{opacity:0; transform:translateY(-40px);} to{opacity:1; transform:translateY(0);} }
-@keyframes fadeInLeft { from{opacity:0; transform:translateX(-40px);} to{opacity:1; transform:translateX(0);} }
-@keyframes fadeInRight { from{opacity:0; transform:translateX(40px);} to{opacity:1; transform:translateX(0);} }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
 
-/* Responsive */
-@media screen and (max-width:968px){
-.nav-links{position:fixed;top:0;right:-100%;height:100vh;width:70%;flex-direction:column;background-color:var(--secondary-color);align-items:center;justify-content:center;transition:var(--transition);box-shadow:-5px 0 15px rgba(0,0,0,0.1);}
-.nav-links.active{right:0;}
-.nav-links li{margin:1.5rem 0;}
-.hamburger{display:block;}
-.hamburger.active div:nth-child(1){transform:rotate(-45deg) translate(-5px,6px);}
-.hamburger.active div:nth-child(2){opacity:0;}
-.hamburger.active div:nth-child(3){transform:rotate(45deg) translate(-5px,-6px);}
-}
-@media screen and (max-width:576px){
-h1{font-size:2rem;}
-h2{font-size:1.8rem;}
-.hero h1{font-size:2.2rem;}
-.hero p{font-size:1rem;}
-.btn{padding:0.6rem 1.5rem;font-size:0.9rem;}
-.mission-grid{grid-template-columns:1fr;}
-.tabs{flex-direction:column;}
-.tab-btn{margin-bottom:0.5rem;border-radius:5px;}
-}
-</style>
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .user-actions a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+
+        .user-actions a:hover {
+            text-decoration: underline;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary);
+            border-radius: 5px;
+            padding: 0 15px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            transition: background 0.3s;
+        }
+
+        nav ul li:hover > a {
+            background-color: #1a5294;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .news-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .news-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .news-date {
+            background: var(--secondary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .news-date span:first-child {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .news-date span:last-child {
+            font-size: 12px;
+        }
+
+        .news-content h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .news-content p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Quick Links */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .quick-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-5px);
+            background: #f0f0f0;
+        }
+
+        .quick-link i {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .quick-link span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Login Form */
+        .login-form input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-form button:hover {
+            background: #1a5294;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 30px 0;
+            margin-top: 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        .footer-section p {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+                justify-content: center;
+            }
+            
+            .user-actions {
+                margin-top: 15px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iODAiIGhlaWdodD0iODAiIGZpbGw9IiNmZmYiIHJ4PSI1IiByeT0iNSIvPjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMGMzYTZjIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj5VR0I8L3RleHQ+PC9zdmc+" alt="Logo UGB">
+                    <div class="logo-text">
+                        <h1>Université Gaston Berger</h1>
+                        <span>Portail Étudiant</span>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <a href="#"><i class="fas fa-user"></i> Espace Étudiant</a>
+                    <a href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                </div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="#"><i class="fas fa-graduation-cap"></i> Scolarité</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Cours</a></li>
+                    <li><a href="#"><i class="fas fa-calendar-alt"></i> Emploi du temps</a></li>
+                    <li><a href="#"><i class="fas fa-chart-bar"></i> Notes</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Messagerie</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- News Section -->
+                <div class="card">
+                    <div class="card-header">
+                        <span>Actualités</span>
+                        <a href="#" style="color: white; font-size: 14px;">Voir tout</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="news-item">
+                            <div class="news-date">
+                                <span>15</span>
+                                <span>OCT</span>
+                            </div>
+                            <div class="news-content">
+                                <h3>Inscription pédagogique année 2023-2024</h3>
+                                <p>Les inscriptions pédagogiques pour l'année académique 2023-2024 sont ouvertes jusqu'au 30 octobre.</p>
+                            </div>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-date">
+                                <span>10</span>
+                                <span>OCT</span>
+                            </div>
+                            <div class="news-content">
+                                <h3>Journée portes ouvertes</h3>
+                                <p>L'UGB organise sa journée portes ouvertes le 25 octobre 2023. Venez nombreux!</p>
+                            </div>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-date">
+                                <span>05</span>
+                                <span>OCT</span>
+                            </div>
+                            <div class="news-content">
+                                <h3>Appel à candidatures bourses d'excellence</h3>
+                                <p>La date limite de dépôt des dossiers pour les bourses d'excellence est fixée au 20 octobre 2023.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Academic Calendar -->
+                <div class="card">
+                    <div class="card-header">
+                        <span>Calendrier Académique</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="news-item">
+                            <div class="news-date" style="background-color: #28a745;">
+                                <span>01</span>
+                                <span>NOV</span>
+                            </div>
+                            <div class="news-content">
+                                <h3>Début des cours</h3>
+                                <p>Début des cours pour le premier semestre de l'année académique 2023-2024.</p>
+                            </div>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-date" style="background-color: #dc3545;">
+                                <span>15</span>
+                                <span>DEC</span>
+                            </div>
+                            <div class="news-content">
+                                <h3>Début des examens</h3>
+                                <p>Début des examens du premier semestre.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- Login Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <span>Connexion</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="login-form">
+                            <input type="text" placeholder="Nom d'utilisateur">
+                            <input type="password" placeholder="Mot de passe">
+                            <button>Se connecter</button>
+                        </div>
+                        <div style="text-align: center; margin-top: 15px;">
+                            <a href="#" style="font-size: 14px;">Mot de passe oublié?</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="card">
+                    <div class="card-header">
+                        <span>Accès Rapide</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="quick-links">
+                            <div class="quick-link">
+                                <i class="fas fa-book"></i>
+                                <span>Cours en ligne</span>
+                            </div>
+                            <div class="quick-link">
+                                <i class="fas fa-file-alt"></i>
+                                <span>Notes</span>
+                            </div>
+                            <div class="quick-link">
+                                <i class="fas fa-calendar"></i>
+                                <span>Emploi du temps</span>
+                            </div>
+                            <div class="quick-link">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Résultats</span>
+                            </div>
+                            <div class="quick-link">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>Frais universitaires</span>
+                            </div>
+                            <div class="quick-link">
+                                <i class="fas fa-envelope"></i>
+                                <span>Messagerie</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Important Dates -->
+                <div class="card">
+                    <div class="card-header">
+                        <span>Dates importantes</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="news-item">
+                            <div class="news-date" style="background-color: #ffc107; color: #333;">
+                                <span>30</span>
+                                <span>OCT</span>
+                            </div>
+                            <div class="news-content">
+                                <h3>Fin des inscriptions</h3>
+                                <p>Date limite des inscriptions pédagogiques</p>
+                            </div>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-date" style="background-color: #17a2b8;">
+                                <span>15</span>
+                                <span>NOV</span>
+                            </div>
+                            <div class="news-content">
+                                <h3>Début des TP</h3>
+                                <p>Début des travaux pratiques</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contacts</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> BP 234, Saint-Louis, Sénégal</p>
+                    <p><i class="fas fa-phone"></i> +221 33 961 23 45</p>
+                    <p><i class="fas fa-envelope"></i> info@ugb.edu.sn</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Liens utiles</h3>
+                    <a href="#">Bibliothèque numérique</a>
+                    <a href="#">Plateforme pédagogique</a>
+                    <a href="#">Webmail UGB</a>
+                    <a href="#">Annuaire</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Réseaux sociaux</h3>
+                    <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                    <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Université Gaston Berger - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
 
-<!-- Header -->
-<header id="header">
-<div class="container">
-<nav class="navbar">
-<div class="logo">
-<div class="logo-text">AEESS</div>
-</div>
-<ul class="nav-links">
-<li><a href="#accueil">Accueil</a></li>
-<li><a href="#missions">Nos Missions</a></li>
-<li><a href="#membres">Espace Membre</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-<div class="hamburger">
-<div></div>
-<div></div>
-<div></div>
-</div>
-</nav>
-</div>
-</header>
-
-<!-- Hero Section -->
-<section id="accueil" class="hero">
-<div class="container">
-<div class="hero-content">
-<h1>Association des Étudiants Soninké à l'UGB</h1>
-<p>Promouvoir la culture soninké, renforcer la solidarité et accompagner la réussite académique de nos membres.</p>
-<div>
-<a href="#membres" class="btn">Rejoindre l'association</a>
-<a href="#missions" class="btn btn-outline">Découvrir nos actions</a>
-</div>
-</div>
-</div>
-</section>
-
-<!-- Missions Section -->
-<section id="missions" class="missions">
-<div class="container">
-<div class="text-center">
-<h2>Nos Missions</h2>
-<p>Découvrez les objectifs et actions de l'AEESS pour la communauté estudiantine soninké</p>
-</div>
-<div class="mission-grid">
-<div class="mission-card"><div class="mission-icon"><i class="fas fa-book-open"></i></div><h3>Soutien Académique</h3><p>Organisation de séances de tutorat, partage de ressources pédagogiques et accompagnement personnalisé pour la réussite académique.</p></div>
-<div class="mission-card"><div class="mission-icon"><i class="fas fa-users"></i></div><h3>Solidarité</h3><p>Création d'un réseau d'entraide et de solidarité pour les étudiants soninké, favorisant l'échange et le soutien mutuel.</p></div>
-<div class="mission-card"><div class="mission-icon"><i class="fas fa-microphone"></i></div><h3>Promotion Culturelle</h3><p>Valorisation et promotion de la culture soninké à travers des événements, des conférences et des activités culturelles.</p></div>
-</div>
-</div>
-</section>
-
-<!-- Members Section -->
-<section id="membres" class="members">
-<div class="container">
-<div class="text-center">
-<h2>Espace Membre</h2>
-<p>Rejoignez notre communauté et accédez à tous les avantages réservés aux membres</p>
-</div>
-<div class="tabs">
-<button class="tab-btn active" data-tab="connexion">Connexion</button>
-<button class="tab-btn" data-tab="inscription">Inscription</button>
-</div>
-<div id="connexion" class="tab-content active">
-<h3>Connexion à l'espace membre</h3>
-<form id="login-form">
-<div class="form-group">
-<label for="login-email">Email</label>
-<input type="email" id="login-email" class="form-control" placeholder="Votre email" required>
-</div>
-<div class="form-group">
-<label for="login-password">Mot de passe</label>
-<input type="password" id="login-password" class="form-control" placeholder="Votre mot de passe" required>
-</div>
-<button type="submit" class="btn">Se connecter</button>
-</form>
-</div>
-<div id="inscription" class="tab-content">
-<h3>Inscription à l'association</h3>
-<form id="register-form">
-<div class="form-group">
-<label for="register-name">Nom complet</label>
-<input type="text" id="register-name" class="form-control" placeholder="Votre nom complet" required>
-</div>
-<div class="form-group">
-<label for="register-email">Email</label>
-<input type="email" id="register-email" class="form-control" placeholder="Votre email" required>
-</div>
-<div class="form-group">
-<label for="register-password">Mot de passe</label>
-<input type="password" id="register-password" class="form-control" placeholder="Créez un mot de passe" required>
-</div>
-<div class="form-group">
-<label for="register-filiere">Filière</label>
-<input type="text" id="register-filiere" class="form-control" placeholder="Votre filière d'étude" required>
-</div>
-<button type="submit" class="btn">S'inscrire</button>
-</form>
-</div>
-
-<!-- Member Area -->
-<div id="member-area" style="display:none;">
-<h3>Espace membre</h3>
-<p>Bienvenue, <span id="member-name"></span> !</p>
-<h4>Formulaire Bachelier</h4>
-<form id="bachelier-form">
-<div class="form-group"><label for="bachelier-nom">Nom</label><input type="text" id="bachelier-nom" class="form-control" required></div>
-<div class="form-group"><label for="bachelier-prenom">Prénom</label><input type="text" id="bachelier-prenom" class="form-control" required></div>
-<div class="form-group"><label for="bachelier-serie">Série du Bac</label><input type="text" id="bachelier-serie" class="form-control" required></div>
-<div class="form-group"><label for="bachelier-lycee">Lycée d'origine</label><input type="text" id="bachelier-lycee" class="form-control" required></div>
-<button type="submit" class="btn">Enregistrer</button>
-</form>
-<h4>Liste des Bacheliers Inscrits</h4>
-<table class="bacheliers-table">
-<thead><tr><th>Nom</th><th>Prénom</th><th>Série du Bac</th><th>Lycée d'origine</th></tr></thead>
-<tbody id="bacheliers-list"></tbody>
-</table>
-</div>
-</div>
-</section>
-
-<!-- Contact Section -->
-<section id="contact" class="contact">
-<div class="container">
-<div class="text-center">
-<h2>Contactez-nous</h2>
-<p>Une question, une suggestion ou besoin d'information ? N'hésitez pas à nous contacter</p>
-</div>
-<div class="contact-wrapper">
-<div class="contact-info">
-<h3>Nos Coordonnées</h3>
-<div class="contact-info-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><p>Université Gaston Berger, Saint-Louis, Sénégal</p></div>
-<div class="contact-info-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><p>contact@aeess-ugb.sn</p></div>
-<div class="contact-info-item"><div class="contact-icon"><i class="fas fa-phone"></i></div><p>+221 33 XXX XX XX</p></div>
-<div class="contact-info-item"><div class="contact-icon"><i class="fas fa-clock"></i></div><p>Lun - Ven: 9:00 - 17:00</p></div>
-</div>
-<form id="contact-form" class="contact-form">
-<div class="form-group"><label for="contact-name">Votre nom</label><input type="text" id="contact-name" class="form-control" required></div>
-<div class="form-group"><label for="contact-email">Votre email</label><input type="email" id="contact-email" class="form-control" required></div>
-<div class="form-group"><label for="contact-subject">Sujet</label><input type="text" id="contact-subject" class="form-control" required></div>
-<div class="form-group"><label for="contact-message">Votre message</label><textarea id="contact-message" class="form-control" rows="5" required></textarea></div>
-<button type="submit" class="btn">Envoyer le message</button>
-</form>
-</div>
-</div>
-</section>
-
-<!-- Footer -->
-<footer>
-<div class="container">
-<div class="footer-content">
-<div class="footer-about">
-<a href="#" class="footer-logo">AEESS</a>
-<p>L'Association des Étudiants Soninké à l'UGB œuvre pour la promotion culturelle, la solidarité et la réussite académique de ses membres.</p>
-<div class="footer-social">
-<a href="#"><i class="fab fa-facebook-f"></i></a>
-<a href="#"><i class="fab fa-twitter"></i></a>
-<a href="#"><i class="fab fa-instagram"></i></a>
-<a href="#"><i class="fab fa-linkedin-in"></i></a>
-</div>
-</div>
-<div class="footer-links">
-<h4>Liens rapides</h4>
-<ul>
-<li><a href="#accueil">Accueil</a></li>
-<li><a href="#missions">Nos Missions</a></li>
-<li><a href="#membres">Espace Membre</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-</div>
-<div class="footer-links">
-<h4>Ressources</h4>
-<ul>
-<li><a href="#">Événements</a></li>
-<li><a href="#">Galerie</a></li>
-<li><a href="#">Blog</a></li>
-<li><a href="#">FAQ</a></li>
-</ul>
-</div>
-</div>
-<div class="copyright">
-<p>&copy; 2023 AEESS - Association des Étudiants Soninké à l'UGB. Tous droits réservés.</p>
-</div>
-</div>
-</footer>
-
-<script>
-// Hamburger menu
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-hamburger.addEventListener('click',()=>{hamburger.classList.toggle('active');navLinks.classList.toggle('active');});
-document.querySelectorAll('.nav-links a').forEach(link=>{link.addEventListener('click',()=>{hamburger.classList.remove('active');navLinks.classList.remove('active');});});
-
-// Header scroll
-const header=document.querySelector('header');
-window.addEventListener('scroll',()=>{window.scrollY>100?header.classList.add('scrolled'):header.classList.remove('scrolled');});
-
-// Tabs
-const tabBtns=document.querySelectorAll('.tab-btn');
-const tabContents=document.querySelectorAll('.tab-content');
-tabBtns.forEach(btn=>{btn.addEventListener('click',()=>{const tab=btn.dataset.tab;tabBtns.forEach(b=>b.classList.remove('active'));tabContents.forEach(c=>c.classList.remove('active'));btn.classList.add('active');document.getElementById(tab).classList.add('active');});});
-
-// User simulation
-let users=JSON.parse(localStorage.getItem('aeess_users'))||[];
-let bacheliers=JSON.parse(localStorage.getItem('aeess_bacheliers'))||[];
-let currentUser=null;
-
-function displayBacheliers(){const bacheliersList=document.getElementById('bacheliers-list');bacheliersList.innerHTML='';bacheliers.forEach((bachelier,index)=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${bachelier.nom}</td><td>${bachelier.prenom}</td><td>${bachelier.serie}</td><td>${bachelier.lycee}</td>`;setTimeout(()=>{tr.classList.add('animate');},100*index);bacheliersList.appendChild(tr);});}
-
-// Login
-const loginForm=document.getElementById('login-form');
-const memberArea=document.getElementById('member-area');
-const memberName=document.getElementById('member-name');
-const loginTab=document.querySelector('[data-tab="connexion"]');
-loginForm.addEventListener('submit',(e)=>{e.preventDefault();const email=document.getElementById('login-email').value;const password=document.getElementById('login-password').value;const user=users.find(u=>u.email===email&&u.password===password);if(user){currentUser=user;memberName.textContent=user.name;memberArea.style.display='block';document.querySelectorAll('.tab-content').forEach(tab=>tab.style.display='none');displayBacheliers();setTimeout(()=>{document.querySelectorAll('#bachelier-form .form-group').forEach((group,index)=>{setTimeout(()=>{group.classList.add('animate');},150*index);});},300);}else{alert('Email ou mot de passe incorrect');}});
-
-// Register
-const registerForm=document.getElementById('register-form');
-registerForm.addEventListener('submit',(e)=>{e.preventDefault();const name=document.getElementById('register-name').value;const email=document.getElementById('register-email').value;const password=document.getElementById('register-password').value;const filiere=document.getElementById('register-filiere').value;if(users.some(u=>u.email===email)){alert('Cet email est déjà utilisé');return;}const newUser={name,email,password,filiere};users.push(newUser);localStorage.setItem('aeess_users',JSON.stringify(users));alert('Inscription réussie ! Vous pouvez maintenant vous connecter.');registerForm.reset();loginTab.click();});
-
-// Bachelier form
-const bachelierForm=document.getElementById('bachelier-form');
-bachelierForm.addEventListener('submit',(e)=>{e.preventDefault();const nom=document.getElementById('bachelier-nom').value;const prenom=document.getElementById('bachelier-prenom').value;const serie=document.getElementById('bachelier-serie').value;const lycee=document.getElementById('bachelier-lycee').value;const newBachelier={nom,prenom,serie,lycee};bacheliers.push(newBachelier);localStorage.setItem('aeess_bacheliers',JSON.stringify(bacheliers));alert('Bachelier enregistré avec succès !');bachelierForm.reset();displayBacheliers();});
-
-// Contact form
-const contactForm=document.getElementById('contact-form');
-contactForm.addEventListener('submit',(e)=>{e.preventDefault();const name=document.getElementById('contact-name').value;const email=document.getElementById('contact-email').value;const subject=document.getElementById('contact-subject').value;const message=document.getElementById('contact-message').value;console.log('Message envoyé:',{name,email,subject,message});alert('Votre message a été envoyé avec succès !');contactForm.reset();});
-
-// Scroll animations
-function animateOnScroll(){const sections=document.querySelectorAll('section');const missionCards=document.querySelectorAll('.mission-card');const tabBtns=document.querySelectorAll('.tab-btn');const contactInfo=document.querySelector('.contact-info');const contactItems=document.querySelectorAll('.contact-info-item');const contactForm=document.querySelector('.contact-form');const footerAbout=document.querySelector('.footer-about');const footerLinks=document.querySelectorAll('.footer-links');const socialLinks=document.querySelectorAll('.footer-social a');const footerListItems=document.querySelectorAll('.footer-links li');sections.forEach(section=>{const sectionTop=section.getBoundingClientRect().top;const triggerPoint=window.innerHeight*0.85;if(sectionTop<triggerPoint){section.classList.add('visible');}});missionCards.forEach(card=>{const cardTop=card.getBoundingClientRect().top;const triggerPoint=window.innerHeight*0.85;if(cardTop<triggerPoint){card.classList.add('animate');}});tabBtns.forEach(btn=>{const btnTop=btn.getBoundingClientRect().top;const triggerPoint=window.innerHeight*0.85;if(btnTop<triggerPoint){btn.classList.add('animate');}});if(contactInfo){const contactTop=contactInfo.getBoundingClientRect().top;const triggerPoint=window.innerHeight*0.85;if(contactTop<triggerPoint){contactInfo.classList.add('animate');contactForm.classList.add('animate');contactItems.forEach(item=>item.classList.add('animate'));}}if(footerAbout.getBoundingClientRect().top<window.innerHeight*0.85){footerAbout.classList.add('animate');footerLinks.forEach(link=>link.classList.add('animate'));socialLinks.forEach(link=>link.classList.add('animate'));footerListItems.forEach(item=>item.classList.add('animate'));}}window.addEventListener('scroll',animateOnScroll);window.addEventListener('load',animateOnScroll);
-</script>
+    <script>
+        // Simple JavaScript for demo purposes
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add active class to current nav item
+            const navItems = document.querySelectorAll('nav ul li a');
+            navItems[0].classList.add('active');
+            
+            // Quick links animation
+            const quickLinks = document.querySelectorAll('.quick-link');
+            quickLinks.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                });
+                link.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
 </body>
 </html>

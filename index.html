@@ -1,594 +1,711 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portail UGB - Université Gaston Berger</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AEESS - Portail</title>
 
-        :root {
-            --primary: #0c3a6c;
-            --secondary: #e37c00;
-            --light: #f5f5f5;
-            --dark: #333;
-            --success: #28a745;
-            --danger: #dc3545;
-            --warning: #ffc107;
-        }
+<!-- Supabase JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.26.0/dist/supabase.min.js"></script>
 
-        body {
-            background-color: #f0f2f5;
-            color: #333;
-            line-height: 1.6;
-        }
+<!-- Styles simples -->
+<style>
+:root{
+  --green:#2E8B57; --white:#fff; --muted:#666; --bg:#f6f8fa;
+  --card:#fff; --accent:#3CB371;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#222}
+.header{background:linear-gradient(90deg,var(--green),#16694a);color:var(--white);padding:18px 16px;position:sticky;top:0;z-index:50}
+.container{max-width:1100px;margin:0 auto;padding:0 16px}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;gap:12px;align-items:center}
+.brand h1{font-size:20px;margin:0}
+.nav{display:flex;gap:12px;align-items:center}
+.nav a{color:rgba(255,255,255,0.95);text-decoration:none;padding:8px 10px;border-radius:6px}
+.nav a:hover{background:rgba(255,255,255,0.06)}
+.btn{background:var(--accent);color:var(--white);padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.12)}
+.main{padding:28px 0}
+.grid{display:grid;gap:18px;grid-template-columns:2fr 1fr}
+.card{background:var(--card);border-radius:10px;padding:16px;box-shadow:0 6px 20px rgba(17,24,39,0.06)}
+.h2{font-size:20px;margin:0 0 12px 0}
+.news-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #eee}
+.news-date{width:56px;height:56px;border-radius:8px;background:var(--accent);color:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700}
+.news-content h3{margin:0;font-size:15px}
+.news-content p{margin:6px 0 0;color:var(--muted);font-size:13px}
+.quick-links{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.quick{display:flex;flex-direction:column;align-items:center;padding:12px;border-radius:8px;background:#fafafa;border:1px solid #f0f0f0}
+.quick i{font-size:18px;color:var(--green);margin-bottom:8px}
+.login-form input, .login-form textarea, input[type="text"],input[type="email"],input[type="password"],select {
+  width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;margin-bottom:10px;font-size:14px;
+}
+small.muted{color:var(--muted)}
+.footer{background:var(--green);color:var(--white);padding:28px 0;margin-top:26px}
+.footer a{color:rgba(255,255,255,0.9);text-decoration:none;display:block;margin-bottom:6px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.flex{display:flex;gap:12px}
+.center{text-align:center}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gallery-grid img{width:100%;height:120px;object-fit:cover;border-radius:6px}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
+/* Responsive */
+@media (max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:480px){
+  .gallery-grid{grid-template-columns:1fr}
+}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;padding:16px}
+.modal .card{max-width:480px;width:100%}
 
-        /* Header Styles */
-        header {
-            background: linear-gradient(to right, var(--primary), #1a5294);
-            color: white;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 60px;
-            margin-right: 15px;
-        }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo-text h1 {
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .logo-text span {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .user-actions a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 14px;
-        }
-
-        .user-actions a:hover {
-            text-decoration: underline;
-        }
-
-        /* Navigation */
-        nav {
-            background-color: var(--primary);
-            border-radius: 5px;
-            padding: 0 15px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            position: relative;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 15px 20px;
-            display: block;
-            transition: background 0.3s;
-        }
-
-        nav ul li:hover > a {
-            background-color: #1a5294;
-        }
-
-        /* Main Content */
-        .main-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 25px;
-            margin: 25px 0;
-        }
-
-        .card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
-            margin-bottom: 25px;
-            overflow: hidden;
-        }
-
-        .card-header {
-            background: var(--primary);
-            color: white;
-            padding: 15px 20px;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .news-item {
-            display: flex;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .news-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .news-date {
-            background: var(--secondary);
-            color: white;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-radius: 5px;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        .news-date span:first-child {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .news-date span:last-child {
-            font-size: 12px;
-        }
-
-        .news-content h3 {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .news-content p {
-            font-size: 14px;
-            color: #666;
-        }
-
-        /* Quick Links */
-        .quick-links {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .quick-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            transition: transform 0.3s;
-        }
-
-        .quick-link:hover {
-            transform: translateY(-5px);
-            background: #f0f0f0;
-        }
-
-        .quick-link i {
-            font-size: 24px;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .quick-link span {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        /* Login Form */
-        .login-form input {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .login-form button {
-            width: 100%;
-            padding: 12px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .login-form button:hover {
-            background: #1a5294;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary);
-            color: white;
-            padding: 30px 0;
-            margin-top: 30px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
-        .footer-section h3 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-section h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: var(--secondary);
-        }
-
-        .footer-section p {
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .footer-section a {
-            color: #ddd;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            margin-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 14px;
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-top {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .logo {
-                margin-bottom: 15px;
-                justify-content: center;
-            }
-            
-            .user-actions {
-                margin-top: 15px;
-            }
-            
-            nav ul {
-                flex-direction: column;
-            }
-            
-            .quick-links {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+/* small UI touches */
+.link-like{background:transparent;border:none;color:var(--green);cursor:pointer;padding:0}
+.small{font-size:13px}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:8px;border-bottom:1px solid #eee;text-align:left}
+.tag{display:inline-block;padding:6px 8px;border-radius:999px;background:#f0fff4;color:var(--green);font-weight:600;font-size:12px}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-top">
-                <div class="logo">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iODAiIGhlaWdodD0iODAiIGZpbGw9IiNmZmYiIHJ4PSI1IiByeT0iNSIvPjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMGMzYTZjIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj5VR0I8L3RleHQ+PC9zdmc+" alt="Logo UGB">
-                    <div class="logo-text">
-                        <h1>Université Gaston Berger</h1>
-                        <span>Portail Étudiant</span>
-                    </div>
-                </div>
-                <div class="user-actions">
-                    <a href="#"><i class="fas fa-user"></i> Espace Étudiant</a>
-                    <a href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
-                </div>
-            </div>
-            
-            <nav>
-                <ul>
-                    <li><a href="#"><i class="fas fa-home"></i> Accueil</a></li>
-                    <li><a href="#"><i class="fas fa-graduation-cap"></i> Scolarité</a></li>
-                    <li><a href="#"><i class="fas fa-book"></i> Cours</a></li>
-                    <li><a href="#"><i class="fas fa-calendar-alt"></i> Emploi du temps</a></li>
-                    <li><a href="#"><i class="fas fa-chart-bar"></i> Notes</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> Messagerie</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    
-    <!-- Main Content -->
-    <div class="container">
-        <div class="main-content">
-            <!-- Left Column -->
-            <div class="left-column">
-                <!-- News Section -->
-                <div class="card">
-                    <div class="card-header">
-                        <span>Actualités</span>
-                        <a href="#" style="color: white; font-size: 14px;">Voir tout</a>
-                    </div>
-                    <div class="card-body">
-                        <div class="news-item">
-                            <div class="news-date">
-                                <span>15</span>
-                                <span>OCT</span>
-                            </div>
-                            <div class="news-content">
-                                <h3>Inscription pédagogique année 2023-2024</h3>
-                                <p>Les inscriptions pédagogiques pour l'année académique 2023-2024 sont ouvertes jusqu'au 30 octobre.</p>
-                            </div>
-                        </div>
-                        <div class="news-item">
-                            <div class="news-date">
-                                <span>10</span>
-                                <span>OCT</span>
-                            </div>
-                            <div class="news-content">
-                                <h3>Journée portes ouvertes</h3>
-                                <p>L'UGB organise sa journée portes ouvertes le 25 octobre 2023. Venez nombreux!</p>
-                            </div>
-                        </div>
-                        <div class="news-item">
-                            <div class="news-date">
-                                <span>05</span>
-                                <span>OCT</span>
-                            </div>
-                            <div class="news-content">
-                                <h3>Appel à candidatures bourses d'excellence</h3>
-                                <p>La date limite de dépôt des dossiers pour les bourses d'excellence est fixée au 20 octobre 2023.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Academic Calendar -->
-                <div class="card">
-                    <div class="card-header">
-                        <span>Calendrier Académique</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="news-item">
-                            <div class="news-date" style="background-color: #28a745;">
-                                <span>01</span>
-                                <span>NOV</span>
-                            </div>
-                            <div class="news-content">
-                                <h3>Début des cours</h3>
-                                <p>Début des cours pour le premier semestre de l'année académique 2023-2024.</p>
-                            </div>
-                        </div>
-                        <div class="news-item">
-                            <div class="news-date" style="background-color: #dc3545;">
-                                <span>15</span>
-                                <span>DEC</span>
-                            </div>
-                            <div class="news-content">
-                                <h3>Début des examens</h3>
-                                <p>Début des examens du premier semestre.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Right Column -->
-            <div class="right-column">
-                <!-- Login Card -->
-                <div class="card">
-                    <div class="card-header">
-                        <span>Connexion</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="login-form">
-                            <input type="text" placeholder="Nom d'utilisateur">
-                            <input type="password" placeholder="Mot de passe">
-                            <button>Se connecter</button>
-                        </div>
-                        <div style="text-align: center; margin-top: 15px;">
-                            <a href="#" style="font-size: 14px;">Mot de passe oublié?</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Quick Links -->
-                <div class="card">
-                    <div class="card-header">
-                        <span>Accès Rapide</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="quick-links">
-                            <div class="quick-link">
-                                <i class="fas fa-book"></i>
-                                <span>Cours en ligne</span>
-                            </div>
-                            <div class="quick-link">
-                                <i class="fas fa-file-alt"></i>
-                                <span>Notes</span>
-                            </div>
-                            <div class="quick-link">
-                                <i class="fas fa-calendar"></i>
-                                <span>Emploi du temps</span>
-                            </div>
-                            <div class="quick-link">
-                                <i class="fas fa-chart-bar"></i>
-                                <span>Résultats</span>
-                            </div>
-                            <div class="quick-link">
-                                <i class="fas fa-dollar-sign"></i>
-                                <span>Frais universitaires</span>
-                            </div>
-                            <div class="quick-link">
-                                <i class="fas fa-envelope"></i>
-                                <span>Messagerie</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Important Dates -->
-                <div class="card">
-                    <div class="card-header">
-                        <span>Dates importantes</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="news-item">
-                            <div class="news-date" style="background-color: #ffc107; color: #333;">
-                                <span>30</span>
-                                <span>OCT</span>
-                            </div>
-                            <div class="news-content">
-                                <h3>Fin des inscriptions</h3>
-                                <p>Date limite des inscriptions pédagogiques</p>
-                            </div>
-                        </div>
-                        <div class="news-item">
-                            <div class="news-date" style="background-color: #17a2b8;">
-                                <span>15</span>
-                                <span>NOV</span>
-                            </div>
-                            <div class="news-content">
-                                <h3>Début des TP</h3>
-                                <p>Début des travaux pratiques</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Contacts</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> BP 234, Saint-Louis, Sénégal</p>
-                    <p><i class="fas fa-phone"></i> +221 33 961 23 45</p>
-                    <p><i class="fas fa-envelope"></i> info@ugb.edu.sn</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Liens utiles</h3>
-                    <a href="#">Bibliothèque numérique</a>
-                    <a href="#">Plateforme pédagogique</a>
-                    <a href="#">Webmail UGB</a>
-                    <a href="#">Annuaire</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Réseaux sociaux</h3>
-                    <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
-                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
-                    <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                    <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2023 Université Gaston Berger - Tous droits réservés</p>
-            </div>
-        </div>
-    </footer>
 
-    <script>
-        // Simple JavaScript for demo purposes
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add active class to current nav item
-            const navItems = document.querySelectorAll('nav ul li a');
-            navItems[0].classList.add('active');
-            
-            // Quick links animation
-            const quickLinks = document.querySelectorAll('.quick-link');
-            quickLinks.forEach(link => {
-                link.addEventListener('mouseenter', function() {
-                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
-                });
-                link.addEventListener('mouseleave', function() {
-                    this.style.boxShadow = 'none';
-                });
-            });
-        });
-    </script>
+<!--
+INSTRUCTIONS RAPIDES (à faire avant d'utiliser le site)
+1) Créer un projet Supabase: https://app.supabase.com
+2) Récupérer SUPABASE_URL et SUPABASE_ANON_KEY et coller dans les variables en bas (SUPABASE_URL, SUPABASE_KEY).
+3) Créer les tables SQL ci-dessous via SQL Editor dans Supabase :
+
+-- Table profiles (supabase auth crée aussi un user automatiquement, mais on garde profile)
+create table profiles (
+  id uuid references auth.users not null primary key,
+  full_name text,
+  is_admin boolean default false,
+  created_at timestamptz default now()
+);
+
+-- Table events
+create table events (
+  id bigserial primary key,
+  title text not null,
+  description text,
+  event_date date,
+  location text,
+  image_url text,
+  created_at timestamptz default now(),
+  created_by uuid references auth.users
+);
+
+-- Table documents
+create table documents (
+  id bigserial primary key,
+  title text,
+  url text,
+  storage_path text,
+  uploaded_by uuid references auth.users,
+  created_at timestamptz default now()
+);
+
+-- Table messages (contact)
+create table messages (
+  id bigserial primary key,
+  name text,
+  email text,
+  subject text,
+  message text,
+  created_at timestamptz default now()
+);
+
+-- Table help_requests (demande d'aide)
+create table help_requests (
+  id bigserial primary key,
+  user_id uuid references auth.users,
+  subject text,
+  content text,
+  status text default 'open',
+  created_at timestamptz default now()
+);
+
+4) Storage: créer un bucket "gallery" et un bucket "documents" (publique ou privé selon votre policy)
+5) Rules/RLS: par défaut, active RLS et ajoute policies simples. Exemple (profiles):
+-- enable RLS
+alter table profiles enable row level security;
+
+-- policy pour que user insert/update son profil
+create policy "users can insert own profile" on profiles
+  for insert using ( auth.role() = 'authenticated' );
+
+-- policy example for documents (allow inserting when authenticated)
+alter table documents enable row level security;
+create policy "allow insert documents" on documents for insert using (auth.role() = 'authenticated');
+
+6) Configure OAuth (Google) si tu veux les boutons sociaux (Supabase -> Auth -> Providers)
+
+IMPORTANT: Ne mets jamais la service_role key côté client.
+-->
+
+<header class="header">
+  <div class="container header-inner">
+    <div class="brand">
+      <div style="width:52px;height:52px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--green);font-weight:700">AE</div>
+      <div>
+        <h1>AEESS — Association Étudiants Soninké</h1>
+        <div style="font-size:13px;color:rgba(255,255,255,0.9)">Accueil · Intégration · Solidarité</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="#home" class="navlink">Accueil</a>
+      <a href="#events" class="navlink">Événements</a>
+      <a href="#gallery" class="navlink">Galerie</a>
+      <a href="#contact" class="navlink">Contact</a>
+      <button id="btn-login" class="btn">Connexion</button>
+    </nav>
+  </div>
+</header>
+
+<main class="main container" id="main">
+  <!-- Home / public -->
+  <section id="home" class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <h2 class="h2">Bienvenue à l'AEESS</h2>
+        <p style="margin:6px 0 0;color:var(--muted)">Association dédiée à l'accueil et l'accompagnement des bacheliers soninké à l'UGB — intégration, tutorat, solidarité et culture.</p>
+      </div>
+      <div class="flex">
+        <button id="btn-join" class="btn">Devenir membre</button>
+        <button id="scroll-events" class="btn link-like" title="Voir les événements" style="background:#fff;color:var(--green);border:1px solid #e8f4ed">Voir événements</button>
+      </div>
+    </div>
+
+    <hr style="margin:14px 0;border:none;border-top:1px solid #eee">
+
+    <div style="display:grid;grid-template-columns:1fr 320px;gap:16px">
+      <!-- left: actualités + events preview -->
+      <div>
+        <div class="card" style="margin-bottom:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span class="h2">Actualités récentes</span>
+            <small class="muted"><a href="#events" class="link-like">Voir tout</a></small>
+          </div>
+          <div id="news-list">
+            <!-- events list injected by JS -->
+            <p class="small muted">Chargement des actualités…</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="h2">Nos missions</div>
+          <p><strong>Accueil :</strong> aide aux nouveaux bacheliers pour se loger et s'intégrer.</p>
+          <p><strong>Pédagogique :</strong> tutorats, formations informatiques et prise de parole.</p>
+          <p><strong>Culturel :</strong> promotion de la culture soninké (événements, soirées, gastronomie).</p>
+        </div>
+      </div>
+
+      <!-- right: quick links and upcoming -->
+      <aside>
+        <div class="card">
+          <div class="h2">Accès rapide</div>
+          <div class="quick-links" style="margin-top:8px">
+            <div class="quick"><i class="fas fa-users"></i><span>Devenir membre</span></div>
+            <div class="quick"><i class="fas fa-hand-holding-heart"></i><span>Soutien / Solidarité</span></div>
+            <div class="quick"><i class="fas fa-chalkboard-teacher"></i><span>Tutorats</span></div>
+            <div class="quick"><i class="fas fa-calendar"></i><span>Événements</span></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Événement à venir</div>
+          <div id="next-event">
+            <p class="muted small">Chargement…</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Events full -->
+  <section id="events" class="card" style="margin-top:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h2 class="h2">Événements & actualités</h2>
+      <div>
+        <button id="btn-add-event" class="btn" style="background:#fff;color:var(--green);border:1px solid #e8f4ed">Proposer un événement</button>
+      </div>
+    </div>
+    <div id="events-list" style="margin-top:12px">Chargement des événements…</div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="card" style="margin-top:16px">
+    <h2 class="h2">Galerie</h2>
+    <div id="gallery-grid" class="gallery-grid" style="margin-top:8px">
+      <p class="muted small">Chargement de la galerie…</p>
+    </div>
+    <div style="margin-top:12px" class="center"><small class="muted">Les membres peuvent proposer des photos depuis leur dashboard.</small></div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="card" style="margin-top:16px">
+    <h2 class="h2">Contact</h2>
+    <div style="display:grid;grid-template-columns:1fr 360px;gap:16px">
+      <div>
+        <form id="contact-form">
+          <input type="text" id="contact-name" placeholder="Votre nom" required>
+          <input type="email" id="contact-email" placeholder="Votre email" required>
+          <input type="text" id="contact-subject" placeholder="Sujet" required>
+          <textarea id="contact-message" rows="5" placeholder="Votre message" required></textarea>
+          <button class="btn" type="submit">Envoyer</button>
+        </form>
+        <div id="contact-res" style="margin-top:10px"></div>
+      </div>
+      <aside>
+        <div class="card">
+          <h3 class="h2">Coordonnées</h3>
+          <p><i class="fas fa-map-marker-alt"></i> Université Gaston Berger, Saint-Louis</p>
+          <p><i class="fas fa-envelope"></i> contact@aeess-ugb.sn</p>
+          <p><i class="fas fa-phone"></i> +221 33 XXX XX XX</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Dashboard area (hidden until login) -->
+  <section id="dashboard" class="card" style="margin-top:16px;display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h2 class="h2">Tableau de bord</h2>
+      <div class="flex">
+        <span id="profile-name" class="small muted"></span>
+        <button id="btn-logout" class="btn" style="background:#fff;color:var(--green);border:1px solid #e8f4ed">Se déconnecter</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 360px;gap:16px;margin-top:12px">
+      <div>
+        <div class="card">
+          <h3 class="h2">Mes documents</h3>
+          <form id="upload-form">
+            <input type="text" id="doc-title" placeholder="Titre du document" required>
+            <input type="file" id="doc-file" accept=".pdf,.doc,.docx,.pptx,.zip,.png,.jpg" required>
+            <button class="btn" type="submit">Téléverser</button>
+          </form>
+          <div id="my-docs" style="margin-top:12px">Aucun document</div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3 class="h2">Demander de l'aide</h3>
+          <form id="help-form">
+            <input type="text" id="help-subject" placeholder="Sujet" required>
+            <textarea id="help-content" rows="4" placeholder="Expliquez votre besoin" required></textarea>
+            <button class="btn" type="submit">Envoyer la demande</button>
+          </form>
+          <div id="help-res" style="margin-top:10px"></div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="card">
+          <h3 class="h2">Mon profil</h3>
+          <div id="profile-info">
+            <p><strong>Nom :</strong> <span id="profile-fullname">—</span></p>
+            <p><strong>Email :</strong> <span id="profile-email">—</span></p>
+            <p><strong>Rôle :</strong> <span id="profile-role">Membre</span></p>
+          </div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3 class="h2">Actions rapides</h3>
+          <button id="btn-upload-photo" class="btn" style="background:#fff;color:var(--green);border:1px solid #e8f4ed">Téléverser photo galerie</button>
+          <div id="upload-photo-area" style="display:none;margin-top:10px">
+            <input type="file" id="gallery-file" accept="image/*">
+            <button id="gallery-upload-btn" class="btn" style="background:#fff;color:var(--green);border:1px solid #e8f4ed">Uploader photo</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <div>
+        <h3>Contacts</h3>
+        <p>BP 234, Saint-Louis, Sénégal</p>
+        <p>+221 33 961 23 45</p>
+        <p>contact@aeess-ugb.sn</p>
+      </div>
+      <div>
+        <h3>Liens utiles</h3>
+        <a href="#">Bibliothèque numérique</a>
+        <a href="#">Plateforme pédagogique</a>
+        <a href="#">Webmail</a>
+      </div>
+      <div>
+        <h3>Réseaux sociaux</h3>
+        <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+        <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+      </div>
+    </div>
+    <div class="center" style="margin-top:18px;color:rgba(255,255,255,0.9)">© AEESS — Tous droits réservés</div>
+  </div>
+</footer>
+
+<!-- Modals: Login / Signup / Add Event -->
+<div id="modal-root" style="display:none"></div>
+
+<script>
+/* ---------- CONFIG SUPABASE ----------
+   Remplace ces valeurs par celles de ton projet Supabase
+   - SUPABASE_URL : https://xxxx.supabase.co
+   - SUPABASE_ANON_KEY : clé anon (public)
+-------------------------------------- */
+const SUPABASE_URL = "https://YOUR_SUPABASE_URL.supabase.co";
+const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+if (!SUPABASE_URL || !SUPABASE_KEY) {
+  console.warn('⚠️ Remplace SUPABASE_URL et SUPABASE_KEY dans le fichier avant usage.');
+}
+
+/* Initialise Supabase client */
+const supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* UTIL - afficher modal simple */
+function showModal(contentHtml){
+  const root = document.getElementById('modal-root');
+  root.innerHTML = `<div class="modal">${contentHtml}</div>`;
+  root.style.display = 'block';
+  root.querySelector('.modal').addEventListener('click', (e)=>{ if(e.target === e.currentTarget){ closeModal(); } });
+}
+function closeModal(){ const root=document.getElementById('modal-root'); root.style.display='none'; root.innerHTML=''; }
+
+/* ---------- AUTH UI (modal) ---------- */
+document.getElementById('btn-login').addEventListener('click', ()=> openAuthModal());
+document.getElementById('btn-join').addEventListener('click', ()=> openAuthModal(true));
+
+function openAuthModal(defaultToSignUp=false){
+  const html = `
+    <div class="card" style="max-width:480px;width:100%">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3>${defaultToSignUp ? 'Inscription' : 'Connexion' }</h3>
+        <button onclick="closeModal()" class="link-like">✕</button>
+      </div>
+      <div style="margin-top:8px">
+        <div id="auth-tabs" style="display:flex;gap:8px;margin-bottom:8px">
+          <button id="tab-login" class="btn" style="background:${defaultToSignUp ? '#fff' : 'var(--accent)'}; color:${defaultToSignUp ? 'var(--green)':'#fff'}">${defaultToSignUp ? 'Connexion' : 'Connexion'}</button>
+          <button id="tab-signup" class="btn" style="background:${defaultToSignUp ? 'var(--accent)':'#fff'}; color:${defaultToSignUp ? '#fff':'var(--green)'}">S'inscrire</button>
+        </div>
+
+        <div id="auth-area"></div>
+        <div style="margin-top:10px">
+          <small class="muted">Vous pouvez aussi utiliser Google si activé.</small>
+        </div>
+      </div>
+    </div>
+  `;
+  showModal(html);
+
+  // attach events
+  document.getElementById('tab-login').addEventListener('click', ()=> renderLogin());
+  document.getElementById('tab-signup').addEventListener('click', ()=> renderSignup());
+
+  // default
+  (defaultToSignUp) ? renderSignup() : renderLogin();
+}
+
+function renderLogin(){
+  const area = document.getElementById('auth-area');
+  area.innerHTML = `
+    <form id="login-ui">
+      <input type="email" id="ui-login-email" placeholder="Email" required>
+      <input type="password" id="ui-login-pass" placeholder="Mot de passe" required>
+      <button type="submit" class="btn">Se connecter</button>
+    </form>
+    <div style="margin-top:10px"><button id="google-login" class="btn" style="background:#db4437">Connexion Google</button></div>
+    <div style="margin-top:8px"><button id="open-signup" class="link-like">Pas encore membre ? S'inscrire</button></div>
+    <div id="auth-msg" style="margin-top:8px"></div>
+  `;
+  document.getElementById('login-ui').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const email=document.getElementById('ui-login-email').value;
+    const password=document.getElementById('ui-login-pass').value;
+    const {error, data} = await supabase.auth.signInWithPassword({email,password});
+    if(error){ document.getElementById('auth-msg').innerText = 'Erreur: ' + error.message; return; }
+    // connecté
+    closeModal(); await postLoginState();
+  });
+  document.getElementById('google-login').addEventListener('click', async ()=>{
+    // ouvrir OAuth (doit être configuré dans Supabase)
+    await supabase.auth.signInWithOAuth({provider:'google', options:{redirectTo:window.location.href}});
+  });
+  document.getElementById('open-signup').addEventListener('click', renderSignup);
+}
+
+function renderSignup(){
+  const area = document.getElementById('auth-area');
+  area.innerHTML = `
+    <form id="signup-ui">
+      <input type="text" id="ui-signup-name" placeholder="Nom complet" required>
+      <input type="email" id="ui-signup-email" placeholder="Email" required>
+      <input type="password" id="ui-signup-pass" placeholder="Mot de passe" required>
+      <button type="submit" class="btn">S'inscrire</button>
+    </form>
+    <div style="margin-top:10px"><button id="google-signup" class="btn" style="background:#db4437">S'inscrire avec Google</button></div>
+    <div id="auth-msg" style="margin-top:8px"></div>
+  `;
+  document.getElementById('signup-ui').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const name=document.getElementById('ui-signup-name').value;
+    const email=document.getElementById('ui-signup-email').value;
+    const password=document.getElementById('ui-signup-pass').value;
+    const {data,error} = await supabase.auth.signUp({email,password, options: {emailRedirectTo: window.location.href}});
+    if(error){ document.getElementById('auth-msg').innerText = 'Erreur: ' + error.message; return; }
+    // optional: create profile row
+    if(data && data.user){
+      await supabase.from('profiles').insert([{id: data.user.id, full_name: name}]);
+    }
+    document.getElementById('auth-msg').innerText = 'Inscription réussie. Vérifie ta boîte (si activé).';
+  });
+  document.getElementById('google-signup').addEventListener('click', async ()=>{
+    await supabase.auth.signInWithOAuth({provider:'google', options:{redirectTo:window.location.href}});
+  });
+}
+
+/* ---------- PUBLIC - fetch events and gallery ---------- */
+
+async function fetchEvents(){
+  const res = await supabase.from('events').select('*').order('event_date', {ascending:false}).limit(10);
+  if(res.error){ console.error(res.error); document.getElementById('news-list').innerHTML = '<p class="muted">Erreur chargement.</p>'; return; }
+  const events = res.data;
+  const newsEl = document.getElementById('news-list');
+  if(!events.length){ newsEl.innerHTML = '<p class="muted">Aucune actualité pour l’instant.</p>'; return; }
+  newsEl.innerHTML = '';
+  events.forEach(ev=>{
+    const date = ev.event_date ? new Date(ev.event_date).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'}) : '';
+    const div = document.createElement('div');
+    div.className='news-item';
+    div.innerHTML = `<div class="news-date"><span>${date.split(' ')[0]||''}</span><span>${(date.split(' ')[1]||'')}</span></div>
+      <div class="news-content"><h3>${ev.title}</h3><p>${ev.description||''}</p></div>`;
+    newsEl.appendChild(div);
+  });
+
+  // next event
+  const next = events.find(e => e.event_date && new Date(e.event_date) >= new Date());
+  const nextEl = document.getElementById('next-event');
+  if(next){ nextEl.innerHTML = `<div><strong>${next.title}</strong><p class="small muted">${new Date(next.event_date).toLocaleDateString()}</p></div>`; }
+  else { nextEl.innerHTML = '<p class="muted small">Aucun événement à venir</p>'; }
+}
+
+async function fetchEventsFull(){
+  const res = await supabase.from('events').select('*').order('event_date', {ascending:true});
+  const el = document.getElementById('events-list');
+  if(res.error){ el.innerHTML = '<p class="muted">Erreur chargement.</p>'; return; }
+  const events = res.data;
+  if(!events.length){ el.innerHTML = '<p class="muted">Aucun événement</p>'; return; }
+  el.innerHTML = '';
+  events.forEach(ev=>{
+    const d = ev.event_date ? new Date(ev.event_date).toLocaleDateString('fr-FR') : '—';
+    const box = document.createElement('div');
+    box.style.marginBottom='12px';
+    box.innerHTML = `<div class="news-item"><div class="news-date"><span>${ev.event_date?new Date(ev.event_date).getDate():''}</span><span>${ev.event_date?new Date(ev.event_date).toLocaleString('fr-FR',{month:'short'}).toUpperCase():' '}</span></div>
+      <div class="news-content"><h3>${ev.title}</h3><p>${ev.description||''}</p><p class="small muted">${ev.location||''} · ${d}</p></div></div>`;
+    el.appendChild(box);
+  });
+}
+
+/* Gallery */
+async function fetchGallery(){
+  // lister fichiers dans le bucket 'gallery' (supabase storage)
+  const {data, error} = await supabase.storage.from('gallery').list('', {limit:100, offset:0});
+  const el = document.getElementById('gallery-grid');
+  if(error){ el.innerHTML = '<p class="muted">Galerie indisponible</p>'; console.warn(error); return; }
+  if(!data.length){ el.innerHTML = '<p class="muted">Aucune photo</p>'; return; }
+  el.innerHTML = '';
+  for(const item of data){
+    const {publicURL} = supabase.storage.from('gallery').getPublicUrl(item.name);
+    const img = document.createElement('img');
+    img.src = publicURL;
+    el.appendChild(img);
+  }
+}
+
+/* ---------- CONTACT FORM ---------- */
+document.getElementById('contact-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const name = document.getElementById('contact-name').value.trim();
+  const email = document.getElementById('contact-email').value.trim();
+  const subject = document.getElementById('contact-subject').value.trim();
+  const message = document.getElementById('contact-message').value.trim();
+  if(!name||!email||!subject||!message){ alert('Remplis tous les champs'); return; }
+  const {error} = await supabase.from('messages').insert([{name,email,subject,message}]);
+  const res = document.getElementById('contact-res');
+  if(error){ res.innerText = 'Erreur envoi: ' + error.message; return; }
+  res.innerText = 'Message envoyé, merci !';
+  e.target.reset();
+});
+
+/* ---------- DASHBOARD: user state ---------- */
+async function postLoginState(){
+  const { data: { user } } = await supabase.auth.getUser();
+  if(!user){ return; }
+  // afficher dashboard
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('profile-name').innerText = user.user_metadata?.full_name || user.email;
+  document.getElementById('profile-fullname').innerText = user.user_metadata?.full_name || '—';
+  document.getElementById('profile-email').innerText = user.email;
+  // hide login button
+  document.getElementById('btn-login').style.display='none';
+  // load user's documents
+  loadMyDocs();
+}
+
+/* watch auth changes (persist session) */
+supabase.auth.onAuthStateChange(async (event, session) => {
+  if(session?.user) {
+    await postLoginState();
+  } else {
+    // logged out
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('btn-login').style.display='inline-block';
+  }
+});
+
+/* initial check */
+(async ()=>{
+  await fetchEvents();
+  await fetchEventsFull();
+  await fetchGallery();
+  const { data: { user } } = await supabase.auth.getUser();
+  if(user) await postLoginState();
+})();
+
+/* Logout */
+document.getElementById('btn-logout').addEventListener('click', async ()=>{
+  await supabase.auth.signOut();
+  alert('Déconnecté');
+  window.location.hash = '#home';
+});
+
+/* Upload document (dashboard) */
+document.getElementById('upload-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const title = document.getElementById('doc-title').value.trim();
+  const fileInput = document.getElementById('doc-file');
+  if(!title || !fileInput.files.length){ alert('Remplis le titre et choisis un fichier'); return; }
+  const file = fileInput.files[0];
+  const filename = `${Date.now()}_${file.name}`;
+  // upload to bucket 'documents'
+  const { data: uploadData, error: uploadError } = await supabase.storage.from('documents').upload(filename, file, { cacheControl: '3600', upsert: false });
+  if(uploadError){ alert('Erreur upload: ' + uploadError.message); console.error(uploadError); return; }
+  const { data: publicUrlData } = supabase.storage.from('documents').getPublicUrl(uploadData.path);
+  const { data: user } = await supabase.auth.getUser();
+  // insert record
+  const { error: insertErr } = await supabase.from('documents').insert([{ title, url: publicUrlData.publicUrl, storage_path: uploadData.path, uploaded_by: user.user.id }]);
+  if(insertErr){ alert('Erreur enregistrement document: '+insertErr.message); return; }
+  alert('Document uploadé avec succès');
+  e.target.reset();
+  loadMyDocs();
+});
+
+/* Load my documents */
+async function loadMyDocs(){
+  const { data: user } = await supabase.auth.getUser();
+  if(!user.user) { document.getElementById('my-docs').innerHTML='Connecte-toi'; return; }
+  const { data, error } = await supabase.from('documents').select('*').eq('uploaded_by', user.user.id).order('created_at', {ascending:false});
+  const el = document.getElementById('my-docs');
+  if(error){ el.innerHTML = 'Erreur: '+error.message; return; }
+  if(!data.length){ el.innerHTML = '<p class="muted small">Aucun document</p>'; return; }
+  const table = document.createElement('table'); table.className='table';
+  table.innerHTML = `<thead><tr><th>Titre</th><th>Date</th><th></th></tr></thead>`;
+  const tbody = document.createElement('tbody');
+  data.forEach(row=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${row.title}</td><td>${new Date(row.created_at).toLocaleString()}</td><td><a href="${row.url}" target="_blank">Télécharger</a></td>`;
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  el.innerHTML = ''; el.appendChild(table);
+}
+
+/* Help requests */
+document.getElementById('help-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const sub = document.getElementById('help-subject').value.trim();
+  const content = document.getElementById('help-content').value.trim();
+  if(!sub || !content){ alert('Formulaire incomplet'); return; }
+  const { data: user } = await supabase.auth.getUser();
+  const { error } = await supabase.from('help_requests').insert([{ user_id: user.user.id, subject: sub, content }]);
+  const msg = document.getElementById('help-res');
+  if(error){ msg.innerText = 'Erreur: '+error.message; return; }
+  msg.innerText = 'Demande envoyée.';
+  e.target.reset();
+});
+
+/* Add event (public propose) - opens modal */
+document.getElementById('btn-add-event').addEventListener('click', ()=> {
+  const html = `<div>
+    <h3>Proposer un événement</h3>
+    <form id="ev-form">
+      <input type="text" id="ev-title" placeholder="Titre" required>
+      <input type="date" id="ev-date" required>
+      <input type="text" id="ev-location" placeholder="Lieu">
+      <textarea id="ev-desc" rows="4" placeholder="Description"></textarea>
+      <button type="submit" class="btn">Envoyer</button>
+      <button type="button" class="link-like" onclick="closeModal()">Annuler</button>
+    </form>
+    <div id="ev-res" style="margin-top:8px"></div>
+  </div>`;
+  showModal(html);
+  document.getElementById('ev-form').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const title = document.getElementById('ev-title').value.trim();
+    const date = document.getElementById('ev-date').value;
+    const loc = document.getElementById('ev-location').value.trim();
+    const desc = document.getElementById('ev-desc').value.trim();
+    const { error } = await supabase.from('events').insert([{ title, event_date: date, location: loc, description: desc }]);
+    const res = document.getElementById('ev-res');
+    if(error){ res.innerText = 'Erreur: '+error.message; return; }
+    res.innerText = 'Événement proposé. Merci!';
+    // refresh lists
+    await fetchEvents();
+    await fetchEventsFull();
+    closeModal();
+  });
+});
+
+/* Upload gallery photo (dashboard quick) */
+document.getElementById('btn-upload-photo').addEventListener('click', ()=> {
+  const area = document.getElementById('upload-photo-area');
+  area.style.display = area.style.display === 'none' ? 'block' : 'none';
+});
+document.getElementById('gallery-upload-btn').addEventListener('click', async ()=>{
+  const fileIn = document.getElementById('gallery-file');
+  if(!fileIn.files.length){ alert('Choisis une photo'); return; }
+  const file = fileIn.files[0];
+  const name = `gallery/${Date.now()}_${file.name}`;
+  const { data, error } = await supabase.storage.from('gallery').upload(name, file);
+  if(error){ alert('Erreur upload: '+error.message); return; }
+  alert('Photo uploadée');
+  fileIn.value = '';
+  await fetchGallery();
+});
+
+/* When user clicks join button, open auth modal */
+document.getElementById('btn-join').addEventListener('click', ()=> openAuthModal(true));
+
+/* scroll events shortcut */
+document.getElementById('scroll-events').addEventListener('click', ()=> location.hash = '#events');
+
+/* Small utility: listen nav links */
+document.querySelectorAll('.navlink').forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    // allow anchor navigation
+  });
+});
+
+/* Re-fetch periodically (optionnal) */
+// setInterval(()=>{ fetchEvents(); fetchEventsFull(); fetchGallery(); }, 60000);
+
+</script>
 </body>
 </html>

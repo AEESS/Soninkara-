@@ -53,6 +53,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap; /* Permet aux éléments de passer à la ligne sur mobile */
         }
 
         .logo {
@@ -65,6 +66,9 @@
             list-style: none;
             display: flex;
             gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 10px; /* Ajout d'une marge sur les petits écrans */
         }
 
         .nav-links li a {
@@ -103,6 +107,7 @@
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--box-shadow);
+            flex-wrap: wrap;
         }
 
         .tab-btn {
@@ -196,7 +201,7 @@
             margin-bottom: 1rem;
         }
         
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
@@ -235,9 +240,59 @@
             font-size: 1.2rem;
             color: var(--primary-color);
         }
+
+        /* Notifications */
+        #notification-banner {
+            display: none;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            text-align: center;
+            background: var(--secondary-color);
+            padding: 10px;
+            z-index: 1000;
+            color: var(--dark-color);
+            font-weight: bold;
+            box-shadow: var(--box-shadow);
+        }
+
+        /* Media Queries pour la Responsabilité */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+                width: 100%;
+                margin-top: 1rem;
+            }
+            .nav-links li {
+                width: 100%;
+            }
+            .nav-links li a {
+                display: block;
+                padding: 10px 0;
+            }
+            .tab-btn {
+                font-size: 0.8rem;
+                padding: 10px 15px;
+            }
+            .member-area-container {
+                padding: 1rem;
+            }
+            .user-details {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
+    <div id="notification-banner">
+        <p>🔔 Une nouvelle demande d'aide a été postée !</p>
+    </div>
 
     <header>
         <div class="container">
@@ -290,6 +345,15 @@
                                     <input type="text" id="demande-sujet" placeholder="Sujet (ex: Cours de Mathématiques)" required>
                                 </div>
                                 <div class="form-group">
+                                    <select id="demande-filiere" required>
+                                        <option value="">Sélectionnez votre UFR/Filière</option>
+                                        <option value="UFR SJEJ">UFR SJEJ</option>
+                                        <option value="UFR LSH">UFR LSH</option>
+                                        <option value="UFR SEFS">UFR SEFS</option>
+                                        <option value="Autres">Autres</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <textarea id="demande-description" rows="4" placeholder="Description de votre demande" required></textarea>
                                 </div>
                                 <button type="submit" class="btn">Envoyer la demande</button>
@@ -297,6 +361,16 @@
                         </div>
                         <div class="section-content">
                             <h3>Demandes récentes</h3>
+                            <div class="form-group">
+                                <label for="filter-filiere">Filtrer par filière :</label>
+                                <select id="filter-filiere">
+                                    <option value="all">Toutes les filières</option>
+                                    <option value="UFR SJEJ">UFR SJEJ</option>
+                                    <option value="UFR LSH">UFR LSH</option>
+                                    <option value="UFR SEFS">UFR SEFS</option>
+                                    <option value="Autres">Autres</option>
+                                </select>
+                            </div>
                             <div id="demandes-list" class="list-container">
                                 </div>
                         </div>
@@ -336,7 +410,6 @@
                                 </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -362,6 +435,7 @@
         const logoutBtn = document.getElementById('logout-btn');
         const loadingMessage = document.getElementById('loading-message');
         const memberAreaContainer = document.querySelector('.member-area-container');
+        const notificationBanner = document.getElementById('notification-banner');
         
         // Tab system
         const tabBtns = document.querySelectorAll('.tab-btn');
@@ -375,17 +449,20 @@
                 tabContents.forEach(content => content.classList.remove('active'));
                 btn.classList.add('active');
                 document.getElementById(target).classList.add('active');
+
+                if (target === 'demandes') {
+                    loadDemandes(document.getElementById('filter-filiere').value);
+                } else if (target === 'partages') {
+                    loadPartages();
+                }
             });
         });
 
-        // Fonction de redirection
         function redirectToLogin() {
             window.location.href = 'index.html';
         }
 
-        // Fonction pour vérifier la session et afficher les informations de l'utilisateur
         async function checkSession() {
-            // Cacher le contenu et afficher le message de chargement
             memberAreaContainer.style.display = 'none';
             loadingMessage.style.display = 'block';
 
@@ -397,12 +474,8 @@
                     userName.textContent = user.user_metadata.full_name || 'Non spécifié';
                     userFiliere.textContent = user.user_metadata.filiere || 'Non spécifié';
                     
-                    // Révéler le contenu une fois chargé
                     loadingMessage.style.display = 'none';
                     memberAreaContainer.style.display = 'block';
-
-                    // Le reste des fonctions de chargement de contenu (demandes, réunions...) peut être appelé ici
-                    // Exemple : loadDemandes();
                     
                 } else {
                     redirectToLogin();
@@ -413,7 +486,6 @@
             }
         }
 
-        // Gérer la déconnexion
         logoutBtn.addEventListener('click', async (e) => {
             e.preventDefault();
             const { error } = await supabase.auth.signOut();
@@ -422,27 +494,25 @@
             }
         });
         
-        // Appeler la fonction au chargement du DOM pour vérifier la session
         document.addEventListener('DOMContentLoaded', checkSession);
 
         /* ------------------------------------------- */
         /* Fonctions pour les nouvelles fonctionnalités */
         /* ------------------------------------------- */
 
-        // Fonction pour gérer la soumission de demande d'aide
         const demandeForm = document.getElementById('demande-form');
         demandeForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const sujet = document.getElementById('demande-sujet').value;
+            const filiere = document.getElementById('demande-filiere').value;
             const description = document.getElementById('demande-description').value;
             const { data: { user } } = await supabase.auth.getSession();
 
-            // Insérer la demande dans une table 'demandes' de votre base de données Supabase
-            // CREATE TABLE demandes (id int, sujet text, description text, auteur_id uuid, created_at timestamp);
             const { error } = await supabase
                 .from('demandes')
                 .insert([{
                     sujet: sujet,
+                    filiere: filiere,
                     description: description,
                     auteur_id: user.id
                 }]);
@@ -453,23 +523,22 @@
             } else {
                 alert("Votre demande a été envoyée avec succès !");
                 demandeForm.reset();
-                // Recharger la liste des demandes
-                loadDemandes();
             }
         });
 
-        // Fonction pour charger et afficher les demandes
-        async function loadDemandes() {
+        const filterFiliere = document.getElementById('filter-filiere');
+
+        async function loadDemandes(filiereFilter = 'all') {
             const demandesList = document.getElementById('demandes-list');
-            demandesList.innerHTML = ''; // Nettoyer la liste
+            demandesList.innerHTML = ''; 
             
-            const { data, error } = await supabase
-                .from('demandes')
-                .select(`
-                    *,
-                    profiles:auteur_id (full_name)
-                `)
-                .order('created_at', { ascending: false });
+            let query = supabase.from('demandes').select(`*, profiles:auteur_id (full_name)`);
+
+            if (filiereFilter !== 'all') {
+                query = query.eq('filiere', filiereFilter);
+            }
+            
+            const { data, error } = await query.order('created_at', { ascending: false });
 
             if (error) {
                 console.error("Erreur lors du chargement des demandes:", error);
@@ -481,18 +550,21 @@
                     const item = document.createElement('div');
                     item.className = 'list-item';
                     item.innerHTML = `
-                        <h4>${demande.sujet}</h4>
+                        <h4>[${demande.filiere}] ${demande.sujet}</h4>
                         <p>${demande.description}</p>
                         <small>De : ${demande.profiles.full_name || 'Anonyme'}</small>
                     `;
                     demandesList.appendChild(item);
                 });
             } else {
-                demandesList.innerHTML = '<p>Aucune demande pour le moment.</p>';
+                demandesList.innerHTML = '<p>Aucune demande pour le moment dans cette filière.</p>';
             }
         }
 
-        // Fonction pour uploader un fichier
+        filterFiliere.addEventListener('change', (e) => {
+            loadDemandes(e.target.value);
+        });
+
         const uploadForm = document.getElementById('upload-form');
         uploadForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -505,8 +577,6 @@
                 return;
             }
 
-            // Utiliser Supabase Storage pour uploader le fichier
-            // Assurez-vous d'avoir un "Bucket" nommé "documents" dans Supabase Storage
             const filePath = `public/${user.id}/${Date.now()}_${file.name}`;
             const { error: uploadError } = await supabase.storage
                 .from('documents')
@@ -518,8 +588,6 @@
                 return;
             }
 
-            // Insérer une référence au fichier dans une table 'partages'
-            // CREATE TABLE partages (id int, titre text, url text, auteur_id uuid, created_at timestamp);
             const { error: dbError } = await supabase
                 .from('partages')
                 .insert([{
@@ -534,22 +602,17 @@
             } else {
                 alert("Fichier partagé avec succès !");
                 uploadForm.reset();
-                // Recharger la liste des partages
                 loadPartages();
             }
         });
 
-        // Fonction pour charger et afficher les partages
         async function loadPartages() {
             const partagesList = document.getElementById('partages-list');
-            partagesList.innerHTML = ''; // Nettoyer la liste
+            partagesList.innerHTML = ''; 
             
             const { data, error } = await supabase
                 .from('partages')
-                .select(`
-                    *,
-                    profiles:auteur_id (full_name)
-                `)
+                .select(`*, profiles:auteur_id (full_name)`)
                 .order('created_at', { ascending: false });
 
             if (error) {
@@ -573,10 +636,21 @@
             }
         }
         
-        // Appeler les fonctions de chargement quand l'utilisateur navigue vers les onglets
-        document.getElementById('demandes-tab').addEventListener('click', loadDemandes);
-        document.getElementById('partages-tab').addEventListener('click', loadPartages);
-
+        supabase
+            .channel('demandes') 
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'demandes' }, (payload) => {
+                notificationBanner.style.display = 'block';
+                
+                setTimeout(() => {
+                    notificationBanner.style.display = 'none';
+                }, 5000);
+                
+                if (document.getElementById('demandes').classList.contains('active')) {
+                    loadDemandes(document.getElementById('filter-filiere').value);
+                }
+                console.log('Nouvelle demande reçue:', payload);
+            })
+            .subscribe();
     </script>
 </body>
 </html>

@@ -1,935 +1,506 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEESS - Association des Étudiants Soninké à l'UGB</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #1a4b2e;
-            --secondary-color: #e9b44c;
-            --accent-color: #9b2915;
-            --light-color: #f9f9f9;
-            --dark-color: #333;
-            --transition: all 0.3s ease;
-            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            --border-radius: 8px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--dark-color);
-            background-color: var(--light-color);
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        /* Header */
-        #header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(26, 75, 46, 0.95);
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--secondary-color);
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--light-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary-color);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--secondary-color);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background-color: var(--light-color);
-            margin: 2px 0;
-            transition: var(--transition);
-        }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--light-color);
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
-                        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80') no-repeat center center/cover;
-            z-index: -1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s ease forwards;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            animation-delay: 0.3s;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-            animation-delay: 0.6s;
-        }
-
-        .hero .btn {
-            margin: 0 10px;
-            animation-delay: 0.9s;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--secondary-color);
-            color: var(--dark-color);
-            text-decoration: none;
-            border-radius: var(--border-radius);
-            font-weight: bold;
-            transition: var(--transition);
-            border: 2px solid var(--secondary-color);
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: transparent;
-            color: var(--secondary-color);
-            transform: translateY(-3px);
-            box-shadow: var(--box-shadow);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--secondary-color);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--secondary-color);
-            color: var(--dark-color);
-        }
-
-        /* Sections communes */
-        section {
-            padding: 5rem 0;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--primary-color);
-            position: relative;
-            display: inline-block;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--secondary-color);
-        }
-
-        /* Missions */
-        .missions {
-            background-color: #fff;
-        }
-
-        .mission-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .mission-card {
-            padding: 2rem;
-            background-color: var(--light-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .mission-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .mission-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .mission-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .mission-card h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        /* Espace Membre */
-        .members {
-            background: linear-gradient(rgba(249, 249, 249, 0.9), rgba(249, 249, 249, 0.9)),
-                        url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80') no-repeat center center/cover;
-            background-attachment: fixed;
-        }
-
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-            background-color: white;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-        }
-
-        .tab-btn {
-            padding: 15px 30px;
-            background-color: #f1f1f1;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: var(--transition);
-            flex: 1;
-        }
-
-        .tab-btn.active {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .tab-content {
-            max-width: 500px;
-            margin: 0 auto;
-            display: none;
-            background: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        input, textarea {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-family: inherit;
-            transition: var(--transition);
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(26, 75, 46, 0.2);
-        }
-
-        /* Styles pour l'espace membre */
-        .member-area {
-            display: none;
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-        }
-
-        .user-info {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 2rem;
-        }
-
-        .user-info h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .user-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-
-        .user-detail {
-            padding: 1rem;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .logout-btn {
-            background: #dc3545;
-            border-color: #dc3545;
-        }
-
-        .logout-btn:hover {
-            background: transparent;
-            color: #dc3545;
-        }
-
-        .password-toggle {
-            position: relative;
-        }
-
-        .password-toggle i {
-            position: absolute;
-            right: 15px;
-            top: 42px;
-            cursor: pointer;
-            color: #777;
-        }
-
-        .message {
-            padding: 10px;
-            margin: 15px 0;
-            border-radius: 8px;
-            text-align: center;
-            display: none;
-        }
-
-        .success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        /* Contact */
-        .contact {
-            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
-                        url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80') no-repeat center center/cover;
-            background-attachment: fixed;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark-color);
-            color: var(--light-color);
-            padding: 2rem 0;
-            text-align: center;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: var(--secondary-color);
-            color: var(--dark-color);
-            border-radius: 50%;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            transform: translateY(-3px);
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Modal de confirmation */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .modal .btn {
-            margin-top: 1rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background-color: var(--primary-color);
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                transition: var(--transition);
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .nav-links li {
-                margin: 1.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .mission-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .tabs {
-                flex-direction: column;
-            }
-
-            .members, .contact {
-                background-attachment: scroll;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header id="header">
-        <div class="container">
-            <nav class="navbar">
-                <div class="logo">AEESS</div>
-                <ul class="nav-links">
-                    <li><a href="#accueil">Accueil</a></li>
-                    <li><a href="#missions">Nos Missions</a></li>
-                    <li><a href="espace.html">Espace Membre</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <div class="hamburger"><span></span><span></span><span></span></div>
-            </nav>
-        </div>
-    </header>
-
-    <section id="accueil" class="hero">
-        <div class="container hero-content">
-            <h1 class="fade-in">Association des Étudiants Soninké à l'UGB</h1>
-            <p class="fade-in">Promouvoir la culture soninké et accompagner la réussite académique.</p>
-            <div class="fade-in">
-                <a href="#membres" class="btn">Rejoindre</a>
-                <a href="#missions" class="btn btn-outline">Découvrir</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="missions" class="missions">
-        <div class="container text-center">
-            <h2 class="fade-in">Nos Missions</h2>
-            <div class="mission-grid">
-                <div class="mission-card fade-in">
-                    <i class="fas fa-book-open mission-icon"></i>
-                    <h3>Soutien Académique</h3>
-                    <p>Tutorat et ressources pédagogiques pour favoriser la réussite de tous les membres.</p>
-                </div>
-                <div class="mission-card fade-in">
-                    <i class="fas fa-users mission-icon"></i>
-                    <h3>Solidarité</h3>
-                    <p>Réseau d'entraide entre étudiants pour faciliter l'intégration et le soutien mutuel.</p>
-                </div>
-                <div class="mission-card fade-in">
-                    <i class="fas fa-microphone mission-icon"></i>
-                    <h3>Promotion Culturelle</h3>
-                    <p>Événements et activités culturelles pour valoriser notre riche héritage soninké.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="membres" class="members">
-        <div class="container text-center">
-            <h2 class="fade-in">Espace Membre</h2>
-            
-            <div id="auth-forms">
-                <div class="tabs fade-in">
-                    <button class="tab-btn active" data-tab="connexion">Connexion</button>
-                    <button class="tab-btn" data-tab="inscription">Inscription</button>
-                </div>
-                <div id="connexion" class="tab-content active">
-                    <div class="message" id="login-message"></div>
-                    <form id="login-form">
-                        <input type="email" id="login-email" placeholder="Email" required>
-                        <div class="password-toggle">
-                            <input type="password" id="login-password" placeholder="Mot de passe" required>
-                            <i class="fas fa-eye" id="toggle-login-password"></i>
-                        </div>
-                        <button type="submit" class="btn">Se connecter</button>
-                    </form>
-                </div>
-                <div id="inscription" class="tab-content">
-                    <div class="message" id="register-message"></div>
-                    <form id="register-form">
-                        <input type="text" id="register-name" placeholder="Nom complet" required>
-                        <input type="email" id="register-email" placeholder="Email" required>
-                        <div class="password-toggle">
-                            <input type="password" id="register-password" placeholder="Mot de passe" required>
-                            <i class="fas fa-eye" id="toggle-register-password"></i>
-                        </div>
-                        <div class="password-toggle">
-                            <input type="password" id="confirm-password" placeholder="Confirmer le mot de passe" required>
-                            <i class="fas fa-eye" id="toggle-confirm-password"></i>
-                        </div>
-                        <input type="text" id="register-filiere" placeholder="Filière" required>
-                        <button type="submit" class="btn">S'inscrire</button>
-                        <a href="#" id="forgot-password-link">Mot de passe oublié ?</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact">
-        <div class="container text-center">
-            <h2 class="fade-in">Contact</h2>
-            <form id="contact-form" class="fade-in">
-                <input type="text" id="contact-name" placeholder="Nom" required>
-                <input type="email" id="contact-email" placeholder="Email" required>
-                <input type="text" id="contact-subject" placeholder="Sujet" required>
-                <textarea id="contact-message" rows="5" placeholder="Message" required></textarea>
-                <button type="submit" class="btn">Envoyer</button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <p>&copy; 2023 AEESS - Association des Étudiants Soninké à l'UGB</p>
-        </div>
-    </footer>
-
-    <div id="confirmation-modal" class="modal">
-        <div class="modal-content">
-            <h3 id="modal-title">Opération réussie</h3>
-            <p id="modal-message">Votre action a été effectuée avec succès.</p>
-            <button class="btn" id="modal-close">Fermer</button>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        // Initialisation de Supabase
-        const supabaseUrl = 'https://oqpbotaerbpcmwffsyjf.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcGJvdGFlcmJwY213ZmZzeWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMzE1NDgsImV4cCI6MjA3MzgwNzU0OH0.iY7VX-yDdtAL75hjwle_xd5Ge3LhcEAd4DlXz1dN5PA';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-        // Éléments du DOM
-        const authForms = document.getElementById('auth-forms');
-        const loginForm = document.getElementById('login-form');
-        const registerForm = document.getElementById('register-form');
-        const loginMessage = document.getElementById('login-message');
-        const registerMessage = document.getElementById('register-message');
-        
-        // Menu mobile
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-        
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active');
-        });
-
-        // Tabs system
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
-        
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const target = btn.dataset.tab;
-                tabBtns.forEach(b => b.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(target).classList.add('active');
-            });
-        });
-
-        // Scroll animations
-        const fadeElems = document.querySelectorAll('.fade-in, section');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
-        
-        fadeElems.forEach(elem => {
-            observer.observe(elem);
-        });
-
-        // Modal functions
-        const modal = document.getElementById('confirmation-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalMessage = document.getElementById('modal-message');
-        const modalClose = document.getElementById('modal-close');
-        
-        function showModal(title, message) {
-            modalTitle.textContent = title;
-            modalMessage.textContent = message;
-            modal.style.display = 'flex';
-        }
-        
-        modalClose.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-        
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        // Toggle password visibility
-        document.getElementById('toggle-login-password').addEventListener('click', function() {
-            togglePassword('login-password', this);
-        });
-        
-        document.getElementById('toggle-register-password').addEventListener('click', function() {
-            togglePassword('register-password', this);
-        });
-        
-        document.getElementById('toggle-confirm-password').addEventListener('click', function() {
-            togglePassword('confirm-password', this);
-        });
-        
-        function togglePassword(inputId, icon) {
-            const passwordInput = document.getElementById(inputId);
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-        
-        // Fonction utilitaire pour afficher les messages
-        function showMessage(element, text, type) {
-            element.textContent = text;
-            element.className = `message ${type}`;
-            element.style.display = 'block';
-            setTimeout(() => {
-                element.style.display = 'none';
-            }, 5000);
-        }
-
-        // Gestion de l'inscription
-        registerForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const name = document.getElementById('register-name').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-            const filiere = document.getElementById('register-filiere').value;
-            
-            // Validation
-            if (!name || !email || !password || !confirmPassword || !filiere) {
-                showMessage(registerMessage, 'Veuillez remplir tous les champs', 'error');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                showMessage(registerMessage, 'Les mots de passe ne correspondent pas', 'error');
-                return;
-            }
-            
-            if (password.length < 6) {
-                showMessage(registerMessage, 'Le mot de passe doit contenir au moins 6 caractères', 'error');
-                return;
-            }
-            
-            try {
-                const { error } = await supabase.auth.signUp({
-                    email: email,
-                    password: password,
-                    options: {
-                        data: {
-                            full_name: name,
-                            filiere: filiere
-                        }
-                    }
-                });
-                
-                if (error) {
-                    showMessage(registerMessage, error.message, 'error');
-                    return;
-                }
-                
-                showMessage(registerMessage, 'Inscription réussie! Vous pouvez maintenant vous connecter.', 'success');
-                registerForm.reset();
-                
-                setTimeout(() => {
-                    tabBtns[0].click();
-                    showMessage(loginMessage, 'Vous pouvez maintenant vous connecter', 'success');
-                }, 2000);
-                
-            } catch (error) {
-                showMessage(registerMessage, 'Une erreur est survenue lors de l\'inscription', 'error');
-                console.error('Erreur d\'inscription:', error);
-            }
-        });
-        
-        // Gestion de la connexion
-        loginForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            
-            if (!email || !password) {
-                showMessage(loginMessage, 'Veuillez remplir tous les champs', 'error');
-                return;
-            }
-            
-            try {
-                const { data, error } = await supabase.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
-                
-                if (error) {
-                    showMessage(loginMessage, error.message, 'error');
-                    return;
-                }
-
-                // Gérer le mot de passe oublié
-const forgotPasswordLink = document.getElementById('forgot-password-link');
-
-forgotPasswordLink.addEventListener('click', async function(e) {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-
-    if (!email) {
-        showMessage(loginMessage, 'Veuillez entrer votre email pour réinitialiser le mot de passe.', 'error');
-        return;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espace - AEESS Soninkara UGB</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* 🎨 Couleurs officielles AEESS */
+    :root {
+      --vert-principal: #3CA64A;   /* vert du logo */
+      --vert-fonce: #2C7034;       /* variante foncée */
+      --blanc: #FFFFFF;
+      --noir: #000000;
+      --gris-clair: #f8f8f8;
+      --transition: all 0.3s ease;
+      --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      --border-radius: 8px;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Open Sans', Arial, sans-serif;
+      background: var(--gris-clair);
+      color: var(--noir);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      color: var(--vert-fonce);
+    }
+
+    /* 🟩 Header */
+    header {
+      background: var(--vert-principal);
+      color: var(--blanc);
+      text-align: center;
+      padding: 1.5rem 1rem;
+      box-shadow: var(--box-shadow);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin: 0.5rem 0 0;
+      font-style: italic;
+    }
+
+    /* 🔗 Navigation */
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      background: var(--vert-fonce);
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--blanc);
+      font-weight: bold;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .nav-btn:hover,
+    .nav-btn:focus-visible {
+      background: var(--vert-principal);
+      outline: none;
+    }
+    
+    .logout-btn {
+        background: none;
+        border: 2px solid #fff;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        margin: 0.5rem 1rem;
+    }
+    .logout-btn:hover {
+        background: #fff;
+        color: var(--vert-fonce);
     }
 
-    try {
-        const { error } = await supabase.auth.resetPasswordForEmail(email);
+    /* 📦 Contenu principal */
+    main {
+      flex: 1;
+      max-width: 1100px;
+      margin: 2rem auto;
+      background: var(--blanc);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    /* 🟢 Onglets */
+    .tab-list {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 0.7rem 1.2rem;
+      border: 2px solid var(--vert-principal);
+      background: var(--blanc);
+      color: var(--vert-fonce);
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .tab-btn[aria-selected="true"] {
+      background: var(--vert-principal);
+      color: var(--blanc);
+    }
+
+    .tab-btn:focus-visible {
+      outline: 2px solid var(--vert-principal);
+      outline-offset: 2px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      border-left: 4px solid var(--vert-principal);
+      padding-left: 1rem;
+    }
+
+    .user-info, .section-content {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        margin-bottom: 2rem;
+    }
+
+    .user-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+    
+    .list-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .list-item {
+        background: white;
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    input, textarea, select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-family: inherit;
+    }
+    
+    .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        background-color: var(--vert-principal);
+        color: #fff;
+        text-decoration: none;
+        border-radius: var(--border-radius);
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: 2px solid var(--vert-principal);
+        cursor: pointer;
+    }
+
+    /* ⚫ Footer */
+    footer {
+      background: var(--noir);
+      color: var(--blanc);
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+    <header>
+    <h1>Association des Élèves et Étudiants Soninké - UGB</h1>
+    <p><em>Soninkara djiké na rêmou na</em></p>
+  </header>
+
+    <nav>
+    <button class="nav-btn" data-tab="presentation">Présentation</button>
+    <button class="nav-btn" data-tab="demandes">Demandes d'Aide</button>
+    <button class="nav-btn" data-tab="partages">Espace de Partage</button>
+    <button class="nav-btn" id="logout-btn">Se déconnecter</button>
+  </nav>
+
+    <main>
+    <h2 style="display: none;">Espace AEESS</h2>
+
+        <div role="tablist" class="tab-list" style="display: none;">
+      <button role="tab" id="tab-1" class="tab-btn" aria-selected="true" aria-controls="content-1" tabindex="0">Présentation</button>
+      <button role="tab" id="tab-2" class="tab-btn" aria-selected="false" aria-controls="content-2" tabindex="-1">Actualités</button>
+      <button role="tab" id="tab-3" class="tab-btn" aria-selected="false" aria-controls="content-3" tabindex="-1">Documents</button>
+    </div>
+    
+    <div id="loading-message" style="text-align: center; font-size: 1.5rem;">Chargement...</div>
+    <div id="content-container" style="display: none;">
+        
+        <section id="demandes" class="tab-content active" aria-labelledby="tab-demandes">
+            <h2>Demander de l'aide</h2>
+            <div class="section-content">
+                <h3>Poser une question ou demander un cours</h3>
+                <form id="demande-form">
+                    <div class="form-group">
+                        <input type="text" id="demande-sujet" placeholder="Sujet (ex: Cours de Mathématiques)" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="demande-filiere" required>
+                            <option value="">Sélectionnez votre UFR/Filière</option>
+                            <option value="UFR SJEJ">UFR SJEJ</option>
+                            <option value="UFR LSH">UFR LSH</option>
+                            <option value="UFR SEFS">UFR SEFS</option>
+                            <option value="Autres">Autres</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="demande-description" rows="4" placeholder="Description de votre demande" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Envoyer la demande</button>
+                </form>
+            </div>
+            <div class="section-content">
+                <h3>Demandes récentes</h3>
+                <div class="form-group">
+                    <label for="filter-filiere">Filtrer par filière :</label>
+                    <select id="filter-filiere">
+                        <option value="all">Toutes les filières</option>
+                        <option value="UFR SJEJ">UFR SJEJ</option>
+                        <option value="UFR LSH">UFR LSH</option>
+                        <option value="UFR SEFS">UFR SEFS</option>
+                        <option value="Autres">Autres</option>
+                    </select>
+                </div>
+                <div id="demandes-list" class="list-container">
+                </div>
+            </div>
+        </section>
+
+        <section id="partages" class="tab-content" aria-labelledby="tab-partages">
+            <h2>Espace de Partage</h2>
+            <div class="section-content">
+                <h3>Télécharger un document ou une image</h3>
+                <form id="upload-form">
+                    <div class="form-group">
+                        <input type="file" id="file-upload" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="file-title" placeholder="Titre du document" required>
+                    </div>
+                    <button type="submit" class="btn">Télécharger</button>
+                </form>
+            </div>
+            <div class="section-content">
+                <h3>Documents partagés</h3>
+                <div id="partages-list" class="list-container">
+                </div>
+            </div>
+        </section>
+        
+    </div>
+  </main>
+
+    <footer>
+    <p>&copy; 2025 AEESS - Soninkara UGB | Tous droits réservés</p>
+  </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Initialisation de Supabase
+    const supabaseUrl = 'https://oqpbotaerbpcmwffsyjf.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcGJvdGFlcmJwY213ZmZzeWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMzE1NDgsImV4cCI6MjA3MzgwNzU0OH0.iY7VX-yDdtAL75hjwle_xd5Ge3LhcEAd4DlXz1dN5PA';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const logoutBtn = document.getElementById('logout-btn');
+    const loadingMessage = document.getElementById('loading-message');
+    const contentContainer = document.getElementById('content-container');
+
+    function showTab(tabId) {
+        tabContents.forEach(content => content.style.display = 'none');
+        const activeContent = document.getElementById(tabId);
+        if (activeContent) {
+            activeContent.style.display = 'block';
+        }
+    }
+    
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const targetTab = btn.dataset.tab;
+            if (targetTab) {
+                showTab(targetTab);
+            }
+        });
+    });
+    
+    function redirectToLogin() {
+        window.location.href = 'index.html';
+    }
+
+    async function checkSession() {
+        loadingMessage.style.display = 'block';
+        contentContainer.style.display = 'none';
+
+        try {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                loadingMessage.style.display = 'none';
+                contentContainer.style.display = 'block';
+                showTab('demandes'); // Afficher l'onglet Demandes par défaut
+                loadDemandes('all');
+                loadPartages();
+            } else {
+                redirectToLogin();
+            }
+        } catch (error) {
+            console.error("Erreur de session:", error);
+            redirectToLogin();
+        }
+    }
+    
+    logoutBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const { error } = await supabase.auth.signOut();
+        if (!error) {
+            redirectToLogin();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', checkSession);
+
+    /* ------------------------------------------- */
+    /* Fonctions pour les nouvelles fonctionnalités */
+    /* ------------------------------------------- */
+
+    const demandeForm = document.getElementById('demande-form');
+    demandeForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const sujet = document.getElementById('demande-sujet').value;
+        const filiere = document.getElementById('demande-filiere').value;
+        const description = document.getElementById('demande-description').value;
+        const { data: { session } } = await supabase.auth.getSession();
+        const user = session?.user;
+
+        const { error } = await supabase
+            .from('demandes')
+            .insert([{
+                sujet: sujet,
+                filiere: filiere,
+                description: description,
+                auteur_id: user.id
+            }]);
 
         if (error) {
-            showMessage(loginMessage, error.message, 'error');
+            console.error("Erreur lors de l'envoi de la demande:", error);
+            alert("Erreur lors de l'envoi de la demande.");
+        } else {
+            alert("Votre demande a été envoyée avec succès !");
+            demandeForm.reset();
+        }
+    });
+
+    const filterFiliere = document.getElementById('filter-filiere');
+
+    async function loadDemandes(filiereFilter = 'all') {
+        const demandesList = document.getElementById('demandes-list');
+        demandesList.innerHTML = '';
+        
+        let query = supabase.from('demandes').select(`*, profiles:auteur_id (full_name)`);
+
+        if (filiereFilter !== 'all') {
+            query = query.eq('filiere', filiereFilter);
+        }
+        
+        const { data, error } = await query.order('created_at', { ascending: false });
+
+        if (error) {
+            console.error("Erreur lors du chargement des demandes:", error);
             return;
         }
 
-        showMessage(loginMessage, 'Un email de réinitialisation a été envoyé à votre adresse.', 'success');
-
-    } catch (error) {
-        showMessage(loginMessage, 'Une erreur est survenue lors de la demande de réinitialisation.', 'error');
-        console.error('Erreur de réinitialisation:', error);
+        if (data.length > 0) {
+            data.forEach(demande => {
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                item.innerHTML = `
+                    <h4>[${demande.filiere}] ${demande.sujet}</h4>
+                    <p>${demande.description}</p>
+                    <small>De : ${demande.profiles?.full_name || 'Anonyme'}</small>
+                `;
+                demandesList.appendChild(item);
+            });
+        } else {
+            demandesList.innerHTML = '<p>Aucune demande pour le moment dans cette filière.</p>';
+        }
     }
-});
-                // Redirection vers la page espace.html après connexion réussie
-                window.location.href = 'espace.html';
-                
-            } catch (error) {
-                showMessage(loginMessage, 'Une erreur est survenue lors de la connexion', 'error');
-                console.error('Erreur de connexion:', error);
-            }
-        });
+
+    filterFiliere.addEventListener('change', (e) => {
+        loadDemandes(e.target.value);
+    });
+
+    const uploadForm = document.getElementById('upload-form');
+    uploadForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const file = document.getElementById('file-upload').files[0];
+        const title = document.getElementById('file-title').value;
+        const { data: { session } } = await supabase.auth.getSession();
+        const user = session?.user;
         
-        // La déconnexion est maintenant gérée dans espace.html
-    </script>
+        if (!file) {
+            alert("Veuillez sélectionner un fichier.");
+            return;
+        }
+
+        const filePath = `${user.id}/${Date.now()}_${file.name}`;
+        const { error: uploadError } = await supabase.storage
+            .from('documents')
+            .upload(filePath, file);
+
+        if (uploadError) {
+            console.error("Erreur lors du téléchargement:", uploadError);
+            alert("Erreur lors du téléchargement du fichier: " + uploadError.message);
+            return;
+        }
+
+        const { error: dbError } = await supabase
+            .from('partages')
+            .insert([{
+                titre: title,
+                url: `${supabaseUrl}/storage/v1/object/public/documents/${filePath}`,
+                auteur_id: user.id
+            }]);
+
+        if (dbError) {
+            console.error("Erreur lors de l'enregistrement de la référence:", dbError);
+            alert("Fichier téléchargé, mais erreur d'enregistrement de la référence.");
+        } else {
+            alert("Fichier partagé avec succès !");
+            uploadForm.reset();
+            loadPartages();
+        }
+    });
+
+    async function loadPartages() {
+        const partagesList = document.getElementById('partages-list');
+        partagesList.innerHTML = '';
+        
+        const { data, error } = await supabase
+            .from('partages')
+            .select(`*, profiles:auteur_id (full_name)`)
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            console.error("Erreur lors du chargement des partages:", error);
+            return;
+        }
+
+        if (data.length > 0) {
+            data.forEach(partage => {
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                item.innerHTML = `
+                    <h4>${partage.titre}</h4>
+                    <p><a href="${partage.url}" target="_blank">Voir le document</a></p>
+                    <small>De : ${partage.profiles?.full_name || 'Anonyme'}</small>
+                `;
+                partagesList.appendChild(item);
+            });
+        } else {
+            partagesList.innerHTML = '<p>Aucun document partagé pour le moment.</p>';
+        }
+    }
+  </script>
 </body>
 </html>

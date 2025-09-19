@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEESS - Connexion</title>
+    <title>AEESS - Association des Élèves et Étudiants Soninké</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -17,482 +17,656 @@
             --border-radius: 8px;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light-color);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        * {
             margin: 0;
-        }
-
-        .auth-container {
-            background: white;
-            padding: 2.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            text-align: center;
-            width: 90%;
-            max-width: 450px;
-            position: relative;
-        }
-
-        .auth-container h1 {
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-            font-size: 1.8rem;
-        }
-
-        .auth-container p {
-            color: #777;
-            margin-bottom: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-            text-align: left;
-            position: relative;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-family: inherit;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(26, 75, 46, 0.2);
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
         }
 
-        .password-toggle {
-            position: absolute;
-            right: 12px;
-            top: 38px;
-            cursor: pointer;
-            color: #777;
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
         }
 
         .btn {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: bold;
+            padding: 0.6rem 1.2rem;
             border-radius: var(--border-radius);
+            font-weight: bold;
             cursor: pointer;
             transition: var(--transition);
-            position: relative;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .btn:hover {
+        .btn-outline {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #2a6b46;
+            border-color: #2a6b46;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, #1a4b2e 0%, #2a6b46 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-secondary {
             background-color: var(--secondary-color);
             color: var(--dark-color);
+            border: 2px solid var(--secondary-color);
         }
 
-        .btn:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
+        .btn-secondary:hover {
+            background-color: #d9a43d;
+            border-color: #d9a43d;
         }
 
-        .btn-loading .btn-text {
-            visibility: hidden;
-            opacity: 0;
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background-color: white;
         }
 
-        .btn-loading::after {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-            border: 3px solid transparent;
-            border-top-color: #ffffff;
-            border-radius: 50%;
-            animation: button-loading-spinner 1s ease infinite;
-        }
-
-        @keyframes button-loading-spinner {
-            from {
-                transform: rotate(0turn);
-            }
-            to {
-                transform: rotate(1turn);
-            }
-        }
-
-        .auth-switch {
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-        }
-
-        .auth-switch a {
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
             color: var(--primary-color);
-            text-decoration: none;
-            font-weight: bold;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--light-color);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
             transition: var(--transition);
         }
 
-        .auth-switch a:hover {
-            text-decoration: underline;
+        .feature-card:hover {
+            transform: translateY(-5px);
         }
 
-        #auth-message {
-            margin-bottom: 1rem;
-            padding: 10px;
-            border-radius: var(--border-radius);
-            color: #fff;
-            display: none;
-            font-weight: bold;
-            text-align: left;
-        }
-
-        #auth-message.success {
-            background-color: #28a745;
-        }
-
-        #auth-message.error {
-            background-color: #dc3545;
-        }
-        
-        .hidden {
-            display: none;
-        }
-
-        .password-requirements {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 0.5rem;
-            text-align: left;
-        }
-
-        .requirement {
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(26, 75, 46, 0.1);
+            border-radius: 50%;
             display: flex;
+            justify-content: center;
             align-items: center;
-            margin-bottom: 0.2rem;
+            margin: 0 auto 1.5rem;
+            color: var(--primary-color);
+            font-size: 1.5rem;
         }
 
-        .requirement i {
-            margin-right: 0.5rem;
-            font-size: 0.7rem;
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
         }
 
-        .requirement.met {
-            color: #28a745;
+        /* About Section */
+        .about {
+            padding: 5rem 0;
+            background-color: #f0f7f2;
         }
 
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .about-image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #1a4b2e, #2a6b46);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .about-text h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Events Section */
+        .events {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .event-image {
+            height: 200px;
+            background: linear-gradient(45deg, #e9b44c, #d9a43c);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+        }
+
+        .event-date {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Footer */
         footer {
-            margin-top: 2rem;
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #444;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
             text-align: center;
-            color: #777;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #ccc;
             font-size: 0.9rem;
+        }
+
+        /* Mobile Navigation */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--dark-color);
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: white;
+                box-shadow: var(--box-shadow);
+                transition: var(--transition);
+                flex-direction: column;
+                padding: 2rem;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .auth-buttons {
+                margin-top: 2rem;
+                flex-direction: column;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
         }
 
         @media (max-width: 480px) {
-            .auth-container {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .feature-card, .event-card {
                 padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="auth-container">
-        <div id="auth-message"></div>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">AE</div>
+                <div class="logo-text">AEESS</div>
+            </div>
 
-        <div id="login-form">
-            <h1>Connexion</h1>
-            <p>Accédez à votre espace membre.</p>
-            <form id="login-submit">
-                <div class="form-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" required autocomplete="email">
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <nav id="nav">
+                <ul>
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#about">À propos</a></li>
+                    <li><a href="#events">Événements</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Connexion</a>
+                    <a href="login.html#register" class="btn btn-primary">Inscription</a>
                 </div>
-                <div class="form-group">
-                    <label for="login-password">Mot de passe</label>
-                    <input type="password" id="login-password" required autocomplete="current-password">
-                    <i class="fas fa-eye password-toggle" id="login-password-toggle"></i>
-                </div>
-                <button type="submit" class="btn" id="login-button">
-                    <span class="btn-text">Se connecter</span>
-                </button>
-            </form>
-            <div class="auth-switch">
-                Pas encore membre ? <a href="#" id="show-register">S'inscrire</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="container hero-content">
+            <h1>Association des Élèves et Étudiants Soninké</h1>
+            <p>Une communauté unie pour promouvoir l'éducation, la culture et l'entraide parmi les étudiants Soninké.</p>
+            <div class="hero-buttons">
+                <a href="login.html#register" class="btn btn-secondary">Rejoindre l'AEESS</a>
+                <a href="#about" class="btn btn-outline">En savoir plus</a>
             </div>
         </div>
+    </section>
 
-        <div id="register-form" class="hidden">
-            <h1>Inscription</h1>
-            <p>Créez votre compte AEESS.</p>
-            <form id="register-submit">
-                <div class="form-group">
-                    <label for="register-name">Nom complet</label>
-                    <input type="text" id="register-name" required autocomplete="name">
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Nos Objectifs</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Éducation</h3>
+                    <p>Promouvoir l'excellence académique et fournir un soutien éducatif à nos membres.</p>
                 </div>
-                <div class="form-group">
-                    <label for="register-email">Email</label>
-                    <input type="email" id="register-email" required autocomplete="email">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Communauté</h3>
+                    <p>Créer un réseau solidaire pour les étudiants Soninké et favoriser l'entraide.</p>
                 </div>
-                <div class="form-group">
-                    <label for="register-password">Mot de passe</label>
-                    <input type="password" id="register-password" required autocomplete="new-password">
-                    <i class="fas fa-eye password-toggle" id="register-password-toggle"></i>
-                    <div class="password-requirements">
-                        <div class="requirement" id="req-length">
-                            <i class="fas fa-circle"></i> Au moins 8 caractères
-                        </div>
-                        <div class="requirement" id="req-uppercase">
-                            <i class="fas fa-circle"></i> Au moins une majuscule
-                        </div>
-                        <div class="requirement" id="req-number">
-                            <i class="fas fa-circle"></i> Au moins un chiffre
-                        </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-monument"></i>
+                    </div>
+                    <h3>Culture</h3>
+                    <p>Préserver et promouvoir la riche culture et les traditions Soninké.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container about-content">
+            <div class="about-image">
+                <div class="about-image-placeholder">
+                    <i class="fas fa-university"></i>
+                </div>
+            </div>
+            <div class="about-text">
+                <h2>À propos de l'AEESS</h2>
+                <p>L'Association des Élèves et Étudiants Soninké (AEESS) est une organisation à but non lucratif qui œuvre pour l'épanouissement académique, culturel et social des étudiants Soninké.</p>
+                <p>Fondée en 2005, notre association compte aujourd'hui plus de 500 membres actifs à travers différentes universités et établissements scolaires.</p>
+                <p>Nous organisons régulièrement des événements culturels, des séminaires éducatifs et des actions sociales pour renforcer les liens au sein de notre communauté.</p>
+                <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">Notre Histoire</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="events" id="events">
+        <div class="container">
+            <h2 class="section-title">Événements à Venir</h2>
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-image">
+                        <i class="fas fa-calendar-alt fa-3x"></i>
+                    </div>
+                    <div class="event-content">
+                        <div class="event-date">15 Septembre 2025</div>
+                        <h3>Forum de Rentrée Universitaire</h3>
+                        <p>Un événement pour accueillir les nouveaux étudiants et présenter les opportunités académiques.</p>
+                        <a href="#" class="btn btn-outline" style="margin-top: 1rem;">Plus d'infos</a>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="register-filiere">UFR / Filière</label>
-                    <select id="register-filiere" required>
-                        <option value="">Sélectionnez votre UFR/Filière</option>
-                        <option value="UFR SJEJ">UFR SJEJ</option>
-                        <option value="UFR LSH">UFR LSH</option>
-                        <option value="UFR SEFS">UFR SEFS</option>
-                        <option value="Autres">Autres</option>
-                    </select>
+                <div class="event-card">
+                    <div class="event-image">
+                        <i class="fas fa-music fa-3x"></i>
+                    </div>
+                    <div class="event-content">
+                        <div class="event-date">28 Octobre 2025</div>
+                        <h3>Festival Culturel Soninké</h3>
+                        <p>Célébration de la culture Soninké à travers la musique, la danse et la gastronomie traditionnelle.</p>
+                        <a href="#" class="btn btn-outline" style="margin-top: 1rem;">Plus d'infos</a>
+                    </div>
                 </div>
-                <button type="submit" class="btn" id="register-button">
-                    <span class="btn-text">S'inscrire</span>
-                </button>
-            </form>
-            <div class="auth-switch">
-                Déjà membre ? <a href="#" id="show-login">Se connecter</a>
+                <div class="event-card">
+                    <div class="event-image">
+                        <i class="fas fa-book fa-3x"></i>
+                    </div>
+                    <div class="event-content">
+                        <div class="event-date">12 Novembre 2025</div>
+                        <h3>Séminaire de Réussite Académique</h3>
+                        <p>Des ateliers et conférences pour aider les étudiants à exceller dans leurs parcours académiques.</p>
+                        <a href="#" class="btn btn-outline" style="margin-top: 1rem;">Plus d'infos</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <footer>
-        <p>&copy; 2025 AEESS - Soninkara UGB | Tous droits réservés</p>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">AEESS</div>
+                    <p>Association des Élèves et Étudiants Soninké</p>
+                    <p>Promouvons l'éducation et la culture Soninké depuis 2005.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Liens Rapides</h3>
+                    <ul>
+                        <li><a href="#accueil">Accueil</a></li>
+                        <li><a href="#about">À propos</a></li>
+                        <li><a href="#events">Événements</a></li>
+                        <li><a href="#">Espace Membre</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Université Gaston Berger, Saint-Louis</li>
+                        <li><i class="fas fa-phone"></i> +221 77 123 45 67</li>
+                        <li><i class="fas fa-envelope"></i> contact@aeess.sn</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 AEESS - Association des Élèves et Étudiants Soninké. Tous droits réservés.</p>
+            </div>
+        </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // Configuration Supabase - À REMPLACER par vos propres variables d'environnement
-        // En production, utilisez des variables d'environnement ou un serveur backend
-        const supabaseUrl = 'https://oqpbotaerbpcmwffsyjf.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcGJvdGFlcmJwY213ZmZzeWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMzE1NDgsImV4cCI6MjA3MzgwNzU0OH0.iY7VX-yDdtAL75hjwle_xd5Ge3LhcEAd4DlXz1dN5PA';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        // Menu mobile toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const nav = document.getElementById('nav');
 
-        // Éléments du DOM
-        const loginForm = document.getElementById('login-form');
-        const registerForm = document.getElementById('register-form');
-        const showLoginLink = document.getElementById('show-login');
-        const showRegisterLink = document.getElementById('show-register');
-        const authMessage = document.getElementById('auth-message');
-        const loginSubmit = document.getElementById('login-submit');
-        const registerSubmit = document.getElementById('register-submit');
-        const loginButton = document.getElementById('login-button');
-        const registerButton = document.getElementById('register-button');
-        const loginPasswordToggle = document.getElementById('login-password-toggle');
-        const registerPasswordToggle = document.getElementById('register-password-toggle');
-        const registerPassword = document.getElementById('register-password');
-
-        // Fonctions d'affichage des messages
-        function showMessage(message, isError = false) {
-            authMessage.textContent = message;
-            authMessage.className = isError ? 'error' : 'success';
-            authMessage.style.display = 'block';
-            setTimeout(() => {
-                authMessage.style.display = 'none';
-            }, 5000);
-        }
-
-        // Basculer entre les formulaires
-        showRegisterLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginForm.classList.add('hidden');
-            registerForm.classList.remove('hidden');
-            authMessage.style.display = 'none';
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            menuToggle.classList.toggle('active');
         });
 
-        showLoginLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            registerForm.classList.add('hidden');
-            loginForm.classList.remove('hidden');
-            authMessage.style.display = 'none';
-        });
-
-        // Toggle password visibility
-        function setupPasswordToggle(toggleElement, passwordField) {
-            toggleElement.addEventListener('click', () => {
-                const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordField.setAttribute('type', type);
-                toggleElement.classList.toggle('fa-eye');
-                toggleElement.classList.toggle('fa-eye-slash');
+        // Close menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                menuToggle.classList.remove('active');
             });
-        }
-
-        setupPasswordToggle(loginPasswordToggle, document.getElementById('login-password'));
-        setupPasswordToggle(registerPasswordToggle, registerPassword);
-
-        // Validation du mot de passe
-        function validatePassword(password) {
-            const hasMinLength = password.length >= 8;
-            const hasUpperCase = /[A-Z]/.test(password);
-            const hasNumber = /[0-9]/.test(password);
-            
-            return {
-                isValid: hasMinLength && hasUpperCase && hasNumber,
-                hasMinLength,
-                hasUpperCase,
-                hasNumber
-            };
-        }
-
-        // Mise à jour visuelle des exigences du mot de passe
-        registerPassword.addEventListener('input', function() {
-            const password = this.value;
-            const validation = validatePassword(password);
-            
-            document.getElementById('req-length').classList.toggle('met', validation.hasMinLength);
-            document.getElementById('req-uppercase').classList.toggle('met', validation.hasUpperCase);
-            document.getElementById('req-number').classList.toggle('met', validation.hasNumber);
         });
 
-        // Gérer la connexion
-        loginSubmit.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value.trim();
-            const password = document.getElementById('login-password').value;
-            
-            // Validation basique
-            if (!email || !password) {
-                showMessage("Veuillez remplir tous les champs", true);
-                return;
-            }
-            
-            // Désactiver le bouton et afficher l'indicateur de chargement
-            loginButton.disabled = true;
-            loginButton.classList.add('btn-loading');
-            
-            try {
-                const { data, error } = await supabase.auth.signInWithPassword({
-                    email: email,
-                    password: password,
-                });
-
-                if (error) {
-                    // Messages d'erreur plus conviviaux
-                    let errorMessage = "Erreur de connexion";
-                    if (error.message.includes("Invalid login credentials")) {
-                        errorMessage = "Email ou mot de passe incorrect";
-                    } else if (error.message.includes("Email not confirmed")) {
-                        errorMessage = "Veuillez confirmer votre email avant de vous connecter";
-                    }
-                    showMessage(errorMessage, true);
-                } else {
-                    window.location.href = 'espace.html';
-                }
-            } catch (error) {
-                showMessage("Une erreur inattendue s'est produite", true);
-            } finally {
-                // Réactiver le bouton et masquer l'indicateur de chargement
-                loginButton.disabled = false;
-                loginButton.classList.remove('btn-loading');
-            }
-        });
-
-        // Gérer l'inscription
-        registerSubmit.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('register-name').value.trim();
-            const email = document.getElementById('register-email').value.trim();
-            const password = document.getElementById('register-password').value;
-            const filiere = document.getElementById('register-filiere').value;
-            
-            // Validation
-            if (!name || !email || !password || !filiere) {
-                showMessage("Veuillez remplir tous les champs", true);
-                return;
-            }
-            
-            const passwordValidation = validatePassword(password);
-            if (!passwordValidation.isValid) {
-                showMessage("Le mot de passe ne respecte pas les exigences de sécurité", true);
-                return;
-            }
-            
-            // Désactiver le bouton et afficher l'indicateur de chargement
-            registerButton.disabled = true;
-            registerButton.classList.add('btn-loading');
-            
-            try {
-                const { data: { user }, error: authError } = await supabase.auth.signUp({
-                    email: email,
-                    password: password,
-                    options: {
-                        data: {
-                            full_name: name,
-                            filiere: filiere
-                        }
-                    }
-                });
-
-                if (authError) {
-                    let errorMessage = "Erreur d'inscription";
-                    if (authError.message.includes("already registered")) {
-                        errorMessage = "Cet email est déjà utilisé";
-                    }
-                    showMessage(errorMessage, true);
-                    return;
-                }
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
                 
-                showMessage("Inscription réussie ! Un email de confirmation a été envoyé. Veuillez vérifier votre boîte mail.");
-                // Réinitialiser le formulaire
-                registerSubmit.reset();
-                // Réinitialiser les indicateurs de mot de passe
-                document.querySelectorAll('.requirement').forEach(el => el.classList.remove('met'));
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
                 
-                // Retour automatique au formulaire de connexion après 3 secondes
-                setTimeout(() => {
-                    showLoginLink.click();
-                }, 3000);
-            } catch (error) {
-                showMessage("Une erreur inattendue s'est produite", true);
-            } finally {
-                // Réactiver le bouton et masquer l'indicateur de chargement
-                registerButton.disabled = false;
-                registerButton.classList.remove('btn-loading');
-            }
-        });
-
-        // Vérifier la session au chargement de la page
-        async function checkSession() {
-            try {
-                const { data: { session } } = await supabase.auth.getSession();
-                if (session) {
-                    window.location.href = 'espace.html';
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
                 }
-            } catch (error) {
-                console.error("Erreur lors de la vérification de la session:", error);
-            }
-        }
-        
-        document.addEventListener('DOMContentLoaded', checkSession);
+            });
+        });
     </script>
 </body>
 </html>

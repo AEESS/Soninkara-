@@ -29,16 +29,6 @@
             color: var(--dark-color);
             background-color: var(--light-color);
             overflow-x: hidden;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        .auth-container {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -46,253 +36,93 @@
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         }
 
-        .auth-box {
-            background: white;
-            padding: 40px;
+        .hero-container {
+            text-align: center;
+            color: white;
+            padding: 4rem;
+            background: rgba(0, 0, 0, 0.3);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-            animation: fadeIn 0.8s ease-in-out;
+            max-width: 800px;
+            animation: fadeIn 1s ease-in-out;
         }
-
+        
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .auth-box h2 {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
+        .hero-container h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
         }
 
-        .auth-box p {
-            margin-bottom: 20px;
-            color: #666;
+        .hero-container p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-family: inherit;
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .btn {
             display: inline-block;
-            width: 100%;
-            padding: 12px 30px;
-            background-color: var(--secondary-color);
-            color: var(--dark-color);
+            padding: 15px 40px;
             text-decoration: none;
             border-radius: var(--border-radius);
             font-weight: bold;
-            transition: all 0.3s ease;
-            border: 2px solid var(--secondary-color);
-            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid;
+            font-size: 1.1rem;
+            min-width: 180px;
+            text-align: center;
         }
 
-        .btn:hover {
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
             background-color: transparent;
             color: var(--secondary-color);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .toggle-form {
-            margin-top: 15px;
-            font-size: 0.9em;
-            color: #555;
-            cursor: pointer;
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border-color: white;
         }
 
-        .toggle-form:hover {
-            text-decoration: underline;
+        .btn-secondary:hover {
+            background-color: white;
             color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-
-        .message {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: var(--border-radius);
-            font-weight: bold;
-        }
-
-        .message.success {
-            background-color: #d4edda;
-            color: #155724;
-            border-color: #c3e6cb;
-        }
-
-        .message.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border-color: #f5c6cb;
-        }
-
     </style>
 </head>
 <body>
-    <div class="auth-container">
-        <div class="auth-box" id="signup-box">
-            <h2>Inscription</h2>
-            <p>Rejoignez l'Association des Étudiants et Étudiantes en Sciences Sociales pour accéder à notre communauté !</p>
-            <form id="signup-form">
-                <div class="form-group">
-                    <input type="text" id="full-name" placeholder="Nom complet" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" id="signup-email" placeholder="Adresse email" required>
-                </div>
-                <div class="form-group">
-                    <select id="filiere" required>
-                        <option value="">Sélectionnez votre UFR/Filière</option>
-                        <option value="UFR SJEJ">UFR SJEJ</option>
-                        <option value="UFR LSH">UFR LSH</option>
-                        <option value="UFR SEFS">UFR SEFS</option>
-                        <option value="Autres">Autres</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="signup-password" placeholder="Mot de passe" required>
-                </div>
-                <button type="submit" class="btn">S'inscrire</button>
-            </form>
-            <p class="toggle-form" data-target="login">Déjà membre ? Se connecter</p>
-            <div id="signup-message" class="message" style="display: none;"></div>
-        </div>
-
-        <div class="auth-box" id="login-box" style="display: none;">
-            <h2>Connexion</h2>
-            <p>Connectez-vous à votre espace membre pour accéder à toutes les fonctionnalités.</p>
-            <form id="login-form">
-                <div class="form-group">
-                    <input type="email" id="login-email" placeholder="Adresse email" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="login-password" placeholder="Mot de passe" required>
-                </div>
-                <button type="submit" class="btn">Se connecter</button>
-            </form>
-            <p class="toggle-form" data-target="signup">Pas encore membre ? S'inscrire</p>
-            <div id="login-message" class="message" style="display: none;"></div>
+    <div class="hero-container">
+        <h1>Bienvenue à l'AEESS</h1>
+        <p>
+            Rejoignez l'Association des Étudiants et Étudiantes en Sciences Sociales. 
+            Accédez à un réseau de soutien, partagez des ressources et participez à nos événements.
+        </p>
+        <div class="btn-group">
+            <a href="login.html?action=login" class="btn btn-primary">Se connecter</a>
+            <a href="login.html?action=signup" class="btn btn-secondary">S'inscrire</a>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        // Initialisation de Supabase
-        const supabaseUrl = 'https://oqpbotaerbpcmwffsyjf.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcGJvdGFlcmJwY213ZmZzeWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMzE1NDgsImV4cCI6MjA3MzgwNzU0OH0.iY7VX-yDdtAL75hjwle_xd5Ge3LhcEAd4DlXz1dN5PA';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-        // Éléments du DOM
-        const signupForm = document.getElementById('signup-form');
-        const loginForm = document.getElementById('login-form');
-        const signupBox = document.getElementById('signup-box');
-        const loginBox = document.getElementById('login-box');
-        const signupMessage = document.getElementById('signup-message');
-        const loginMessage = document.getElementById('login-message');
-        const toggleForms = document.querySelectorAll('.toggle-form');
-
-        // Gérer le basculement entre les formulaires
-        toggleForms.forEach(link => {
-            link.addEventListener('click', (e) => {
-                const target = e.target.dataset.target;
-                if (target === 'login') {
-                    signupBox.style.display = 'none';
-                    loginBox.style.display = 'block';
-                } else {
-                    loginBox.style.display = 'none';
-                    signupBox.style.display = 'block';
-                }
-            });
-        });
-
-        // Fonction pour afficher les messages
-        function showMessage(element, message, type) {
-            element.textContent = message;
-            element.className = `message ${type}`;
-            element.style.display = 'block';
-            setTimeout(() => {
-                element.style.display = 'none';
-            }, 5000);
-        }
-
-        // Gérer la soumission du formulaire d'inscription
-        signupForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const fullName = document.getElementById('full-name').value;
-            const email = document.getElementById('signup-email').value;
-            const filiere = document.getElementById('filiere').value;
-            const password = document.getElementById('signup-password').value;
-
-            const { data, error } = await supabase.auth.signUp({
-                email: email,
-                password: password,
-                options: {
-                    data: {
-                        full_name: fullName,
-                        filiere: filiere,
-                    }
-                }
-            });
-
-            if (error) {
-                showMessage(signupMessage, `Erreur d'inscription: ${error.message}`, 'error');
-            } else if (data.user) {
-                showMessage(signupMessage, "Inscription réussie ! Veuillez vérifier votre email pour confirmer votre compte.", 'success');
-                signupForm.reset();
-            }
-        });
-
-        // Gérer la soumission du formulaire de connexion
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email: email,
-                password: password,
-            });
-
-            if (error) {
-                showMessage(loginMessage, `Erreur de connexion: ${error.message}`, 'error');
-            } else {
-                window.location.href = 'espace.html';
-            }
-        });
-        
-        // Redirection si l'utilisateur est déjà connecté
-        async function checkSession() {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-                window.location.href = 'espace.html';
-            }
-        }
-        document.addEventListener('DOMContentLoaded', checkSession);
-
-    </script>
 </body>
 </html>

@@ -663,6 +663,7 @@
                         </div>
                         <input type="text" id="register-filiere" placeholder="Filière" required>
                         <button type="submit" class="btn">S'inscrire</button>
+                        <a href="#" id="forgot-password-link">Mot de passe oublié ?</a>
                     </form>
                 </div>
             </div>
@@ -891,7 +892,34 @@
                     showMessage(loginMessage, error.message, 'error');
                     return;
                 }
-                
+
+                // Gérer le mot de passe oublié
+const forgotPasswordLink = document.getElementById('forgot-password-link');
+
+forgotPasswordLink.addEventListener('click', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+
+    if (!email) {
+        showMessage(loginMessage, 'Veuillez entrer votre email pour réinitialiser le mot de passe.', 'error');
+        return;
+    }
+
+    try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email);
+
+        if (error) {
+            showMessage(loginMessage, error.message, 'error');
+            return;
+        }
+
+        showMessage(loginMessage, 'Un email de réinitialisation a été envoyé à votre adresse.', 'success');
+
+    } catch (error) {
+        showMessage(loginMessage, 'Une erreur est survenue lors de la demande de réinitialisation.', 'error');
+        console.error('Erreur de réinitialisation:', error);
+    }
+});
                 // Redirection vers la page espace.html après connexion réussie
                 window.location.href = 'espace.html';
                 

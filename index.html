@@ -1,643 +1,692 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AEESS - Portail</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEESS - Association des Étudiants Soninké à l'UGB</title>
+    <meta name="description" content="Association des Étudiants Soninké à l'UGB : promouvoir la culture soninké, solidarité et réussite académique.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables et réinitialisation */
+        :root {
+            --primary-color: #1a4b2e;
+            --secondary-color: #e9b44c;
+            --accent-color: #9b2915;
+            --light-color: #f9f9f9;
+            --dark-color: #333;
+            --transition: all 0.3s ease;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
 
-<!-- Font Awesome pour les icônes -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- Supabase JS -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.26.0/dist/umd/supabase.min.js"></script>
+        html {
+            scroll-behavior: smooth;
+        }
 
-<!-- Styles simples -->
-<style>
-:root{
-  --green:#2E8B57; --white:#fff; --muted:#666; --bg:#f6f8fa;
-  --card:#fff; --accent:#3CB371;
-  font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#222}
-.header{background:linear-gradient(90deg,var(--green),#16694a);color:var(--white);padding:18px 16px;position:sticky;top:0;z-index:50}
-.container{max-width:1100px;margin:0 auto;padding:0 16px}
-.header-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{display:flex;gap:12px;align-items:center}
-.brand h1{font-size:20px;margin:0}
-.nav{display:flex;gap:12px;align-items:center}
-.nav a{color:rgba(255,255,255,0.95);text-decoration:none;padding:8px 10px;border-radius:6px}
-.nav a:hover{background:rgba(255,255,255,0.06)}
-.btn{background:var(--accent);color:var(--white);padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
-.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.12)}
-.main{padding:28px 0}
-.grid{display:grid;gap:18px;grid-template-columns:2fr 1fr}
-.card{background:var(--card);border-radius:10px;padding:16px;box-shadow:0 6px 20px rgba(17,24,39,0.06)}
-.h2{font-size:20px;margin:0 0 12px 0}
-.news-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #eee}
-.news-date{width:56px;height:56px;border-radius:8px;background:var(--accent);color:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700}
-.news-content h3{margin:0;font-size:15px}
-.news-content p{margin:6px 0 0;color:var(--muted);font-size:13px}
-.quick-links{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.quick{display:flex;flex-direction:column;align-items:center;padding:12px;border-radius:8px;background:#fafafa;border:1px solid #f0f0f0}
-.quick i{font-size:18px;color:var(--green);margin-bottom:8px}
-.login-form input, .login-form textarea, input[type="text"],input[type="email"],input[type="password"],select {
-  width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;margin-bottom:10px;font-size:14px;
-}
-small.muted{color:var(--muted)}
-.footer{background:var(--green);color:var(--white);padding:28px 0;margin-top:26px}
-.footer a{color:rgba(255,255,255,0.9);text-decoration:none;display:block;margin-bottom:6px}
-.row{display:flex;gap:12px;flex-wrap:wrap}
-.flex{display:flex;gap:12px}
-.center{text-align:center}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.gallery-grid img{width:100%;height:120px;object-fit:cover;border-radius:6px}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            overflow-x: hidden;
+        }
 
-/* Responsive */
-@media (max-width:900px){
-  .grid{grid-template-columns:1fr}
-  .gallery-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media (max-width:480px){
-  .gallery-grid{grid-template-columns:1fr}
-}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;padding:16px}
-.modal .card{max-width:480px;width:100%}
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
 
-/* small UI touches */
-.link-like{background:transparent;border:none;color:var(--green);cursor:pointer;padding:0}
-.small{font-size:13px}
-.table{width:100%;border-collapse:collapse}
-.table th,.table td{padding:8px;border-bottom:1px solid #eee;text-align:left}
-.tag{display:inline-block;padding:6px 8px;border-radius:999px;background:#f0fff4;color:var(--green);font-weight:600;font-size:12px}
-</style>
+        /* Header */
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(26, 75, 46, 0.95);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--light-color);
+            margin: 2px 0;
+            transition: var(--transition);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--light-color);
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3') no-repeat center center/cover;
+            overflow: hidden;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation-delay: 0.3s;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation-delay: 0.6s;
+        }
+
+        .hero .btn {
+            margin: 0 10px;
+            animation-delay: 0.9s;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            transition: var(--transition);
+            border: 2px solid var(--secondary-color);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--secondary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+        }
+
+        /* Sections communes */
+        section {
+            padding: 5rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        /* Missions */
+        .missions {
+            background-color: #fff;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .mission-card {
+            padding: 2rem;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .mission-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .mission-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .mission-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Espace Membre */
+        .members {
+            background-color: #f5f5f5;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background-color: #ddd;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .tab-btn:first-child {
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+        }
+
+        .tab-btn:last-child {
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .tab-content {
+            max-width: 500px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        input, textarea {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(26, 75, 46, 0.2);
+        }
+
+        /* Contact */
+        .contact {
+            background-color: #fff;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--primary-color);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .tab-btn {
+                width: 100%;
+                border-radius: var(--border-radius) !important;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<header class="header">
-  <div class="container header-inner">
-    <div class="brand">
-      <div style="width:52px;height:52px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--green);font-weight:700">AE</div>
-      <div>
-        <h1>AEESS — Association Étudiants Soninké</h1>
-        <div style="font-size:13px;color:rgba(255,255,255,0.9)">Accueil · Intégration · Solidarité</div>
-      </div>
-    </div>
-
-    <nav class="nav">
-      <a href="#home" class="navlink">Accueil</a>
-      <a href="#events" class="navlink">Événements</a>
-      <a href="#gallery" class="navlink">Galerie</a>
-      <a href="#contact" class="navlink">Contact</a>
-      <button id="btn-login" class="btn">Connexion</button>
-    </nav>
-  </div>
-</header>
-
-<main class="main container" id="main">
-  <!-- Home / public -->
-  <section id="home" class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div>
-        <h2 class="h2">Bienvenue à l'AEESS</h2>
-        <p style="margin:6px 0 0;color:var(--muted)">Association dédiée à l'accueil et l'accompagnement des bacheliers soninké à l'UGB — intégration, tutorat, solidarité et culture.</p>
-      </div>
-      <div class="flex">
-        <button id="btn-join" class="btn">Devenir membre</button>
-        <button id="scroll-events" class="btn link-like" title="Voir les événements" style="background:#fff;color:var(--green);border:1px solid #e8f4ed">Voir événements</button>
-      </div>
-    </div>
-
-    <hr style="margin:14px 0;border:none;border-top:1px solid #eee">
-
-    <div style="display:grid;grid-template-columns:1fr 320px;gap:16px">
-      <!-- left: actualités + events preview -->
-      <div>
-        <div class="card" style="margin-bottom:12px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-            <span class="h2">Actualités récentes</span>
-            <small class="muted"><a href="#events" class="link-like">Voir tout</a></small>
-          </div>
-          <div id="news-list">
-            <!-- events list injected by JS -->
-            <p class="small muted">Chargement des actualités…</p>
-          </div>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">AEESS</div>
+                <ul class="nav-links">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#missions">Nos Missions</a></li>
+                    <li><a href="#membres">Espace Membre</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+            </nav>
         </div>
+    </header>
 
-        <div class="card">
-          <div class="h2">Nos missions</div>
-          <p><strong>Accueil :</strong> aide aux nouveaux bacheliers pour se loger et s'intégrer.</p>
-          <p><strong>Pédagogique :</strong> tutorats, formations informatiques et prise de parole.</p>
-          <p><strong>Culturel :</strong> promotion de la culture soninké (événements, soirées, gastronomie).</p>
+    <!-- Hero -->
+    <section id="accueil" class="hero">
+        <div id="particles-js"></div>
+        <div class="container hero-content">
+            <h1 class="fade-in">Association des Étudiants Soninké à l'UGB</h1>
+            <p class="fade-in">Promouvoir la culture soninké et accompagner la réussite académique.</p>
+            <div class="fade-in">
+                <a href="#membres" class="btn">Rejoindre</a>
+                <a href="#missions" class="btn btn-outline">Découvrir</a>
+            </div>
         </div>
-      </div>
+    </section>
 
-      <!-- right: quick links and upcoming -->
-      <aside>
-        <div class="card">
-          <div class="h2">Accès rapide</div>
-          <div class="quick-links" style="margin-top:8px">
-            <div class="quick"><i class="fas fa-users"></i><span>Devenir membre</span></div>
-            <div class="quick"><i class="fas fa-hand-holding-heart"></i><span>Soutien / Solidarité</span></div>
-            <div class="quick"><i class="fas fa-chalkboard-teacher"></i><span>Tutorats</span></div>
-            <div class="quick"><i class="fas fa-calendar"></i><span>Événements</span></div>
-          </div>
+    <!-- Missions -->
+    <section id="missions" class="missions">
+        <div class="container text-center">
+            <h2 class="fade-in">Nos Missions</h2>
+            <div class="mission-grid">
+                <div class="mission-card fade-in">
+                    <i class="fas fa-book-open mission-icon"></i>
+                    <h3>Soutien Académique</h3>
+                    <p>Tutorat et ressources pédagogiques pour favoriser la réussite de tous les membres.</p>
+                </div>
+                <div class="mission-card fade-in">
+                    <i class="fas fa-users mission-icon"></i>
+                    <h3>Solidarité</h3>
+                    <p>Réseau d'entraide entre étudiants pour faciliter l'intégration et le soutien mutuel.</p>
+                </div>
+                <div class="mission-card fade-in">
+                    <i class="fas fa-microphone mission-icon"></i>
+                    <h3>Promotion Culturelle</h3>
+                    <p>Événements et activités culturelles pour valoriser notre riche héritage soninké.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="card" style="margin-top:12px">
-          <div class="h2">Événement à venir</div>
-          <div id="next-event">
-            <p class="muted small">Chargement…</p>
-          </div>
+    <!-- Espace Membre -->
+    <section id="membres" class="members">
+        <div class="container text-center">
+            <h2 class="fade-in">Espace Membre</h2>
+            <div class="tabs fade-in">
+                <button class="tab-btn active" data-tab="connexion">Connexion</button>
+                <button class="tab-btn" data-tab="inscription">Inscription</button>
+            </div>
+            <div id="connexion" class="tab-content active">
+                <form id="login-form">
+                    <input type="email" id="login-email" placeholder="Email" required>
+                    <input type="password" id="login-password" placeholder="Mot de passe" required>
+                    <button type="submit" class="btn">Se connecter</button>
+                </form>
+            </div>
+            <div id="inscription" class="tab-content">
+                <form id="register-form">
+                    <input type="text" id="register-name" placeholder="Nom complet" required>
+                    <input type="email" id="register-email" placeholder="Email" required>
+                    <input type="password" id="register-password" placeholder="Mot de passe" required>
+                    <input type="text" id="register-filiere" placeholder="Filière" required>
+                    <button type="submit" class="btn">S'inscrire</button>
+                </form>
+            </div>
         </div>
-      </aside>
-    </div>
-  </section>
+    </section>
 
-  <!-- Events full -->
-  <section id="events" class="card" style="margin-top:16px">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <h2 class="h2">Événements & actualités</h2>
-      <div>
-        <button id="btn-add-event" class="btn" style="background:#fff;color:var(--green);border:1px solid #e8f4ed">Proposer un événement</button>
-      </div>
-    </div>
-    <div id="events-list" style="margin-top:12px">Chargement des événements…</div>
-  </section>
-
-  <!-- Gallery -->
-  <section id="gallery" class="card" style="margin-top:16px">
-    <h2 class="h2">Galerie</h2>
-    <div id="gallery-grid" class="gallery-grid" style="margin-top:8px">
-      <p class="muted small">Chargement de la galerie…</p>
-    </div>
-    <div style="margin-top:12px" class="center"><small class="muted">Les membres peuvent proposer des photos depuis leur dashboard.</small></div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="card" style="margin-top:16px">
-    <h2 class="h2">Contact</h2>
-    <div style="display:grid;grid-template-columns:1fr 360px;gap:16px">
-      <div>
-        <form id="contact-form">
-          <input type="text" id="contact-name" placeholder="Votre nom" required>
-          <input type="email" id="contact-email" placeholder="Votre email" required>
-          <input type="text" id="contact-subject" placeholder="Sujet" required>
-          <textarea id="contact-message" rows="5" placeholder="Votre message" required></textarea>
-          <button class="btn" type="submit">Envoyer</button>
-        </form>
-        <div id="contact-res" style="margin-top:10px"></div>
-      </div>
-      <aside>
-        <div class="card">
-          <h3 class="h2">Coordonnées</h3>
-          <p><i class="fas fa-map-marker-alt"></i> Université Gaston Berger, Saint-Louis</p>
-          <p><i class="fas fa-envelope"></i> contact@aeess-ugb.sn</p>
-          <p><i class="fas fa-phone"></i> +221 33 XXX XX XX</p>
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <div class="container text-center">
+            <h2 class="fade-in">Contact</h2>
+            <form id="contact-form" class="fade-in">
+                <input type="text" id="contact-name" placeholder="Nom" required>
+                <input type="email" id="contact-email" placeholder="Email" required>
+                <input type="text" id="contact-subject" placeholder="Sujet" required>
+                <textarea id="contact-message" rows="5" placeholder="Message" required></textarea>
+                <button type="submit" class="btn">Envoyer</button>
+            </form>
         </div>
-      </aside>
-    </div>
-  </section>
+    </section>
 
-  <!-- Dashboard area (hidden until login) -->
-  <section id="dashboard" class="card" style="margin-top:16px;display:none">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <h2 class="h2">Tableau de bord</h2>
-      <div class="flex">
-        <span id="profile-name" class="small muted"></span>
-        <button id="btn-logout" class="btn" style="background:#fff;color:var(--green);border:1px solid #e8f4ed">Se déconnecter</button>
-      </div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 360px;gap:16px;margin-top:12px">
-      <div>
-        <div class="card">
-          <h3 class="h2">Mes documents</h3>
-          <form id="upload-form">
-            <input type="text" id="doc-title" placeholder="Titre du document" required>
-            <input type="file" id="doc-file" accept=".pdf,.doc,.docx,.pptx,.zip,.png,.jpg" required>
-            <button class="btn" type="submit">Téléverser</button>
-          </form>
-          <div id="my-docs" style="margin-top:12px">Aucun document</div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 AEESS - Association des Étudiants Soninké à l'UGB</p>
         </div>
+    </footer>
 
-        <div class="card" style="margin-top:12px">
-          <h3 class="h2">Demander de l'aide</h3>
-          <form id="help-form">
-            <input type="text" id="help-subject" placeholder="Sujet" required>
-            <textarea id="help-content" rows="4" placeholder="Expliquez votre besoin" required></textarea>
-            <button class="btn" type="submit">Envoyer la demande</button>
-          </form>
-          <div id="help-res" style="margin-top:10px"></div>
-        </div>
-      </div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Menu mobile
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
 
-      <aside>
-        <div class="card">
-          <h3 class="h2">Mon profil</h3>
-          <div id="profile-info">
-            <p><strong>Nom :</strong> <span id="profile-fullname">—</span></p>
-            <p><strong>Email :</strong> <span id="profile-email">—</span></p>
-            <p><strong>Rôle :</strong> <span id="profile-role">Membre</span></p>
-          </div>
-        </div>
-        <div class="card" style="margin-top:12px">
-          <h3 class="h2">Actions rapides</h3>
-          <button id="btn-upload-photo" class="btn" style="background:#fff;color:var(--green);border:1px solid #e8f4ed">Téléverser photo galerie</button>
-          <div id="upload-photo-area" style="display:none;margin-top:10px">
-            <input type="file" id="gallery-file" accept="image/*">
-            <button id="gallery-upload-btn" class="btn" style="background:#fff;color:var(--green);border:1px solid #e8f4ed">Uploader photo</button>
-          </div>
-        </div>
-      </aside>
-    </div>
-  </section>
-</main>
+        // Tabs system
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.dataset.tab;
+                
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(target).classList.add('active');
+            });
+        });
 
-<!-- Footer -->
-<footer class="footer">
-  <div class="container">
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
-      <div>
-        <h3>Contacts</h3>
-        <p>BP 234, Saint-Louis, Sénégal</p>
-        <p>+221 33 961 23 45</p>
-        <p>contact@aeess-ugb.sn</p>
-      </div>
-      <div>
-        <h3>Liens utiles</h3>
-        <a href="#">Bibliothèque numérique</a>
-        <a href="#">Plateforme pédagogique</a>
-        <a href="#">Webmail</a>
-      </div>
-      <div>
-        <h3>Réseaux sociaux</h3>
-        <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
-        <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
-      </div>
-    </div>
-    <div class="center" style="margin-top:18px;color:rgba(255,255,255,0.9)">© AEESS — Tous droits réservés</div>
-  </div>
-</footer>
+        // Scroll animations
+        const fadeElems = document.querySelectorAll('.fade-in, section');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        fadeElems.forEach(elem => {
+            observer.observe(elem);
+        });
 
-<!-- Modals: Login / Signup / Add Event -->
-<div id="modal-root" style="display:none"></div>
+        // Particles.js configuration
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: "#e9b44c"
+                },
+                shape: {
+                    type: "circle",
+                    stroke: {
+                        width: 0,
+                        color: "#000000"
+                    }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    anim: {
+                        enable: false,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 40,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ffffff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "grab"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
 
-<script>
-/* ---------- CONFIG SUPABASE ----------
-   Remplace ces valeurs par celles de ton projet Supabase
-   - SUPABASE_URL : https://oqpbotaerbpcmwffsyjf.supabase.co
-   - SUPABASE_ANON_KEY : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcGJvdGFlcmJwY213ZmZzeWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMzE1NDgsImV4cCI6MjA3MzgwNzU0OH0.iY7VX-yDdtAL75hjwle_xd5Ge3LhcEAd4DlXz1dN5PA
--------------------------------------- */
-const SUPABASE_URL = "https://oqpbotaerbpcmwffsyjf.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcGJvdGFlcmJwY213ZmZzeWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMzE1NDgsImV4cCI6MjA3MzgwNzU0OH0.iY7VX-yDdtAL75hjwle_xd5Ge3LhcEAd4DlXz1dN5PA";
+        // Form submissions (prevent default for demo)
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Connexion simulée! En production, cela enverrait les données au serveur.');
+        });
 
-if (!SUPABASE_URL || !SUPABASE_KEY) {
-  console.warn('⚠️ Remplace SUPABASE_URL et SUPABASE_KEY dans le fichier avant usage.');
-}
+        document.getElementById('register-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Inscription simulée! En production, cela enverrait les données au serveur.');
+        });
 
-/* Initialise Supabase client */
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-/* UTIL - afficher modal simple */
-function showModal(contentHtml){
-  const root = document.getElementById('modal-root');
-  root.innerHTML = `<div class="modal">${contentHtml}</div>`;
-  root.style.display = 'block';
-  root.querySelector('.modal').addEventListener('click', (e)=>{ if(e.target === e.currentTarget){ closeModal(); } });
-}
-function closeModal(){ const root=document.getElementById('modal-root'); root.style.display='none'; root.innerHTML=''; }
-
-/* ---------- AUTH UI (modal) ---------- */
-document.getElementById('btn-login').addEventListener('click', ()=> openAuthModal());
-document.getElementById('btn-join').addEventListener('click', ()=> openAuthModal(true));
-
-function openAuthModal(defaultToSignUp=false){
-  const html = `
-    <div class="card" style="max-width:480px;width:100%">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <h3>${defaultToSignUp ? 'Inscription' : 'Connexion' }</h3>
-        <button onclick="closeModal()" class="link-like">✕</button>
-      </div>
-      <div style="margin-top:8px">
-        <div id="auth-tabs" style="display:flex;gap:8px;margin-bottom:8px">
-          <button id="tab-login" class="btn" style="background:${defaultToSignUp ? '#fff' : 'var(--accent)'}; color:${defaultToSignUp ? 'var(--green)':'#fff'}">Connexion</button>
-          <button id="tab-signup" class="btn" style="background:${defaultToSignUp ? 'var(--accent)':'#fff'}; color:${defaultToSignUp ? '#fff':'var(--green)'}">S'inscrire</button>
-        </div>
-
-        <div id="auth-area"></div>
-        <div style="margin-top:10px">
-          <small class="muted">Vous pouvez aussi utiliser Google si activé.</small>
-        </div>
-      </div>
-    </div>
-  `;
-  showModal(html);
-
-  // attach events
-  document.getElementById('tab-login').addEventListener('click', ()=> renderLogin());
-  document.getElementById('tab-signup').addEventListener('click', ()=> renderSignup());
-
-  // default
-  (defaultToSignUp) ? renderSignup() : renderLogin();
-}
-
-function renderLogin(){
-  const area = document.getElementById('auth-area');
-  area.innerHTML = `
-    <form id="login-ui">
-      <input type="email" id="ui-login-email" placeholder="Email" required>
-      <input type="password" id="ui-login-pass" placeholder="Mot de passe" required>
-      <button type="submit" class="btn">Se connecter</button>
-    </form>
-    <div style="margin-top:10px"><button id="google-login" class="btn" style="background:#db4437">Connexion Google</button></div>
-    <div style="margin-top:8px"><button id="open-signup" class="link-like">Pas encore membre ? S'inscrire</button></div>
-    <div id="auth-msg" style="margin-top:8px"></div>
-  `;
-  document.getElementById('login-ui').addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const email=document.getElementById('ui-login-email').value;
-    const password=document.getElementById('ui-login-pass').value;
-    const {error, data} = await supabase.auth.signInWithPassword({email,password});
-    if(error){ document.getElementById('auth-msg').innerText = 'Erreur: ' + error.message; return; }
-    // connecté
-    closeModal(); await postLoginState();
-  });
-  document.getElementById('google-login').addEventListener('click', async ()=>{
-    // ouvrir OAuth (doit être configuré dans Supabase)
-    await supabase.auth.signInWithOAuth({provider:'google', options:{redirectTo:window.location.href}});
-  });
-  document.getElementById('open-signup').addEventListener('click', renderSignup);
-}
-
-function renderSignup(){
-  const area = document.getElementById('auth-area');
-  area.innerHTML = `
-    <form id="signup-ui">
-      <input type="text" id="ui-signup-name" placeholder="Nom complet" required>
-      <input type="email" id="ui-signup-email" placeholder="Email" required>
-      <input type="password" id="ui-signup-pass" placeholder="Mot de passe" required>
-      <button type="submit" class="btn">S'inscrire</button>
-    </form>
-    <div style="margin-top:10px"><button id="google-signup" class="btn" style="background:#db4437">S'inscrire avec Google</button></div>
-    <div id="auth-msg" style="margin-top:8px"></div>
-  `;
-  document.getElementById('signup-ui').addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const name=document.getElementById('ui-signup-name').value;
-    const email=document.getElementById('ui-signup-email').value;
-    const password=document.getElementById('ui-signup-pass').value;
-    const {data,error} = await supabase.auth.signUp({email,password, options: {emailRedirectTo: window.location.href}});
-    if(error){ document.getElementById('auth-msg').innerText = 'Erreur: ' + error.message; return; }
-    // optional: create profile row
-    if(data && data.user){
-      await supabase.from('profiles').insert([{id: data.user.id, full_name: name}]);
-    }
-    document.getElementById('auth-msg').innerText = 'Inscription réussie. Vérifie ta boîte (si activé).';
-  });
-  document.getElementById('google-signup').addEventListener('click', async ()=>{
-    await supabase.auth.signInWithOAuth({provider:'google', options:{redirectTo:window.location.href}});
-  });
-}
-
-/* ---------- PUBLIC - fetch events and gallery ---------- */
-
-async function fetchEvents(){
-  const res = await supabase.from('events').select('*').order('event_date', {ascending:false}).limit(10);
-  if(res.error){ console.error(res.error); document.getElementById('news-list').innerHTML = '<p class="muted">Erreur chargement.</p>'; return; }
-  const events = res.data;
-  const newsEl = document.getElementById('news-list');
-  if(!events.length){ newsEl.innerHTML = '<p class="muted">Aucune actualité pour l’instant.</p>'; return; }
-  newsEl.innerHTML = '';
-  events.forEach(ev=>{
-    const date = ev.event_date ? new Date(ev.event_date).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'}) : '';
-    const div = document.createElement('div');
-    div.className='news-item';
-    div.innerHTML = `<div class="news-date"><span>${date.split(' ')[0]||''}</span><span>${(date.split(' ')[1]||'')}</span></div>
-      <div class="news-content"><h3>${ev.title}</h3><p>${ev.description||''}</p></div>`;
-    newsEl.appendChild(div);
-  });
-
-  // next event
-  const next = events.find(e => e.event_date && new Date(e.event_date) >= new Date());
-  const nextEl = document.getElementById('next-event');
-  if(next){ nextEl.innerHTML = `<div><strong>${next.title}</strong><p class="small muted">${new Date(next.event_date).toLocaleDateString()}</p></div>`; }
-  else { nextEl.innerHTML = '<p class="muted small">Aucun événement à venir</p>'; }
-}
-
-async function fetchEventsFull(){
-  const res = await supabase.from('events').select('*').order('event_date', {ascending:true});
-  const el = document.getElementById('events-list');
-  if(res.error){ el.innerHTML = '<p class="muted">Erreur chargement.</p>'; return; }
-  const events = res.data;
-  if(!events.length){ el.innerHTML = '<p class="muted">Aucun événement</p>'; return; }
-  el.innerHTML = '';
-  events.forEach(ev=>{
-    const d = ev.event_date ? new Date(ev.event_date).toLocaleDateString('fr-FR') : '—';
-    const box = document.createElement('div');
-    box.style.marginBottom='12px';
-    box.innerHTML = `<div class="news-item"><div class="news-date"><span>${ev.event_date?new Date(ev.event_date).getDate():''}</span><span>${ev.event_date?new Date(ev.event_date).toLocaleString('fr-FR',{month:'short'}).toUpperCase():' '}</span></div>
-      <div class="news-content"><h3>${ev.title}</h3><p>${ev.description||''}</p><p class="small muted">${ev.location||''} · ${d}</p></div></div>`;
-    el.appendChild(box);
-  });
-}
-
-/* Gallery */
-async function fetchGallery(){
-  // lister fichiers dans le bucket 'gallery' (supabase storage)
-  const {data, error} = await supabase.storage.from('gallery').list('', {limit:100, offset:0});
-  const el = document.getElementById('gallery-grid');
-  if(error){ el.innerHTML = '<p class="muted">Galerie indisponible</p>'; console.warn(error); return; }
-  if(!data.length){ el.innerHTML = '<p class="muted">Aucune photo</p>'; return; }
-  el.innerHTML = '';
-  for(const item of data){
-    const {publicURL} = supabase.storage.from('gallery').getPublicUrl(item.name);
-    const img = document.createElement('img');
-    img.src = publicURL;
-    el.appendChild(img);
-  }
-}
-
-/* ---------- CONTACT FORM ---------- */
-document.getElementById('contact-form').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const name = document.getElementById('contact-name').value.trim();
-  const email = document.getElementById('contact-email').value.trim();
-  const subject = document.getElementById('contact-subject').value.trim();
-  const message = document.getElementById('contact-message').value.trim();
-  if(!name||!email||!subject||!message){ alert('Remplis tous les champs'); return; }
-  const {error} = await supabase.from('messages').insert([{name,email,subject,message}]);
-  const res = document.getElementById('contact-res');
-  if(error){ res.innerText = 'Erreur envoi: ' + error.message; return; }
-  res.innerText = 'Message envoyé, merci !';
-  e.target.reset();
-});
-
-/* ---------- DASHBOARD: user state ---------- */
-async function postLoginState(){
-  const { data: { user } } = await supabase.auth.getUser();
-  if(!user){ return; }
-  // afficher dashboard
-  document.getElementById('dashboard').style.display = 'block';
-  document.getElementById('profile-name').innerText = user.user_metadata?.full_name || user.email;
-  document.getElementById('profile-fullname').innerText = user.user_metadata?.full_name || '—';
-  document.getElementById('profile-email').innerText = user.email;
-  // hide login button
-  document.getElementById('btn-login').style.display='none';
-  // load user's documents
-  loadMyDocs();
-}
-
-/* watch auth changes (persist session) */
-supabase.auth.onAuthStateChange(async (event, session) => {
-  if(session?.user) {
-    await postLoginState();
-  } else {
-    // logged out
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('btn-login').style.display='inline-block';
-  }
-});
-
-/* initial check */
-(async ()=>{
-  await fetchEvents();
-  await fetchEventsFull();
-  await fetchGallery();
-  const { data: { user } } = await supabase.auth.getUser();
-  if(user) await postLoginState();
-})();
-
-/* Logout */
-document.getElementById('btn-logout').addEventListener('click', async ()=>{
-  await supabase.auth.signOut();
-  alert('Déconnecté');
-  window.location.hash = '#home';
-});
-
-/* Upload document (dashboard) */
-document.getElementById('upload-form').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const title = document.getElementById('doc-title').value.trim();
-  const fileInput = document.getElementById('doc-file');
-  if(!title || !fileInput.files.length){ alert('Remplis le titre et choisis un fichier'); return; }
-  const file = fileInput.files[0];
-  const filename = `${Date.now()}_${file.name}`;
-  // upload to bucket 'documents'
-  const { data: uploadData, error: uploadError } = await supabase.storage.from('documents').upload(filename, file, { cacheControl: '3600', upsert: false });
-  if(uploadError){ alert('Erreur upload: ' + uploadError.message); console.error(uploadError); return; }
-  const { data: publicUrlData } = supabase.storage.from('documents').getPublicUrl(uploadData.path);
-  const { data: user } = await supabase.auth.getUser();
-  // insert record
-  const { error: insertErr } = await supabase.from('documents').insert([{ title, url: publicUrlData.publicUrl, storage_path: uploadData.path, uploaded_by: user.user.id }]);
-  if(insertErr){ alert('Erreur enregistrement document: '+insertErr.message); return; }
-  alert('Document uploadé avec succès');
-  e.target.reset();
-  loadMyDocs();
-});
-
-/* Load my documents */
-async function loadMyDocs(){
-  const { data: user } = await supabase.auth.getUser();
-  if(!user.user) { document.getElementById('my-docs').innerHTML='Connecte-toi'; return; }
-  const { data, error } = await supabase.from('documents').select('*').eq('uploaded_by', user.user.id).order('created_at', {ascending:false});
-  const el = document.getElementById('my-docs');
-  if(error){ el.innerHTML = 'Erreur: '+error.message; return; }
-  if(!data.length){ el.innerHTML = '<p class="muted small">Aucun document</p>'; return; }
-  const table = document.createElement('table'); table.className='table';
-  table.innerHTML = `<thead><tr><th>Titre</th><th>Date</th><th></th></tr></thead>`;
-  const tbody = document.createElement('tbody');
-  data.forEach(row=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${row.title}</td><td>${new Date(row.created_at).toLocaleString()}</td><td><a href="${row.url}" target="_blank">Télécharger</a></td>`;
-    tbody.appendChild(tr);
-  });
-  table.appendChild(tbody);
-  el.innerHTML = ''; el.appendChild(table);
-}
-
-/* Help requests */
-document.getElementById('help-form').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const sub = document.getElementById('help-subject').value.trim();
-  const content = document.getElementById('help-content').value.trim();
-  if(!sub || !content){ alert('Formulaire incomplet'); return; }
-  const { data: user } = await supabase.auth.getUser();
-  const { error } = await supabase.from('help_requests').insert([{ user_id: user.user.id, subject: sub, content }]);
-  const msg = document.getElementById('help-res');
-  if(error){ msg.innerText = 'Erreur: '+error.message; return; }
-  msg.innerText = 'Demande envoyée.';
-  e.target.reset();
-});
-
-/* Add event (public propose) - opens modal */
-document.getElementById('btn-add-event').addEventListener('click', ()=> {
-  const html = `<div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <h3>Proposer un événement</h3>
-      <button onclick="closeModal()" class="link-like">✕</button>
-    </div>
-    <form id="ev-form">
-      <input type="text" id="ev-title" placeholder="Titre" required>
-      <input type="date" id="ev-date" required>
-      <input type="text" id="ev-location" placeholder="Lieu">
-      <textarea id="ev-desc" rows="4" placeholder="Description"></textarea>
-      <button type="submit" class="btn">Envoyer</button>
-      <button type="button" class="link-like" onclick="closeModal()">Annuler</button>
-    </form>
-    <div id="ev-res" style="margin-top:8px"></div>
-  </div>`;
-  showModal(html);
-  document.getElementById('ev-form').addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const title = document.getElementById('ev-title').value.trim();
-    const date = document.getElementById('ev-date').value;
-    const loc = document.getElementById('ev-location').value.trim();
-    const desc = document.getElementById('ev-desc').value.trim();
-    const { error } = await supabase.from('events').insert([{ title, event_date: date, location: loc, description: desc }]);
-    const res = document.getElementById('ev-res');
-    if(error){ res.innerText = 'Erreur: '+error.message; return; }
-    res.innerText = 'Événement proposé. Merci!';
-    // refresh lists
-    await fetchEvents();
-    await fetchEventsFull();
-    setTimeout(closeModal, 2000);
-  });
-});
-
-/* Upload gallery photo (dashboard quick) */
-document.getElementById('btn-upload-photo').addEventListener('click', ()=> {
-  const area = document.getElementById('upload-photo-area');
-  area.style.display = area.style.display === 'none' ? 'block' : 'none';
-});
-document.getElementById('gallery-upload-btn').addEventListener('click', async ()=>{
-  const fileIn = document.getElementById('gallery-file');
-  if(!fileIn.files.length){ alert('Choisis une photo'); return; }
-  const file = fileIn.files[0];
-  const name = `gallery/${Date.now()}_${file.name}`;
-  const { data, error } = await supabase.storage.from('gallery').upload(name, file);
-  if(error){ alert('Erreur upload: '+error.message); return; }
-  alert('Photo uploadée');
-  fileIn.value = '';
-  await fetchGallery();
-});
-
-/* When user clicks join button, open auth modal */
-document.getElementById('btn-join').addEventListener('click', ()=> openAuthModal(true));
-
-/* scroll events shortcut */
-document.getElementById('scroll-events').addEventListener('click', ()=> location.hash = '#events');
-
-/* Small utility: listen nav links */
-document.querySelectorAll('.navlink').forEach(a=>{
-  a.addEventListener('click', (e)=>{
-    // allow anchor navigation
-  });
-});
-
-/* Re-fetch periodically (optionnal) */
-// setInterval(()=>{ fetchEvents(); fetchEventsFull(); fetchGallery(); }, 60000);
-
-</script>
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Message simulé! En production, cela enverrait les données au serveur.');
+        });
+    </script>
 </body>
 </html>

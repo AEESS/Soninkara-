@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEESS - Connexion</title>
+    <title>AEESS - Connexion/Inscription</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -90,7 +90,7 @@
             font-weight: bold;
         }
 
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
@@ -138,17 +138,50 @@
             font-weight: bold;
         }
 
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
         .message.error {
             background-color: #f8d7da;
             color: #721c24;
             border-color: #f5c6cb;
         }
-
     </style>
 </head>
 <body>
     <div class="auth-container">
-        <div class="auth-box">
+        <div class="auth-box" id="signup-box">
+            <h2>Inscription</h2>
+            <p>Rejoignez l'Association des Étudiants et Étudiantes en Sciences Sociales pour accéder à notre communauté !</p>
+            <form id="signup-form">
+                <div class="form-group">
+                    <input type="text" id="full-name" placeholder="Nom complet" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="signup-email" placeholder="Adresse email" required>
+                </div>
+                <div class="form-group">
+                    <select id="filiere" required>
+                        <option value="">Sélectionnez votre UFR/Filière</option>
+                        <option value="UFR SJEJ">UFR SJEJ</option>
+                        <option value="UFR LSH">UFR LSH</option>
+                        <option value="UFR SEFS">UFR SEFS</option>
+                        <option value="Autres">Autres</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="signup-password" placeholder="Mot de passe" required>
+                </div>
+                <button type="submit" class="btn">S'inscrire</button>
+            </form>
+            <p class="toggle-form" data-target="login">Déjà membre ? Se connecter</p>
+            <div id="signup-message" class="message" style="display: none;"></div>
+        </div>
+
+        <div class="auth-box" id="login-box" style="display: none;">
             <h2>Connexion</h2>
             <p>Connectez-vous à votre espace membre pour accéder à toutes les fonctionnalités.</p>
             <form id="login-form">
@@ -160,21 +193,56 @@
                 </div>
                 <button type="submit" class="btn">Se connecter</button>
             </form>
-            <p><a href="index.html" class="toggle-form">Pas encore membre ? S'inscrire</a></p>
+            <p class="toggle-form" data-target="signup">Pas encore membre ? S'inscrire</p>
             <div id="login-message" class="message" style="display: none;"></div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         // Initialisation de Supabase
         const supabaseUrl = 'https://oqpbotaerbpcmwffsyjf.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcGJvdGFlcmJwY213ZmZzeWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMzE1NDgsImV4cCI6MjA3MzgwNzU0OH0.iY7VX-yDdtAL75hjwle_xd5Ge3LhcEAd4DlXz1dN5PA';
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-        
+
         // Éléments du DOM
+        const signupForm = document.getElementById('signup-form');
         const loginForm = document.getElementById('login-form');
+        const signupBox = document.getElementById('signup-box');
+        const loginBox = document.getElementById('login-box');
+        const signupMessage = document.getElementById('signup-message');
         const loginMessage = document.getElementById('login-message');
+        const toggleForms = document.querySelectorAll('.toggle-form');
+        
+        // Gérer le basculement entre les formulaires
+        function toggleForm(target) {
+            if (target === 'login') {
+                signupBox.style.display = 'none';
+                loginBox.style.display = 'block';
+            } else {
+                loginBox.style.display = 'none';
+                signupBox.style.display = 'block';
+            }
+        }
+        
+        // Basculer en fonction du paramètre d'URL
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const action = params.get('action');
+            if (action === 'signup') {
+                toggleForm('signup');
+            } else {
+                // Par défaut, afficher le formulaire de connexion
+                toggleForm('login');
+            }
+        });
+        
+        toggleForms.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const target = e.target.dataset.target;
+                toggleForm(target);
+            });
+        });
 
         // Fonction pour afficher les messages
         function showMessage(element, message, type) {
@@ -185,7 +253,34 @@
                 element.style.display = 'none';
             }, 5000);
         }
-        
+
+        // Gérer la soumission du formulaire d'inscription
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('full-name').value;
+            const email = document.getElementById('signup-email').value;
+            const filiere = document.getElementById('filiere').value;
+            const password = document.getElementById('signup-password').value;
+
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        full_name: fullName,
+                        filiere: filiere,
+                    }
+                }
+            });
+
+            if (error) {
+                showMessage(signupMessage, `Erreur d'inscription: ${error.message}`, 'error');
+            } else if (data.user) {
+                showMessage(signupMessage, "Inscription réussie ! Veuillez vérifier votre email pour confirmer votre compte.", 'success');
+                signupForm.reset();
+            }
+        });
+
         // Gérer la soumission du formulaire de connexion
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -203,7 +298,7 @@
                 window.location.href = 'espace.html';
             }
         });
-
+        
         // Redirection si l'utilisateur est déjà connecté
         async function checkSession() {
             const { data: { session } } = await supabase.auth.getSession();

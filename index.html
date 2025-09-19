@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEESS - Association des Élèves et Étudiants Soninké de Saint-Louis</title>
+    <title>AEESS - Accueil</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -28,783 +28,271 @@
             line-height: 1.6;
             color: var(--dark-color);
             background-color: var(--light-color);
+            overflow-x: hidden;
         }
 
         .container {
-            width: 100%;
+            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
 
-        /* Header */
-        header {
-            background-color: white;
-            box-shadow: var(--box-shadow);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--dark-color);
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        nav a:hover {
-            color: var(--primary-color);
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.6rem 1.2rem;
-            border-radius: var(--border-radius);
-            font-weight: bold;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-outline {
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-            border: 2px solid var(--primary-color);
-        }
-
-        .btn-primary:hover {
-            background-color: #2a6b46;
-            border-color: #2a6b46;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 8rem 0 4rem;
-            background: linear-gradient(135deg, #1a4b2e 0%, #2a6b46 100%);
-            color: white;
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 2.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary-color);
-            color: var(--dark-color);
-            border: 2px solid var(--secondary-color);
-        }
-
-        .btn-secondary:hover {
-            background-color: #d9a43d;
-            border-color: #d9a43d;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 5rem 0;
-            background-color: white;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--primary-color);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background-color: var(--light-color);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(26, 75, 46, 0.1);
-            border-radius: 50%;
+        .auth-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0 auto 1.5rem;
-            color: var(--primary-color);
-            font-size: 1.5rem;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         }
 
-        .feature-card h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        /* About Section */
-        .about {
-            padding: 5rem 0;
-            background-color: #f0f7f2;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-image {
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-        }
-
-        .about-image-placeholder {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(45deg, #1a4b2e, #2a6b46);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .about-text h2 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        /* Events Section */
-        .events {
-            padding: 5rem 0;
-            background-color: white;
-        }
-
-        .events-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .event-card {
-            border: 1px solid #e0e0e0;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .event-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--box-shadow);
-        }
-
-        .event-image {
-            height: 200px;
-            background: linear-gradient(45deg, #e9b44c, #d9a43c);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
-
-        .event-content {
-            padding: 1.5rem;
-        }
-
-        .event-date {
-            color: var(--accent-color);
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .event-card h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 5rem 0;
-            background-color: #f0f7f2;
-        }
-
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .contact-info {
-            padding-right: 2rem;
-        }
-
-        .contact-info h2 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-details {
-            margin-bottom: 2rem;
-        }
-
-        .contact-details p {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .contact-details i {
-            margin-right: 1rem;
-            color: var(--primary-color);
-            width: 20px;
-        }
-
-        .contact-form {
+        .auth-box {
             background: white;
-            padding: 2rem;
+            padding: 40px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-box h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .auth-box p {
+            margin-bottom: 20px;
+            color: #666;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
+            text-align: left;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
-        .form-group input,
-        .form-group textarea {
+        .form-group input, .form-group select {
             width: 100%;
-            padding: 0.8rem;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: var(--border-radius);
             font-family: inherit;
         }
 
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark-color);
-            color: white;
-            padding: 3rem 0 1.5rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: white;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1.5rem;
-            color: var(--secondary-color);
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-section a {
-            color: #ccc;
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px 30px;
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
             text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-section a:hover {
-            color: var(--secondary-color);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #444;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            background-color: var(--primary-color);
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid #444;
-            color: #ccc;
-            font-size: 0.9rem;
-        }
-
-        /* Mobile Navigation */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 25px;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid var(--secondary-color);
             cursor: pointer;
         }
 
-        .menu-toggle span {
-            width: 100%;
-            height: 3px;
-            background-color: var(--dark-color);
-            border-radius: 5px;
-            transition: var(--transition);
+        .btn:hover {
+            background-color: transparent;
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .about-content,
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .contact-info {
-                padding-right: 0;
-                margin-bottom: 2rem;
-            }
+        .toggle-form {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #555;
+            cursor: pointer;
         }
 
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-
-            nav {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 80%;
-                height: calc(100vh - 70px);
-                background-color: white;
-                box-shadow: var(--box-shadow);
-                transition: var(--transition);
-                flex-direction: column;
-                padding: 2rem;
-            }
-
-            nav.active {
-                left: 0;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-
-            .auth-buttons {
-                margin-top: 2rem;
-                flex-direction: column;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
+        .toggle-form:hover {
+            text-decoration: underline;
+            color: var(--primary-color);
         }
 
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .feature-card, .event-card {
-                padding: 1.5rem;
-            }
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            font-weight: bold;
         }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <div class="logo">
-                <img src="IMG-20250123-WA0037.jpg" alt="Logo AEESS" class="logo-img">
-                <div class="logo-text">AEESS</div>
-            </div>
-
-            <div class="menu-toggle" id="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-            <nav id="nav">
-                <ul>
-                    <li><a href="#accueil">Accueil</a></li>
-                    <li><a href="#about">À propos</a></li>
-                    <li><a href="#events">Événements</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <div class="auth-buttons">
-                    <a href="login.html" class="btn btn-outline">Connexion</a>
-                    <a href="login.html" class="btn btn-primary">Inscription</a>
+    <div class="auth-container">
+        <div class="auth-box" id="signup-box">
+            <h2>Inscription</h2>
+            <p>Rejoignez l'Association des Étudiants et Étudiantes en Sciences Sociales pour accéder à notre communauté !</p>
+            <form id="signup-form">
+                <div class="form-group">
+                    <input type="text" id="full-name" placeholder="Nom complet" required>
                 </div>
-            </nav>
+                <div class="form-group">
+                    <input type="email" id="signup-email" placeholder="Adresse email" required>
+                </div>
+                <div class="form-group">
+                    <select id="filiere" required>
+                        <option value="">Sélectionnez votre UFR/Filière</option>
+                        <option value="UFR SJEJ">UFR SJEJ</option>
+                        <option value="UFR LSH">UFR LSH</option>
+                        <option value="UFR SEFS">UFR SEFS</option>
+                        <option value="Autres">Autres</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="signup-password" placeholder="Mot de passe" required>
+                </div>
+                <button type="submit" class="btn">S'inscrire</button>
+            </form>
+            <p class="toggle-form" data-target="login">Déjà membre ? Se connecter</p>
+            <div id="signup-message" class="message" style="display: none;"></div>
         </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="accueil">
-        <div class="container hero-content">
-            <h1>Association des Élèves et Étudiants Soninké de Saint-Louis</h1>
-            <p>Une communauté unie pour promouvoir l'éducation, la culture et l'entraide parmi les étudiants Soninké de Saint-Louis.</p>
-            <div class="hero-buttons">
-                <a href="login.html" class="btn btn-secondary">Rejoindre l'AEESS</a>
-                <a href="#about" class="btn btn-outline">En savoir plus</a>
-            </div>
+        <div class="auth-box" id="login-box" style="display: none;">
+            <h2>Connexion</h2>
+            <p>Connectez-vous à votre espace membre pour accéder à toutes les fonctionnalités.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <input type="email" id="login-email" placeholder="Adresse email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="login-password" placeholder="Mot de passe" required>
+                </div>
+                <button type="submit" class="btn">Se connecter</button>
+            </form>
+            <p class="toggle-form" data-target="signup">Pas encore membre ? S'inscrire</p>
+            <div id="login-message" class="message" style="display: none;"></div>
         </div>
-    </section>
+    </div>
 
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <h2 class="section-title">Nos Objectifs</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h3>Éducation</h3>
-                    <p>Promouvoir l'excellence académique et fournir un soutien éducatif à nos membres.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Communauté</h3>
-                    <p>Créer un réseau solidaire pour les étudiants Soninké et favoriser l'entraide.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-monument"></i>
-                    </div>
-                    <h3>Culture</h3>
-                    <p>Préserver et promouvoir la riche culture et les traditions Soninké.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container about-content">
-            <div class="about-image">
-                <div class="about-image-placeholder">
-                    <i class="fas fa-university"></i>
-                </div>
-            </div>
-            <div class="about-text">
-                <h2>À propos de l'AEESS</h2>
-                <p>L'Association des Élèves et Étudiants Soninké de Saint-Louis (AEESS) est une organisation à but non lucratif qui œuvre pour l'épanouissement académique, culturel et social des étudiants Soninké de la région de Saint-Louis.</p>
-                <p>Fondée en 2005, notre association compte aujourd'hui plus de 500 membres actifs à travers différents établissements scolaires et universitaires de Saint-Louis.</p>
-                <p>Nous organisons régulièrement des événements culturels, des séminaires éducatifs et des actions sociales pour renforcer les liens au sein de notre communauté.</p>
-                <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">Notre Histoire</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Events Section -->
-    <section class="events" id="events">
-        <div class="container">
-            <h2 class="section-title">Événements à Venir</h2>
-            <div class="events-grid">
-                <div class="event-card">
-                    <div class="event-image">
-                        <i class="fas fa-calendar-alt fa-3x"></i>
-                    </div>
-                    <div class="event-content">
-                        <div class="event-date">15 Septembre 2025</div>
-                        <h3>Forum de Rentrée Universitaire</h3>
-                        <p>Un événement pour accueillir les nouveaux étudiants et présenter les opportunités académiques.</p>
-                        <a href="#" class="btn btn-outline" style="margin-top: 1rem;">Plus d'infos</a>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">
-                        <i class="fas fa-music fa-3x"></i>
-                    </div>
-                    <div class="event-content">
-                        <div class="event-date">28 Octobre 2025</div>
-                        <h3>Festival Culturel Soninké</h3>
-                        <p>Célébration de la culture Soninké à travers la musique, la danse et la gastronomie traditionnelle.</p>
-                        <a href="#" class="btn btn-outline" style="margin-top: 1rem;">Plus d'infos</a>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">
-                        <i class="fas fa-book fa-3x"></i>
-                    </div>
-                    <div class="event-content">
-                        <div class="event-date">12 Novembre 2025</div>
-                        <h3>Séminaire de Réussite Académique</h3>
-                        <p>Des ateliers et conférences pour aider les étudiants à exceller dans leurs parcours académiques.</p>
-                        <a href="#" class="btn btn-outline" style="margin-top: 1rem;">Plus d'infos</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2 class="section-title">Contactez-nous</h2>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h2>Restons en contact</h2>
-                    <p>N'hésitez pas à nous contacter pour toute question ou information supplémentaire.</p>
-                    
-                    <div class="contact-details">
-                        <p><i class="fas fa-map-marker-alt"></i> Saint-Louis, Senegal</p>
-                        <p><i class="fas fa-phone"></i> +221 77 123 45 67</p>
-                        <p><i class="fas fa-envelope"></i> contact@aeess.sn</p>
-                    </div>
-                    
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Nom complet</label>
-                            <input type="text" id="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Sujet</label>
-                            <input type="text" id="subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Envoyer le message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">AEESS</div>
-                    <p>Association des Élèves et Étudiants Soninké de Saint-Louis</p>
-                    <p>Promouvons l'éducation et la culture Soninké depuis 2005.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Liens Rapides</h3>
-                    <ul>
-                        <li><a href="#accueil">Accueil</a></li>
-                        <li><a href="#about">À propos</a></li>
-                        <li><a href="#events">Événements</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> Saint-Louis, Senegal</li>
-                        <li><i class="fas fa-phone"></i> +221 77 123 45 67</li>
-                        <li><i class="fas fa-envelope"></i> contact@aeess.sn</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 AEESS - Association des Élèves et Étudiants Soninké de Saint-Louis. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // Menu mobile toggle
-        const menuToggle = document.getElementById('menu-toggle');
-        const nav = document.getElementById('nav');
+        // Initialisation de Supabase
+        const supabaseUrl = 'https://oqpbotaerbpcmwffsyjf.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcGJvdGFlcmJwY213ZmZzeWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMzE1NDgsImV4cCI6MjA3MzgwNzU0OH0.iY7VX-yDdtAL75hjwle_xd5Ge3LhcEAd4DlXz1dN5PA';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        menuToggle.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        });
+        // Éléments du DOM
+        const signupForm = document.getElementById('signup-form');
+        const loginForm = document.getElementById('login-form');
+        const signupBox = document.getElementById('signup-box');
+        const loginBox = document.getElementById('login-box');
+        const signupMessage = document.getElementById('signup-message');
+        const loginMessage = document.getElementById('login-message');
+        const toggleForms = document.querySelectorAll('.toggle-form');
 
-        // Close menu when clicking on a link
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                nav.classList.remove('active');
-                menuToggle.classList.remove('active');
-                
-                // Si c'est un lien de connexion/inscription, on ne fait pas de défilement
-                if (link.getAttribute('href').includes('login.html')) {
-                    return;
+        // Gérer le basculement entre les formulaires
+        toggleForms.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const target = e.target.dataset.target;
+                if (target === 'login') {
+                    signupBox.style.display = 'none';
+                    loginBox.style.display = 'block';
+                } else {
+                    loginBox.style.display = 'none';
+                    signupBox.style.display = 'block';
                 }
             });
         });
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Contact form handling
-        const contactForm = document.getElementById('contactForm');
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Ici vous pouvez ajouter le code pour envoyer le formulaire
-                alert('Merci pour votre message! Nous vous répondrons bientôt.');
-                contactForm.reset();
-            });
+        // Fonction pour afficher les messages
+        function showMessage(element, message, type) {
+            element.textContent = message;
+            element.className = `message ${type}`;
+            element.style.display = 'block';
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
         }
 
-        // Vérifier si l'URL contient un paramètre pour ouvrir directement le formulaire d'inscription
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const action = urlParams.get('action');
-            
-            if (action === 'register') {
-                window.location.href = 'login.html';
+        // Gérer la soumission du formulaire d'inscription
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('full-name').value;
+            const email = document.getElementById('signup-email').value;
+            const filiere = document.getElementById('filiere').value;
+            const password = document.getElementById('signup-password').value;
+
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        full_name: fullName,
+                        filiere: filiere,
+                    }
+                }
+            });
+
+            if (error) {
+                showMessage(signupMessage, `Erreur d'inscription: ${error.message}`, 'error');
+            } else if (data.user) {
+                showMessage(signupMessage, "Inscription réussie ! Veuillez vérifier votre email pour confirmer votre compte.", 'success');
+                signupForm.reset();
             }
         });
+
+        // Gérer la soumission du formulaire de connexion
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                showMessage(loginMessage, `Erreur de connexion: ${error.message}`, 'error');
+            } else {
+                window.location.href = 'espace.html';
+            }
+        });
+        
+        // Redirection si l'utilisateur est déjà connecté
+        async function checkSession() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                window.location.href = 'espace.html';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', checkSession);
+
     </script>
 </body>
 </html>

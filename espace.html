@@ -1,656 +1,656 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEESS - Espace Membre</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #1a4b2e;
-            --secondary-color: #e9b44c;
-            --accent-color: #9b2915;
-            --light-color: #f9f9f9;
-            --dark-color: #333;
-            --transition: all 0.3s ease;
-            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            --border-radius: 8px;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEESS - Espace Membre</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a4b2e;
+            --secondary-color: #e9b44c;
+            --accent-color: #9b2915;
+            --light-color: #f9f9f9;
+            --dark-color: #333;
+            --transition: all 0.3s ease;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--dark-color);
-            background-color: var(--light-color);
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
 
-        /* Header */
-        header {
-            background-color: var(--primary-color);
-            color: var(--light-color);
-            padding: 1rem 0;
-            box-shadow: var(--box-shadow);
-        }
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            padding: 1rem 0;
+            box-shadow: var(--box-shadow);
+        }
 
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap; /* Permet aux éléments de passer à la ligne sur mobile */
-        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--secondary-color);
-        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
 
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-top: 10px; /* Ajout d'une marge sur les petits écrans */
-        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
 
-        .nav-links li a {
-            color: var(--light-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-        }
+        .nav-links li a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
 
-        .nav-links li a:hover,
-        .nav-links li a.active {
-            color: var(--secondary-color);
-        }
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            color: var(--secondary-color);
+        }
 
-        /* Main content */
-        main {
-            flex: 1;
-            padding: 3rem 0;
-        }
+        /* Main content */
+        main {
+            flex: 1;
+            padding: 3rem 0;
+        }
 
-        .member-area-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            position: relative;
-        }
+        .member-area-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            position: relative;
+        }
 
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-            background-color: #f1f1f1;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            flex-wrap: wrap;
-        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            background-color: #f1f1f1;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            flex-wrap: wrap;
+        }
 
-        .tab-btn {
-            padding: 15px 30px;
-            background-color: #f1f1f1;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: var(--transition);
-            flex: 1;
-            text-align: center;
-        }
+        .tab-btn {
+            padding: 15px 30px;
+            background-color: #f1f1f1;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            flex: 1;
+            text-align: center;
+        }
 
-        .tab-btn.active {
-            background-color: var(--primary-color);
-            color: white;
-        }
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
 
-        .tab-content.active {
-            display: block;
-        }
+        .tab-content.active {
+            display: block;
+        }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-        .user-info, .section-content {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 2rem;
-        }
+        .user-info, .section-content {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+        }
 
-        .user-info h3, .section-content h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
+        .user-info h3, .section-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
 
-        .user-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
+        .user-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
 
-        .user-detail {
-            padding: 1rem;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+        .user-detail {
+            padding: 1rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--secondary-color);
-            color: var(--dark-color);
-            text-decoration: none;
-            border-radius: var(--border-radius);
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border: 2px solid var(--secondary-color);
-            cursor: pointer;
-        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid var(--secondary-color);
+            cursor: pointer;
+        }
 
-        .btn:hover {
-            background-color: transparent;
-            color: var(--secondary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
+        .btn:hover {
+            background-color: transparent;
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
 
-        .logout-btn {
-            background: #dc3545;
-            border-color: #dc3545;
-            color: white;
-        }
+        .logout-btn {
+            background: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
 
-        .logout-btn:hover {
-            background: transparent;
-            color: #dc3545;
-        }
+        .logout-btn:hover {
+            background: transparent;
+            color: #dc3545;
+        }
 
-        /* Formulaire */
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        
-        input, textarea, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-family: inherit;
-        }
+        /* Formulaire */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+        }
 
-        /* Listes de contenus */
-        .list-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+        /* Listes de contenus */
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
-        .list-item {
-            background: white;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+        .list-item {
+            background: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-        /* Footer */
-        footer {
-            background-color: var(--dark-color);
-            color: var(--light-color);
-            padding: 2rem 0;
-            text-align: center;
-        }
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 2rem 0;
+            text-align: center;
+        }
 
-        /* Message de chargement */
-        #loading-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.2rem;
-            color: var(--primary-color);
-        }
+        /* Message de chargement */
+        #loading-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
 
-        /* Notifications */
-        #notification-banner {
-            display: none;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            text-align: center;
-            background: var(--secondary-color);
-            padding: 10px;
-            z-index: 1000;
-            color: var(--dark-color);
-            font-weight: bold;
-            box-shadow: var(--box-shadow);
-        }
+        /* Notifications */
+        #notification-banner {
+            display: none;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            text-align: center;
+            background: var(--secondary-color);
+            padding: 10px;
+            z-index: 1000;
+            color: var(--dark-color);
+            font-weight: bold;
+            box-shadow: var(--box-shadow);
+        }
 
-        /* Media Queries pour la Responsabilité */
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .nav-links {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-                width: 100%;
-                margin-top: 1rem;
-            }
-            .nav-links li {
-                width: 100%;
-            }
-            .nav-links li a {
-                display: block;
-                padding: 10px 0;
-            }
-            .tab-btn {
-                font-size: 0.8rem;
-                padding: 10px 15px;
-            }
-            .member-area-container {
-                padding: 1rem;
-            }
-            .user-details {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+        /* Media Queries pour la Responsabilité */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+                width: 100%;
+                margin-top: 1rem;
+            }
+            .nav-links li {
+                width: 100%;
+            }
+            .nav-links li a {
+                display: block;
+                padding: 10px 0;
+            }
+            .tab-btn {
+                font-size: 0.8rem;
+                padding: 10px 15px;
+            }
+            .member-area-container {
+                padding: 1rem;
+            }
+            .user-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div id="notification-banner">
-        <p>🔔 Une nouvelle demande d'aide a été postée !</p>
-    </div>
+    <div id="notification-banner">
+        <p>🔔 Une nouvelle demande d'aide a été postée !</p>
+    </div>
 
-    <header>
-        <div class="container">
-            <nav class="navbar">
-                <div class="logo">AEESS</div>
-                <ul class="nav-links">
-                    <li><a href="#" class="tab-btn active" data-tab="home">Accueil</a></li>
-                    <li><a href="#" class="tab-btn" data-tab="demandes">Demandes & Aide</a></li>
-                    <li><a href="#" class="tab-btn" data-tab="reunions">Réunions</a></li>
-                    <li><a href="#" class="tab-btn" data-tab="partages">Espace de Partage</a></li>
-                    <li><a href="#" class="btn logout-btn" id="logout-btn">Se déconnecter</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">AEESS</div>
+                <ul class="nav-links">
+                    <li><a href="#" class="tab-btn active" data-tab="home">Accueil</a></li>
+                    <li><a href="#" class="tab-btn" data-tab="demandes">Demandes & Aide</a></li>
+                    <li><a href="#" class="tab-btn" data-tab="reunions">Réunions</a></li>
+                    <li><a href="#" class="tab-btn" data-tab="partages">Espace de Partage</a></li>
+                    <li><a href="#" class="btn logout-btn" id="logout-btn">Se déconnecter</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <main>
-        <section class="members">
-            <div class="container text-center">
-                <div class="member-area-container">
-                    <div id="loading-message">Chargement...</div>
+    <main>
+        <section class="members">
+            <div class="container text-center">
+                <div class="member-area-container">
+                    <div id="loading-message">Chargement...</div>
 
-                    <div id="home" class="tab-content active">
-                        <h2>Mon Profil</h2>
-                        <div class="user-info">
-                            <h3>Vos informations</h3>
-                            <div class="user-details">
-                                <div class="user-detail">
-                                    <strong>Nom:</strong> <span id="user-name"></span>
-                                </div>
-                                <div class="user-detail">
-                                    <strong>Email:</strong> <span id="user-email"></span>
-                                </div>
-                                <div class="user-detail">
-                                    <strong>Filière:</strong> <span id="user-filiere"></span>
-                                </div>
-                                <div class="user-detail">
-                                    <strong>Statut:</strong> Membre actif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="home" class="tab-content active">
+                        <h2>Mon Profil</h2>
+                        <div class="user-info">
+                            <h3>Vos informations</h3>
+                            <div class="user-details">
+                                <div class="user-detail">
+                                    <strong>Nom:</strong> <span id="user-name"></span>
+                                </div>
+                                <div class="user-detail">
+                                    <strong>Email:</strong> <span id="user-email"></span>
+                                </div>
+                                <div class="user-detail">
+                                    <strong>Filière:</strong> <span id="user-filiere"></span>
+                                </div>
+                                <div class="user-detail">
+                                    <strong>Statut:</strong> Membre actif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <div id="demandes" class="tab-content">
-                        <h2>Demander de l'aide</h2>
-                        <div class="section-content">
-                            <h3>Poser une question ou demander un cours</h3>
-                            <form id="demande-form">
-                                <div class="form-group">
-                                    <input type="text" id="demande-sujet" placeholder="Sujet (ex: Cours de Mathématiques)" required>
-                                </div>
-                                <div class="form-group">
-                                    <select id="demande-filiere" required>
-                                        <option value="">Sélectionnez votre UFR/Filière</option>
-                                        <option value="UFR SJEJ">UFR SJEJ</option>
-                                        <option value="UFR LSH">UFR LSH</option>
-                                        <option value="UFR SEFS">UFR SEFS</option>
-                                        <option value="Autres">Autres</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <textarea id="demande-description" rows="4" placeholder="Description de votre demande" required></textarea>
-                                </div>
-                                <button type="submit" class="btn">Envoyer la demande</button>
-                            </form>
-                        </div>
-                        <div class="section-content">
-                            <h3>Demandes récentes</h3>
-                            <div class="form-group">
-                                <label for="filter-filiere">Filtrer par filière :</label>
-                                <select id="filter-filiere">
-                                    <option value="all">Toutes les filières</option>
-                                    <option value="UFR SJEJ">UFR SJEJ</option>
-                                    <option value="UFR LSH">UFR LSH</option>
-                                    <option value="UFR SEFS">UFR SEFS</option>
-                                    <option value="Autres">Autres</option>
-                                </select>
-                            </div>
-                            <div id="demandes-list" class="list-container">
-                                </div>
-                        </div>
-                    </div>
+                    <div id="demandes" class="tab-content">
+                        <h2>Demander de l'aide</h2>
+                        <div class="section-content">
+                            <h3>Poser une question ou demander un cours</h3>
+                            <form id="demande-form">
+                                <div class="form-group">
+                                    <input type="text" id="demande-sujet" placeholder="Sujet (ex: Cours de Mathématiques)" required>
+                                </div>
+                                <div class="form-group">
+                                    <select id="demande-filiere" required>
+                                        <option value="">Sélectionnez votre UFR/Filière</option>
+                                        <option value="UFR SJEJ">UFR SJEJ</option>
+                                        <option value="UFR LSH">UFR LSH</option>
+                                        <option value="UFR SEFS">UFR SEFS</option>
+                                        <option value="Autres">Autres</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <textarea id="demande-description" rows="4" placeholder="Description de votre demande" required></textarea>
+                                </div>
+                                <button type="submit" class="btn">Envoyer la demande</button>
+                            </form>
+                        </div>
+                        <div class="section-content">
+                            <h3>Demandes récentes</h3>
+                            <div class="form-group">
+                                <label for="filter-filiere">Filtrer par filière :</label>
+                                <select id="filter-filiere">
+                                    <option value="all">Toutes les filières</option>
+                                    <option value="UFR SJEJ">UFR SJEJ</option>
+                                    <option value="UFR LSH">UFR LSH</option>
+                                    <option value="UFR SEFS">UFR SEFS</option>
+                                    <option value="Autres">Autres</option>
+                                </select>
+                            </div>
+                            <div id="demandes-list" class="list-container">
+                                </div>
+                        </div>
+                    </div>
 
-                    <div id="reunions" class="tab-content">
-                        <h2>Réunions & Annonces</h2>
-                        <div class="section-content">
-                            <h3>Prochaines réunions du bureau</h3>
-                            <div id="reunions-list" class="list-container">
-                                <div class="list-item">
-                                    <h4>Réunion générale de l'AG</h4>
-                                    <p>Date : <strong>12 décembre 2025</strong></p>
-                                    <p>Sujet : Préparation des événements du semestre.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="reunions" class="tab-content">
+                        <h2>Réunions & Annonces</h2>
+                        <div class="section-content">
+                            <h3>Prochaines réunions du bureau</h3>
+                            <div id="reunions-list" class="list-container">
+                                <div class="list-item">
+                                    <h4>Réunion générale de l'AG</h4>
+                                    <p>Date : <strong>12 décembre 2025</strong></p>
+                                    <p>Sujet : Préparation des événements du semestre.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <div id="partages" class="tab-content">
-                        <h2>Espace de Partage</h2>
-                        <div class="section-content">
-                            <h3>Télécharger un document ou une image</h3>
-                            <form id="upload-form">
-                                <div class="form-group">
-                                    <input type="file" id="file-upload" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" id="file-title" placeholder="Titre du document" required>
-                                </div>
-                                <button type="submit" class="btn">Télécharger</button>
-                            </form>
-                        </div>
-                        <div class="section-content">
-                            <h3>Documents partagés</h3>
-                            <div id="partages-list" class="list-container">
-                                </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+                    <div id="partages" class="tab-content">
+                        <h2>Espace de Partage</h2>
+                        <div class="section-content">
+                            <h3>Télécharger un document ou une image</h3>
+                            <form id="upload-form">
+                                <div class="form-group">
+                                    <input type="file" id="file-upload" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="file-title" placeholder="Titre du document" required>
+                                </div>
+                                <button type="submit" class="btn">Télécharger</button>
+                            </form>
+                        </div>
+                        <div class="section-content">
+                            <h3>Documents partagés</h3>
+                            <div id="partages-list" class="list-container">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <footer>
-        <div class="container text-center">
-            <p>&copy; 2023 AEESS - Espace Membre</p>
-        </div>
-    </footer>
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2023 AEESS - Espace Membre</p>
+        </div>
+    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        // Initialisation de Supabase
-        const supabaseUrl = 'https://oqpbotaerbpcmwffsyjf.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcGJvdGFlcmJwY213ZmZzeWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMzE1NDgsImV4cCI6MjA3MzgwNzU0OH0.iY7VX-yDdtAL75hjwle_xd5Ge3LhcEAd4DlXz1dN5PA';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Initialisation de Supabase
+        const supabaseUrl = 'https://oqpbotaerbpcmwffsyjf.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcGJvdGFlcmJwY213ZmZzeWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMzE1NDgsImV4cCI6MjA3MzgwNzU0OH0.iY7VX-yDdtAL75hjwle_xd5Ge3LhcEAd4DlXz1dN5PA';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Éléments du DOM
-        const userName = document.getElementById('user-name');
-        const userEmail = document.getElementById('user-email');
-        const userFiliere = document.getElementById('user-filiere');
-        const logoutBtn = document.getElementById('logout-btn');
-        const loadingMessage = document.getElementById('loading-message');
-        const memberAreaContainer = document.querySelector('.member-area-container');
-        const notificationBanner = document.getElementById('notification-banner');
-        
-        // Tab system
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
-        
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = btn.dataset.tab;
-                tabBtns.forEach(b => b.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(target).classList.add('active');
+        // Éléments du DOM
+        const userName = document.getElementById('user-name');
+        const userEmail = document.getElementById('user-email');
+        const userFiliere = document.getElementById('user-filiere');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loadingMessage = document.getElementById('loading-message');
+        const memberAreaContainer = document.querySelector('.member-area-container');
+        const notificationBanner = document.getElementById('notification-banner');
+        
+        // Tab system
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = btn.dataset.tab;
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(target).classList.add('active');
 
-                if (target === 'demandes') {
-                    loadDemandes(document.getElementById('filter-filiere').value);
-                } else if (target === 'partages') {
-                    loadPartages();
-                }
-            });
-        });
+                if (target === 'demandes') {
+                    loadDemandes(document.getElementById('filter-filiere').value);
+                } else if (target === 'partages') {
+                    loadPartages();
+                }
+            });
+        });
 
-        function redirectToLogin() {
-            window.location.href = 'index.html';
-        }
+        function redirectToLogin() {
+            window.location.href = 'index.html';
+        }
 
-        async function checkSession() {
-            memberAreaContainer.style.display = 'none';
-            loadingMessage.style.display = 'block';
+        async function checkSession() {
+            memberAreaContainer.style.display = 'none';
+            loadingMessage.style.display = 'block';
 
-            try {
-                const { data: { session } } = await supabase.auth.getSession();
-                if (session) {
-                    const user = session.user;
-                    userEmail.textContent = user.email;
-                    userName.textContent = user.user_metadata.full_name || 'Non spécifié';
-                    userFiliere.textContent = user.user_metadata.filiere || 'Non spécifié';
-                    
-                    loadingMessage.style.display = 'none';
-                    memberAreaContainer.style.display = 'block';
-                    
-                } else {
-                    redirectToLogin();
-                }
-            } catch (error) {
-                console.error("Erreur de session:", error);
-                redirectToLogin();
-            }
-        }
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session) {
+                    const user = session.user;
+                    userEmail.textContent = user.email;
+                    userName.textContent = user.user_metadata.full_name || 'Non spécifié';
+                    userFiliere.textContent = user.user_metadata.filiere || 'Non spécifié';
+                    
+                    loadingMessage.style.display = 'none';
+                    memberAreaContainer.style.display = 'block';
+                    
+                } else {
+                    redirectToLogin();
+                }
+            } catch (error) {
+                console.error("Erreur de session:", error);
+                redirectToLogin();
+            }
+        }
 
-        logoutBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const { error } = await supabase.auth.signOut();
-            if (!error) {
-                redirectToLogin();
-            }
-        });
-        
-        document.addEventListener('DOMContentLoaded', checkSession);
+        logoutBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const { error } = await supabase.auth.signOut();
+            if (!error) {
+                redirectToLogin();
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', checkSession);
 
-        /* ------------------------------------------- */
-        /* Fonctions pour les nouvelles fonctionnalités */
-        /* ------------------------------------------- */
+        /* ------------------------------------------- */
+        /* Fonctions pour les nouvelles fonctionnalités */
+        /* ------------------------------------------- */
 
-        const demandeForm = document.getElementById('demande-form');
-        demandeForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const sujet = document.getElementById('demande-sujet').value;
-            const filiere = document.getElementById('demande-filiere').value;
-            const description = document.getElementById('demande-description').value;
-            const { data: { user } } = await supabase.auth.getSession();
+        const demandeForm = document.getElementById('demande-form');
+        demandeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const sujet = document.getElementById('demande-sujet').value;
+            const filiere = document.getElementById('demande-filiere').value;
+            const description = document.getElementById('demande-description').value;
+            const { data: { user } } = await supabase.auth.getSession();
 
-            const { error } = await supabase
-                .from('demandes')
-                .insert([{
-                    sujet: sujet,
-                    filiere: filiere,
-                    description: description,
-                    auteur_id: user.id
-                }]);
+            const { error } = await supabase
+                .from('demandes')
+                .insert([{
+                    sujet: sujet,
+                    filiere: filiere,
+                    description: description,
+                    auteur_id: user.id
+                }]);
 
-            if (error) {
-                console.error("Erreur lors de l'envoi de la demande:", error);
-                alert("Erreur lors de l'envoi de la demande.");
-            } else {
-                alert("Votre demande a été envoyée avec succès !");
-                demandeForm.reset();
-            }
-        });
+            if (error) {
+                console.error("Erreur lors de l'envoi de la demande:", error);
+                alert("Erreur lors de l'envoi de la demande.");
+            } else {
+                alert("Votre demande a été envoyée avec succès !");
+                demandeForm.reset();
+            }
+        });
 
-        const filterFiliere = document.getElementById('filter-filiere');
+        const filterFiliere = document.getElementById('filter-filiere');
 
-        async function loadDemandes(filiereFilter = 'all') {
-            const demandesList = document.getElementById('demandes-list');
-            demandesList.innerHTML = ''; 
-            
-            let query = supabase.from('demandes').select(`*, profiles:auteur_id (full_name)`);
+        async function loadDemandes(filiereFilter = 'all') {
+            const demandesList = document.getElementById('demandes-list');
+            demandesList.innerHTML = ''; 
+            
+            let query = supabase.from('demandes').select(`*, profiles:auteur_id (full_name)`);
 
-            if (filiereFilter !== 'all') {
-                query = query.eq('filiere', filiereFilter);
-            }
-            
-            const { data, error } = await query.order('created_at', { ascending: false });
+            if (filiereFilter !== 'all') {
+                query = query.eq('filiere', filiereFilter);
+            }
+            
+            const { data, error } = await query.order('created_at', { ascending: false });
 
-            if (error) {
-                console.error("Erreur lors du chargement des demandes:", error);
-                return;
-            }
+            if (error) {
+                console.error("Erreur lors du chargement des demandes:", error);
+                return;
+            }
 
-            if (data.length > 0) {
-                data.forEach(demande => {
-                    const item = document.createElement('div');
-                    item.className = 'list-item';
-                    item.innerHTML = `
-                        <h4>[${demande.filiere}] ${demande.sujet}</h4>
-                        <p>${demande.description}</p>
-                        <small>De : ${demande.profiles.full_name || 'Anonyme'}</small>
-                    `;
-                    demandesList.appendChild(item);
-                });
-            } else {
-                demandesList.innerHTML = '<p>Aucune demande pour le moment dans cette filière.</p>';
-            }
-        }
+            if (data.length > 0) {
+                data.forEach(demande => {
+                    const item = document.createElement('div');
+                    item.className = 'list-item';
+                    item.innerHTML = `
+                        <h4>[${demande.filiere}] ${demande.sujet}</h4>
+                        <p>${demande.description}</p>
+                        <small>De : ${demande.profiles.full_name || 'Anonyme'}</small>
+                    `;
+                    demandesList.appendChild(item);
+                });
+            } else {
+                demandesList.innerHTML = '<p>Aucune demande pour le moment dans cette filière.</p>';
+            }
+        }
 
-        filterFiliere.addEventListener('change', (e) => {
-            loadDemandes(e.target.value);
-        });
+        filterFiliere.addEventListener('change', (e) => {
+            loadDemandes(e.target.value);
+        });
 
-        const uploadForm = document.getElementById('upload-form');
-        uploadForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const file = document.getElementById('file-upload').files[0];
-            const title = document.getElementById('file-title').value;
-            const { data: { user } } = await supabase.auth.getSession();
+        const uploadForm = document.getElementById('upload-form');
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const file = document.getElementById('file-upload').files[0];
+            const title = document.getElementById('file-title').value;
+            const { data: { user } } = await supabase.auth.getSession();
 
-            if (!file) {
-                alert("Veuillez sélectionner un fichier.");
-                return;
-            }
+            if (!file) {
+                alert("Veuillez sélectionner un fichier.");
+                return;
+            }
 
-            const filePath = `public/${user.id}/${Date.now()}_${file.name}`;
-            const { error: uploadError } = await supabase.storage
-                .from('documents')
-                .upload(filePath, file);
+            const filePath = `public/${user.id}/${Date.now()}_${file.name}`;
+            const { error: uploadError } = await supabase.storage
+                .from('documents')
+                .upload(filePath, file);
 
-            if (uploadError) {
-                console.error("Erreur lors du téléchargement:", uploadError);
-                alert("Erreur lors du téléchargement du fichier.");
-                return;
-            }
+            if (uploadError) {
+                console.error("Erreur lors du téléchargement:", uploadError);
+                alert("Erreur lors du téléchargement du fichier.");
+                return;
+            }
 
-            const { error: dbError } = await supabase
-                .from('partages')
-                .insert([{
-                    titre: title,
-                    url: `https://oqpbotaerbpcmwffsyjf.supabase.co/storage/v1/object/public/documents/${filePath}`,
-                    auteur_id: user.id
-                }]);
+            const { error: dbError } = await supabase
+                .from('partages')
+                .insert([{
+                    titre: title,
+                    url: `https://oqpbotaerbpcmwffsyjf.supabase.co/storage/v1/object/public/documents/${filePath}`,
+                    auteur_id: user.id
+                }]);
 
-            if (dbError) {
-                console.error("Erreur lors de l'enregistrement de la référence:", dbError);
-                alert("Fichier téléchargé, mais erreur d'enregistrement.");
-            } else {
-                alert("Fichier partagé avec succès !");
-                uploadForm.reset();
-                loadPartages();
-            }
-        });
+            if (dbError) {
+                console.error("Erreur lors de l'enregistrement de la référence:", dbError);
+                alert("Fichier téléchargé, mais erreur d'enregistrement.");
+            } else {
+                alert("Fichier partagé avec succès !");
+                uploadForm.reset();
+                loadPartages();
+            }
+        });
 
-        async function loadPartages() {
-            const partagesList = document.getElementById('partages-list');
-            partagesList.innerHTML = ''; 
-            
-            const { data, error } = await supabase
-                .from('partages')
-                .select(`*, profiles:auteur_id (full_name)`)
-                .order('created_at', { ascending: false });
+        async function loadPartages() {
+            const partagesList = document.getElementById('partages-list');
+            partagesList.innerHTML = ''; 
+            
+            const { data, error } = await supabase
+                .from('partages')
+                .select(`*, profiles:auteur_id (full_name)`)
+                .order('created_at', { ascending: false });
 
-            if (error) {
-                console.error("Erreur lors du chargement des partages:", error);
-                return;
-            }
+            if (error) {
+                console.error("Erreur lors du chargement des partages:", error);
+                return;
+            }
 
-            if (data.length > 0) {
-                data.forEach(partage => {
-                    const item = document.createElement('div');
-                    item.className = 'list-item';
-                    item.innerHTML = `
-                        <h4>${partage.titre}</h4>
-                        <p><a href="${partage.url}" target="_blank">Voir le document</a></p>
-                        <small>De : ${partage.profiles.full_name || 'Anonyme'}</small>
-                    `;
-                    partagesList.appendChild(item);
-                });
-            } else {
-                partagesList.innerHTML = '<p>Aucun document partagé pour le moment.</p>';
-            }
-        }
-        
-        supabase
-            .channel('demandes') 
-            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'demandes' }, (payload) => {
-                notificationBanner.style.display = 'block';
-                
-                setTimeout(() => {
-                    notificationBanner.style.display = 'none';
-                }, 5000);
-                
-                if (document.getElementById('demandes').classList.contains('active')) {
-                    loadDemandes(document.getElementById('filter-filiere').value);
-                }
-                console.log('Nouvelle demande reçue:', payload);
-            })
-            .subscribe();
-    </script>
+            if (data.length > 0) {
+                data.forEach(partage => {
+                    const item = document.createElement('div');
+                    item.className = 'list-item';
+                    item.innerHTML = `
+                        <h4>${partage.titre}</h4>
+                        <p><a href="${partage.url}" target="_blank">Voir le document</a></p>
+                        <small>De : ${partage.profiles.full_name || 'Anonyme'}</small>
+                    `;
+                    partagesList.appendChild(item);
+                });
+            } else {
+                partagesList.innerHTML = '<p>Aucun document partagé pour le moment.</p>';
+            }
+        }
+        
+        supabase
+            .channel('demandes') 
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'demandes' }, (payload) => {
+                notificationBanner.style.display = 'block';
+                
+                setTimeout(() => {
+                    notificationBanner.style.display = 'none';
+                }, 5000);
+                
+                if (document.getElementById('demandes').classList.contains('active')) {
+                    loadDemandes(document.getElementById('filter-filiere').value);
+                }
+                console.log('Nouvelle demande reçue:', payload);
+            })
+            .subscribe();
+    </script>
 </body>
 </html>

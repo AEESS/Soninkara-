@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEESS - Association des Élèves et Étudiants Soninké</title>
+    <title>AEESS - Association des Élèves et Étudiants Soninké de Saint-Louis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -60,16 +60,11 @@
             gap: 10px;
         }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary-color);
+        .logo-img {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
+            object-fit: cover;
         }
 
         .logo-text {
@@ -146,7 +141,7 @@
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 2.8rem;
             margin-bottom: 1rem;
         }
 
@@ -305,6 +300,74 @@
             color: var(--primary-color);
         }
 
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
+            background-color: #f0f7f2;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            padding-right: 2rem;
+        }
+
+        .contact-info h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+
+        .contact-details p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-details i {
+            margin-right: 1rem;
+            color: var(--primary-color);
+            width: 20px;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
         /* Footer */
         footer {
             background-color: var(--dark-color);
@@ -399,12 +462,18 @@
 
         /* Responsive Design */
         @media (max-width: 900px) {
-            .about-content {
+            .about-content,
+            .contact-container {
                 grid-template-columns: 1fr;
             }
 
             .hero h1 {
                 font-size: 2.5rem;
+            }
+
+            .contact-info {
+                padding-right: 0;
+                margin-bottom: 2rem;
             }
         }
 
@@ -466,7 +535,7 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <div class="logo-icon">AE</div>
+                <img src="IMG-20250123-WA0037.jpg" alt="Logo AEESS" class="logo-img">
                 <div class="logo-text">AEESS</div>
             </div>
 
@@ -485,7 +554,7 @@
                 </ul>
                 <div class="auth-buttons">
                     <a href="login.html" class="btn btn-outline">Connexion</a>
-                    <a href="login.html#register" class="btn btn-primary">Inscription</a>
+                    <a href="login.html" class="btn btn-primary">Inscription</a>
                 </div>
             </nav>
         </div>
@@ -494,10 +563,10 @@
     <!-- Hero Section -->
     <section class="hero" id="accueil">
         <div class="container hero-content">
-            <h1>Association des Élèves et Étudiants Soninké</h1>
-            <p>Une communauté unie pour promouvoir l'éducation, la culture et l'entraide parmi les étudiants Soninké.</p>
+            <h1>Association des Élèves et Étudiants Soninké de Saint-Louis</h1>
+            <p>Une communauté unie pour promouvoir l'éducation, la culture et l'entraide parmi les étudiants Soninké de Saint-Louis.</p>
             <div class="hero-buttons">
-                <a href="login.html#register" class="btn btn-secondary">Rejoindre l'AEESS</a>
+                <a href="login.html" class="btn btn-secondary">Rejoindre l'AEESS</a>
                 <a href="#about" class="btn btn-outline">En savoir plus</a>
             </div>
         </div>
@@ -543,8 +612,8 @@
             </div>
             <div class="about-text">
                 <h2>À propos de l'AEESS</h2>
-                <p>L'Association des Élèves et Étudiants Soninké (AEESS) est une organisation à but non lucratif qui œuvre pour l'épanouissement académique, culturel et social des étudiants Soninké.</p>
-                <p>Fondée en 2005, notre association compte aujourd'hui plus de 500 membres actifs à travers différentes universités et établissements scolaires.</p>
+                <p>L'Association des Élèves et Étudiants Soninké de Saint-Louis (AEESS) est une organisation à but non lucratif qui œuvre pour l'épanouissement académique, culturel et social des étudiants Soninké de la région de Saint-Louis.</p>
+                <p>Fondée en 2005, notre association compte aujourd'hui plus de 500 membres actifs à travers différents établissements scolaires et universitaires de Saint-Louis.</p>
                 <p>Nous organisons régulièrement des événements culturels, des séminaires éducatifs et des actions sociales pour renforcer les liens au sein de notre communauté.</p>
                 <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">Notre Histoire</a>
             </div>
@@ -593,14 +662,21 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="contact">
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">AEESS</div>
-                    <p>Association des Élèves et Étudiants Soninké</p>
-                    <p>Promouvons l'éducation et la culture Soninké depuis 2005.</p>
+            <h2 class="section-title">Contactez-nous</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>Restons en contact</h2>
+                    <p>N'hésitez pas à nous contacter pour toute question ou information supplémentaire.</p>
+                    
+                    <div class="contact-details">
+                        <p><i class="fas fa-map-marker-alt"></i> Saint-Louis, Senegal</p>
+                        <p><i class="fas fa-phone"></i> +221 77 123 45 67</p>
+                        <p><i class="fas fa-envelope"></i> contact@aeess.sn</p>
+                    </div>
+                    
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -608,26 +684,61 @@
                         <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nom complet</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Sujet</label>
+                            <input type="text" id="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer le message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">AEESS</div>
+                    <p>Association des Élèves et Étudiants Soninké de Saint-Louis</p>
+                    <p>Promouvons l'éducation et la culture Soninké depuis 2005.</p>
+                </div>
                 <div class="footer-section">
                     <h3>Liens Rapides</h3>
                     <ul>
                         <li><a href="#accueil">Accueil</a></li>
                         <li><a href="#about">À propos</a></li>
                         <li><a href="#events">Événements</a></li>
-                        <li><a href="#">Espace Membre</a></li>
+                        <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h3>Contact</h3>
                     <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> Université Gaston Berger, Saint-Louis</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Saint-Louis, Senegal</li>
                         <li><i class="fas fa-phone"></i> +221 77 123 45 67</li>
                         <li><i class="fas fa-envelope"></i> contact@aeess.sn</li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2025 AEESS - Association des Élèves et Étudiants Soninké. Tous droits réservés.</p>
+                <p>&copy; 2025 AEESS - Association des Élèves et Étudiants Soninké de Saint-Louis. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
@@ -647,6 +758,11 @@
             link.addEventListener('click', () => {
                 nav.classList.remove('active');
                 menuToggle.classList.remove('active');
+                
+                // Si c'est un lien de connexion/inscription, on ne fait pas de défilement
+                if (link.getAttribute('href').includes('login.html')) {
+                    return;
+                }
             });
         });
 
@@ -666,6 +782,28 @@
                     });
                 }
             });
+        });
+
+        // Contact form handling
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Ici vous pouvez ajouter le code pour envoyer le formulaire
+                alert('Merci pour votre message! Nous vous répondrons bientôt.');
+                contactForm.reset();
+            });
+        }
+
+        // Vérifier si l'URL contient un paramètre pour ouvrir directement le formulaire d'inscription
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const action = urlParams.get('action');
+            
+            if (action === 'register') {
+                window.location.href = 'login.html';
+            }
         });
     </script>
 </body>

@@ -136,7 +136,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
                         url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80') no-repeat center center/cover;
             z-index: -1;
         }
@@ -280,7 +280,7 @@
 
         /* Espace Membre */
         .members {
-            background: linear-gradient(rgba(249, 249, 249, 0.9), rgba(249, 249, 249, 0.9)), 
+            background: linear-gradient(rgba(249, 249, 249, 0.9), rgba(249, 249, 249, 0.9)),
                         url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80') no-repeat center center/cover;
             background-attachment: fixed;
         }
@@ -425,7 +425,7 @@
 
         /* Contact */
         .contact {
-            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
                         url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80') no-repeat center center/cover;
             background-attachment: fixed;
         }
@@ -579,7 +579,6 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header id="header">
         <div class="container">
             <nav class="navbar">
@@ -587,7 +586,7 @@
                 <ul class="nav-links">
                     <li><a href="#accueil">Accueil</a></li>
                     <li><a href="#missions">Nos Missions</a></li>
-                    <li><a href="#membres">Espace Membre</a></li>
+                    <li><a href="espace.html">Espace Membre</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                 <div class="hamburger"><span></span><span></span><span></span></div>
@@ -595,7 +594,6 @@
         </div>
     </header>
 
-    <!-- Hero -->
     <section id="accueil" class="hero">
         <div class="container hero-content">
             <h1 class="fade-in">Association des Étudiants Soninké à l'UGB</h1>
@@ -607,7 +605,6 @@
         </div>
     </section>
 
-    <!-- Missions -->
     <section id="missions" class="missions">
         <div class="container text-center">
             <h2 class="fade-in">Nos Missions</h2>
@@ -631,12 +628,10 @@
         </div>
     </section>
 
-    <!-- Espace Membre -->
     <section id="membres" class="members">
         <div class="container text-center">
             <h2 class="fade-in">Espace Membre</h2>
             
-            <!-- Zone de connexion/inscription -->
             <div id="auth-forms">
                 <div class="tabs fade-in">
                     <button class="tab-btn active" data-tab="connexion">Connexion</button>
@@ -671,35 +666,9 @@
                     </form>
                 </div>
             </div>
-            
-            <!-- Zone membre (affichée après connexion) -->
-            <div class="member-area" id="member-area">
-                <h2>Bienvenue dans votre espace membre!</h2>
-                
-                <div class="user-info">
-                    <h3>Vos informations</h3>
-                    <div class="user-details">
-                        <div class="user-detail">
-                            <strong>Nom:</strong> <span id="user-name"></span>
-                        </div>
-                        <div class="user-detail">
-                            <strong>Email:</strong> <span id="user-email"></span>
-                        </div>
-                        <div class="user-detail">
-                            <strong>Filière:</strong> <span id="user-filiere"></span>
-                        </div>
-                        <div class="user-detail">
-                            <strong>Statut:</strong> Membre actif
-                        </div>
-                    </div>
-                </div>
-                
-                <button class="btn logout-btn" id="logout-btn">Se déconnecter</button>
-            </div>
         </div>
     </section>
 
-    <!-- Contact -->
     <section id="contact" class="contact">
         <div class="container text-center">
             <h2 class="fade-in">Contact</h2>
@@ -725,7 +694,6 @@
         </div>
     </footer>
 
-    <!-- Modal de confirmation -->
     <div id="confirmation-modal" class="modal">
         <div class="modal-content">
             <h3 id="modal-title">Opération réussie</h3>
@@ -734,26 +702,19 @@
         </div>
     </div>
 
-    <!-- Intégration de Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         // Initialisation de Supabase
         const supabaseUrl = 'https://oqpbotaerbpcmwffsyjf.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xcGJvdGFlcmJwY213ZmZzeWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMzE1NDgsImV4cCI6MjA3MzgwNzU0OH0.iY7VX-yDdtAL75hjwle_xd5Ge3LhcEAd4DlXz1dN5PA';
-        
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-        
+
         // Éléments du DOM
         const authForms = document.getElementById('auth-forms');
-        const memberArea = document.getElementById('member-area');
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
         const loginMessage = document.getElementById('login-message');
         const registerMessage = document.getElementById('register-message');
-        const logoutBtn = document.getElementById('logout-btn');
-        const userName = document.getElementById('user-name');
-        const userEmail = document.getElementById('user-email');
-        const userFiliere = document.getElementById('user-filiere');
         
         // Menu mobile
         const hamburger = document.querySelector('.hamburger');
@@ -771,10 +732,8 @@
         tabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const target = btn.dataset.tab;
-                
                 tabBtns.forEach(b => b.classList.remove('active'));
                 tabContents.forEach(content => content.classList.remove('active'));
-                
                 btn.classList.add('active');
                 document.getElementById(target).classList.add('active');
             });
@@ -845,6 +804,16 @@
             }
         }
         
+        // Fonction utilitaire pour afficher les messages
+        function showMessage(element, text, type) {
+            element.textContent = text;
+            element.className = `message ${type}`;
+            element.style.display = 'block';
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+
         // Gestion de l'inscription
         registerForm.addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -871,8 +840,7 @@
             }
             
             try {
-                // Inscription avec Supabase
-                const { data, error } = await supabase.auth.signUp({
+                const { error } = await supabase.auth.signUp({
                     email: email,
                     password: password,
                     options: {
@@ -889,11 +857,8 @@
                 }
                 
                 showMessage(registerMessage, 'Inscription réussie! Vous pouvez maintenant vous connecter.', 'success');
-                
-                // Réinitialiser le formulaire
                 registerForm.reset();
                 
-                // Basculer vers le formulaire de connexion
                 setTimeout(() => {
                     tabBtns[0].click();
                     showMessage(loginMessage, 'Vous pouvez maintenant vous connecter', 'success');
@@ -911,14 +876,12 @@
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             
-            // Validation
             if (!email || !password) {
                 showMessage(loginMessage, 'Veuillez remplir tous les champs', 'error');
                 return;
             }
             
             try {
-                // Connexion avec Supabase
                 const { data, error } = await supabase.auth.signInWithPassword({
                     email: email,
                     password: password
@@ -929,13 +892,8 @@
                     return;
                 }
                 
-                // Afficher l'espace membre
-                userEmail.textContent = data.user.email;
-                userName.textContent = data.user.user_metadata.full_name || 'Non spécifié';
-                userFiliere.textContent = data.user.user_metadata.filiere || 'Non spécifié';
-                
-                authForms.style.display = 'none';
-                memberArea.style.display = 'block';
+                // Redirection vers la page espace.html après connexion réussie
+                window.location.href = 'espace.html';
                 
             } catch (error) {
                 showMessage(loginMessage, 'Une erreur est survenue lors de la connexion', 'error');
@@ -943,91 +901,7 @@
             }
         });
         
-        // Gestion de la déconnexion
-        logoutBtn.addEventListener('click', async function() {
-            try {
-                const { error } = await supabase.auth.signOut();
-                
-                if (error) {
-                    console.error('Erreur de déconnexion:', error);
-                }
-                
-                // Revenir au formulaire de connexion
-                memberArea.style.display = 'none';
-                authForms.style.display = 'block';
-                
-                // Réinitialiser le formulaire
-                loginForm.reset();
-                
-            } catch (error) {
-                console.error('Erreur de déconnexion:', error);
-            }
-        });
-        
-        // Vérifier si l'utilisateur est déjà connecté
-        async function checkAuth() {
-            try {
-                const { data: { session } } = await supabase.auth.getSession();
-                
-                if (session) {
-                    // Afficher l'espace membre
-                    userEmail.textContent = session.user.email;
-                    userName.textContent = session.user.user_metadata.full_name || 'Non spécifié';
-                    userFiliere.textContent = session.user.user_metadata.filiere || 'Non spécifié';
-                    
-                    authForms.style.display = 'none';
-                    memberArea.style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Erreur de vérification d\'authentification:', error);
-            }
-        }
-        
-        // Afficher les messages
-        function showMessage(element, text, type) {
-            element.textContent = text;
-            element.className = `message ${type}`;
-            element.style.display = 'block';
-            
-            // Cacher le message après 5 secondes
-            setTimeout(() => {
-                element.style.display = 'none';
-            }, 5000);
-        }
-        
-        // Vérifier l'état d'authentification au chargement
-        document.addEventListener('DOMContentLoaded', function() {
-            checkAuth();
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(26, 75, 46, 0.98)';
-                header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
-            } else {
-                header.style.background = 'rgba(26, 75, 46, 0.95)';
-                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-            }
-        });
-
-        // Contact form (simulation)
-        document.getElementById('contact-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('contact-name').value;
-            const email = document.getElementById('contact-email').value;
-            const subject = document.getElementById('contact-subject').value;
-            const message = document.getElementById('contact-message').value;
-            
-            // Simulation d'envoi de message
-            if (name && email && subject && message) {
-                showModal('Message envoyé', 'Merci pour votre message! Nous vous répondrons bientôt.');
-                document.getElementById('contact-form').reset();
-            } else {
-                showModal('Erreur', 'Veuillez remplir tous les champs.');
-            }
-        });
+        // La déconnexion est maintenant gérée dans espace.html
     </script>
 </body>
 </html>
